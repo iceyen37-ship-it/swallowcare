@@ -3,6 +3,8 @@
     --page-bg:#1e1b18; --bg:#fef6ee; --card:#ffffff; --ink:#1c1c1c; --sub:#6b7280;
     --accent:#f6812a; --accent-d:#d6620f; --yellow:#fddb00; --yellow-d:#f5c400;
     --line:#e5e7eb; --teal:#12b8a6; --gold:#eab308;
+    --cyan:#00e8d8; --orange:#ff5100; --olive:#c7c000; --grey-bg:#f5f5f5;
+    --num:"Helvetica Neue",Arial,"PingFang TC","Microsoft JhengHei",sans-serif;
   }
   *{box-sizing:border-box;}
   body{margin:0;font-family:"PingFang TC","Microsoft JhengHei",sans-serif;background:linear-gradient(135deg, #1f1c19 0%, #2b2520 50%, #171412 100%);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px;color:var(--ink);}
@@ -25,15 +27,19 @@
   .phone-bar.light-text{color:#fff;}
 
   .screen{height:100%;overflow-y:auto;padding-bottom:96px;position:relative;-webkit-overflow-scrolling:touch;}
-  .tabbar{position:absolute;bottom:0;left:0;right:0;height:88px;background:#171717;display:flex;align-items:flex-end;padding-bottom:14px;border-radius:36px 36px 0 0;z-index:20;}
-  .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:.68rem;color:#fff;cursor:pointer;background:none;border:none;}
-  .tab.active{color:var(--accent);}
-  .tab.active .ic svg{stroke:var(--accent);}
+  .screen[data-page=visit]{background:#fff;}
+  .screen[data-page=meal]{background:#fff600;}
+  .screen[data-page=elder],.screen[data-page=texture]{background:var(--grey-bg);}
+  .tabbar{position:absolute;bottom:0;left:0;right:0;height:104px;background:#171717;display:flex;align-items:flex-end;padding:0 8px 20px;border-radius:40px 40px 0 0;z-index:20;}
+  .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font-size:.75rem;color:#fff;cursor:pointer;background:none;border:none;font-family:inherit;padding:0;}
+  .tab.active{color:var(--cyan);}
+  .tab.active .ic svg{stroke:var(--cyan);}
   .tab .ic{display:flex;align-items:center;justify-content:center;}
-  .tab .ic svg{width:26px;height:26px;stroke:#fff;fill:none;stroke-width:1.6;}
-  .tab-spacer{flex:0 0 76px;}
-  .tab-bump{position:absolute;left:50%;top:-24px;transform:translateX(-50%);width:140px;height:48px;background:#171717;border-radius:70px 70px 0 0;z-index:19;}
-  .fab{position:absolute;left:50%;bottom:56px;transform:translateX(-50%);width:60px;height:60px;border-radius:50%;background:var(--accent);color:#fff;font-size:1.7rem;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:21;box-shadow:0 4px 12px rgba(246,129,42,.5);transition:transform .2s;}
+  .tab .ic svg{width:30px;height:30px;stroke:#fff;fill:none;stroke-width:1.3;}
+  .tab-spacer{flex:0 0 72px;}
+  .tab-bump{position:absolute;left:50%;bottom:48px;transform:translateX(-50%);width:78px;height:78px;background:#171717;border-radius:50%;z-index:19;}
+  .fab{position:absolute;left:50%;bottom:61px;transform:translateX(-50%);width:54px;height:54px;border-radius:50%;background:var(--orange);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:21;transition:transform .2s;}
+  .fab svg{width:30px;height:30px;stroke:#171717;stroke-width:2;fill:none;}
   .fab:hover{transform:translateX(-50%) scale(1.06);}
 
   /* ---- Mobile & Android App Fullscreen Responsive Styling ---- */
@@ -62,10 +68,10 @@
     }
     .screen {
       padding-top: env(safe-area-inset-top, 0px);
-      padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+      padding-bottom: calc(116px + env(safe-area-inset-bottom, 0px));
     }
     .tabbar {
-      padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+      padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
     }
   }
 
@@ -155,29 +161,22 @@
   @keyframes slideUpCard{from{opacity:0;transform:translateY(40px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
 
   /* ---- 質地卡 ---- */
-  .qd-head{padding:16px 16px 10px;}
-  .qd-head .tag{color:var(--accent);font-size:.68rem;font-weight:700;margin-bottom:6px;}
-  .qd-head h2{margin:0 0 2px;font-size:1.05rem;color:var(--ink);}
-  .qd-head p{margin:0;font-size:.78rem;color:var(--sub);}
-  .qd-section-title{padding:14px 16px 0;font-size:.95rem;font-weight:700;color:var(--ink);}
-  .qd-section-sub{padding:2px 16px 0;font-size:.75rem;color:var(--sub);}
-  .split-card{display:flex;height:200px;border-radius:18px;overflow:hidden;margin:10px 16px;box-shadow:0 2px 8px rgba(0,0,0,.15);}
-  .split-half{flex:1;position:relative;cursor:pointer;display:flex;align-items:flex-end;padding:14px;border:none;text-align:left;font:inherit;}
-  .split-half .lbl{color:#fff;font-weight:800;font-size:1.02rem;text-shadow:0 1px 4px rgba(0,0,0,.5);}
-  .split-video-a{background:linear-gradient(160deg,#c8946a 0%,#8a6142 100%);}
-  .split-video-b{background:linear-gradient(160deg,#8a6142 0%,#4a3222 100%);}
-  .split-menu-a{background:linear-gradient(160deg,#d8cda0 0%,#b7ae85 100%);}
-  .split-menu-b{background:linear-gradient(160deg,#b7ae85 0%,#6f7050 100%);}
-  .split-menu-a .lbl,.split-menu-b .lbl{color:#2c2a1e;text-shadow:none;}
-  .qd-scroll{display:flex;gap:10px;overflow-x:auto;padding:10px 16px 4px;-webkit-overflow-scrolling:touch;}
-  .qd-card{flex:0 0 128px;height:158px;border-radius:24px;position:relative;overflow:hidden;cursor:pointer;border:none;padding:0;display:block;}
-  .qd-card .qd-bg{position:absolute;inset:0;}
-  .qd-card .qd-overlay{position:absolute;inset:0;background:linear-gradient(to bottom, rgba(255,255,255,.15) 0%, rgba(0,0,0,.55) 100%);}
-  .qd-card .qd-lbl{position:absolute;left:0;right:0;bottom:14px;z-index:1;color:#fff;text-align:center;padding:0 6px;}
-  .qd-card .qd-lbl b{display:block;font-size:1.05rem;font-weight:800;text-shadow:0 1px 4px rgba(0,0,0,.4);}
-  .qd-card .qd-lbl span{display:block;font-size:.66rem;margin-top:2px;text-shadow:0 1px 4px rgba(0,0,0,.4);}
-  .qd-toolkit{display:flex;gap:10px;padding:14px 16px 20px;}
-  .qd-toolkit .qd-tk-card{flex:1;height:200px;border-radius:24px;background:linear-gradient(160deg,#f3ead9 0%,#d9c9a4 100%);display:flex;align-items:center;justify-content:center;font-size:2rem;color:#a98a55;}
+  .qd-head{padding:40px 20px 0;}
+  .qd-head .tag{color:#ff6a2b;font-size:.68rem;font-weight:800;letter-spacing:.2px;}
+  .qd-head h2{margin:12px 0 4px;font-size:1.5rem;font-weight:900;color:#000;font-family:var(--num);}
+  .qd-head p{margin:0;font-size:.88rem;color:#9a9a9a;}
+  .qd-section{padding:34px 20px 0;}
+  .qd-section h2{margin:0 0 4px;font-size:1.5rem;font-weight:900;color:#000;}
+  .qd-section p{margin:0;font-size:.88rem;color:#9a9a9a;}
+  .strip{display:flex;gap:4px;overflow-x:auto;padding-left:28px;margin-top:16px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+  .strip::-webkit-scrollbar{display:none;}
+  .strip::after{content:"";flex:0 0 20px;}
+  .tile{flex:0 0 194px;height:250px;position:relative;overflow:hidden;cursor:pointer;border:none;padding:0;background:#ddd center/cover no-repeat;font-family:inherit;}
+  .tile:first-child{border-radius:40px 0 0 40px;}
+  .tile:last-of-type{border-radius:0 40px 40px 0;}
+  .tile .wash{position:absolute;inset:0;background:rgba(255,255,255,.18);}
+  .tile .lb{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;color:#fff;font-size:1.3rem;font-weight:900;font-family:var(--num);text-shadow:0 1px 10px rgba(0,0,0,.5);}
+  .qd-toolkit{margin:16px 20px 24px;height:200px;border-radius:40px;background:#e8dcc4 center/cover no-repeat;}
 
   /* ---- 質地測定示範 detail page ---- */
   .st-topbar{background:#e75900;color:#fff;padding:20px 16px 18px;position:relative;border-radius:0 0 30px 30px;}
@@ -212,79 +211,141 @@
   .mn-photo{width:100%;height:160px;border-radius:14px;background:#e5e5e5;}
   .mn-warn{font-size:.7rem;color:var(--accent);margin:0 0 8px;line-height:1.5;}
 
-  /* ---- 自家菜 / 安心錄 shared ---- */
-  .yellow-panel{background:var(--yellow);padding:14px 16px 16px;}
-  .yp-row{display:flex;justify-content:space-between;align-items:center;}
-  .pill-white{background:#fff;border-radius:20px;padding:6px 12px;font-size:.72rem;font-weight:700;color:#222;display:inline-flex;align-items:center;gap:5px;}
-  .avatar{width:32px;height:32px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:1rem;overflow:hidden;}
-  .calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:10px;}
-  .cal-h{text-align:center;font-size:.62rem;color:#8a6d00;}
-  .cal-d{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:8px;font-size:.75rem;cursor:pointer;border:none;background:transparent;color:#333;}
-  .cal-d.sel{background:#fff;font-weight:800;}
-  .cal-d.has::after{content:"";display:block;width:4px;height:4px;border-radius:50%;background:var(--accent);position:relative;top:9px;}
-  .today-title{font-weight:800;font-size:1rem;margin:12px 0 2px;color:#222;}
-  .today-sub{font-size:.78rem;color:#3a3226;}
-  .entry-item{display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.75);border-radius:12px;padding:9px 12px;margin-top:8px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
-  .entry-item .entry-badge{width:38px;height:38px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.08);flex-shrink:0;}
-  .entry-item .who{font-size:.7rem;font-weight:700;color:#222;}
-  .entry-item .what{font-size:.74rem;color:#444;font-weight:600;}
-  .entry-item .time{margin-left:auto;font-size:.65rem;color:#666;font-weight:600;}
-
-  .form-panel{background:var(--card);border-radius:20px 20px 0 0;margin-top:-14px;position:relative;padding:16px;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
-  .fp-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
-  .fp-head .dsel{font-weight:800;font-size:1rem;color:var(--ink);}
-  .seg{display:flex;background:var(--line);border-radius:14px;padding:2px;font-size:.7rem;margin-left:auto;}
-  .seg span{padding:5px 10px;border-radius:12px;cursor:pointer;color:var(--ink);}
-  .seg span.on{background:var(--teal);color:#fff;font-weight:700;}
-  .cam-btn{width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;}
-  .f-field{border:1.5px solid var(--accent);border-radius:22px;padding:9px 14px;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
-  .f-field label{color:var(--accent);font-size:.8rem;font-weight:700;flex-shrink:0;}
-  .f-field input,.f-field select{border:none;outline:none;flex:1;font-size:.85rem;background:transparent;color:var(--ink);text-align:right;min-width:0;}
-  .f-field .icon-r{font-size:1rem;flex-shrink:0;}
-  .btn-primary{background:var(--accent);color:#fff;border:none;padding:11px;border-radius:14px;font-size:.86rem;font-weight:700;cursor:pointer;width:100%;}
-  .list-title{font-size:.9rem;font-weight:700;margin:16px 0 8px;color:var(--ink);}
+  /* ---- 共用：標題列、表單底板 ---- */
+  .pg-head{display:flex;justify-content:space-between;align-items:center;padding:56px 24px 12px 33px;}
+  .pg-head h2{margin:0;font-size:1.5rem;font-weight:900;color:#000;}
+  .more{background:none;border:none;padding:4px;cursor:pointer;display:flex;}
+  .more svg{width:24px;height:6px;fill:#000;}
+  .sheet{background:var(--grey-bg);margin:26px 11px 0;border-radius:40px 40px 0 0;padding:28px 32px 28px;min-height:330px;}
+  .sheet-head{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+  .sheet-head h3{margin:0;font-size:1.3rem;font-weight:900;color:#000;}
+  .pill-btn{width:38px;height:26px;border-radius:13px;background:#fff;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}
+  .pill-btn svg{width:18px;height:18px;stroke:#222;fill:none;stroke-width:1.4;}
+  .sheet-head .pill-btn:last-child{margin-left:auto;}
+  .f-field{position:relative;background:#fff;border:1px solid var(--orange);border-radius:18px;height:36px;padding:0 6px 0 22px;margin-bottom:13px;display:flex;align-items:center;gap:6px;}
+  .f-field label{color:var(--orange);font-size:.95rem;flex-shrink:0;}
+  .f-field .caret{width:1.5px;height:18px;background:#111;flex-shrink:0;margin-left:6px;transition:opacity .15s;}
+  .f-field:focus-within .caret{opacity:0;}
+  .f-field input,.f-field select{border:none;outline:none;flex:1;font-size:.9rem;background:transparent;color:#222;text-align:right;text-align-last:right;min-width:0;font-family:inherit;-webkit-appearance:none;appearance:none;padding:0 4px;height:100%;}
+  .f-field input::placeholder{color:#c6c6c6;}
+  .f-field input[type=date]::-webkit-calendar-picker-indicator{opacity:0;position:absolute;right:6px;width:28px;height:28px;cursor:pointer;}
+  .f-field .tri{width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid var(--orange);flex-shrink:0;margin:0 8px 0 2px;pointer-events:none;}
+  .f-field .ico{width:26px;height:26px;flex-shrink:0;pointer-events:none;}
+  .f-field .ico.sm{width:22px;height:22px;margin-right:4px;}
+  .f-field.area{height:auto;min-height:36px;padding-top:7px;padding-bottom:7px;align-items:flex-start;}
+  .btn-primary{background:var(--orange);color:#fff;border:none;height:40px;border-radius:20px;font-size:.92rem;font-weight:700;cursor:pointer;width:100%;margin-top:4px;font-family:inherit;}
+  .list-title{font-size:1rem;font-weight:900;margin:24px 0 10px;color:#000;}
   .empty{text-align:center;color:var(--sub);font-size:.82rem;padding:24px 0;}
+  .hist{background:#fff;border-radius:16px;padding:12px 16px;margin-bottom:10px;}
+  .hist .h1{font-size:.8rem;font-weight:800;color:#111;}
+  .hist .h2{font-size:.8rem;color:#555;margin-top:4px;line-height:1.5;}
 
-  /* ---- 安心錄 last visit ---- */
-  .visit-hero{background:var(--yellow);border-radius:16px;padding:14px 16px;margin:0 16px;box-shadow:0 4px 0 var(--yellow-d);}
-  .visit-hero .vh-meta{font-size:.78rem;font-weight:800;color:#2a2200;border-bottom:1px solid rgba(0,0,0,.15);padding-bottom:8px;margin-bottom:8px;}
-  .visit-hero .vh-body{font-size:.8rem;line-height:1.6;margin-bottom:6px;color:#2a2200;}
-  .visit-hero .vh-by{font-size:.72rem;color:#5c4a00;}
-  .date-chip-row{display:flex;gap:10px;overflow-x:auto;padding:14px 16px;}
-  .date-chip{flex:0 0 78px;height:78px;border-radius:14px;background:linear-gradient(160deg,var(--yellow) 0%,var(--accent) 100%);color:#2a2200;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:8px 10px;cursor:pointer;}
-  .date-chip b{font-size:.68rem;}
-  .date-chip .dnum{font-size:1.3rem;font-weight:800;}
-  .date-chip .dtag{font-size:.6rem;}
+  /* ---- 安心錄 ---- */
+  .visit-hero{background:#fff600;margin:0 11px 14px;border-radius:0 0 44px 44px;padding:14px 22px 22px;box-shadow:0 7px 0 #fffddc,0 14px 0 #eae9bf;}
+  .vh-meta{display:flex;align-items:center;font-size:.9rem;font-weight:800;color:#000;padding-bottom:7px;border-bottom:1px solid #000;margin-bottom:10px;white-space:nowrap;}
+  .vh-meta .sep{width:1px;height:14px;background:#000;margin:0 6px;}
+  .vh-meta .right{margin-left:auto;display:flex;gap:18px;}
+  .vh-body{font-size:.82rem;line-height:1.55;color:#555;margin-bottom:12px;}
+  .vh-by{font-size:.82rem;color:#555;}
+  .year-title{font-size:1.45rem;font-weight:900;color:#000;padding:34px 30px 10px;font-family:var(--num);}
+  .date-chip-row{display:flex;gap:17px;overflow-x:auto;padding:0 22px 4px;scrollbar-width:none;}
+  .date-chip-row::-webkit-scrollbar{display:none;}
+  .date-chip{flex:0 0 107px;height:110px;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;color:#444;border:none;font-family:inherit;padding:0;background:linear-gradient(180deg,#fdfdec 0%,#e9f8a8 100%);transition:transform .15s;}
+  .date-chip:active{transform:scale(.97);}
+  .date-chip.c0{background:linear-gradient(180deg,#fff1be 0%,#ffaf0a 100%);}
+  .date-chip.c1{background:linear-gradient(180deg,#fdfad6 0%,#ebee38 100%);}
+  .date-chip.on{box-shadow:inset 0 0 0 2px rgba(0,0,0,.55);}
+  .date-chip b{font-size:1.15rem;font-weight:800;font-family:var(--num);line-height:1.1;}
+  .date-chip .dnum{font-size:2.2rem;font-weight:900;font-family:var(--num);line-height:1.05;}
+  .date-chip .dtag{font-size:1rem;font-weight:800;}
+
+  /* ---- 飲食冊 ---- */
+  .meal-top{display:flex;justify-content:space-between;align-items:center;padding:44px 30px 0 35px;}
+  .month-pill{display:inline-flex;align-items:center;gap:12px;background:#fff;border-radius:12px;height:24px;padding:0 14px 0 12px;font-size:.72rem;letter-spacing:.5px;color:#111;}
+  .month-pill svg{width:18px;height:18px;stroke:#111;fill:none;stroke-width:1.4;}
+  .avatar-ring{width:42px;height:42px;border-radius:50%;border:2px solid #222;background:#fff center/cover;flex-shrink:0;}
+  .cal-panel{background:#fffb83;margin:2px 11px 0;border-radius:24px;padding:12px 16px 10px;box-shadow:0 4px 8px rgba(0,0,0,.12);}
+  .calendar{display:grid;grid-template-columns:repeat(7,1fr);row-gap:6px;}
+  .cal-h{text-align:center;font-size:.75rem;color:#111;padding:4px 0 4px;}
+  .cal-d{height:22px;display:flex;align-items:center;justify-content:center;font-size:.75rem;cursor:pointer;border:none;background:transparent;color:#111;padding:0;font-family:var(--num);}
+  .cal-d span{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+  .cal-d.has span{background:#fff;}
+  .cal-d.sel span{background:#111;color:#fff600;font-weight:800;}
+  .cal-d.out{color:#c9c9c9;}
+  .today-title{font-size:1.5rem;font-weight:900;color:#000;margin:20px 30px 0 44px;}
+  .today-row{display:flex;align-items:flex-start;gap:14px;margin:12px 43px 0 44px;}
+  .today-date{border-left:6px solid #000;padding-left:12px;font-size:1.5rem;font-weight:900;line-height:1.08;font-family:var(--num);color:#000;}
+  .today-sum{flex:1;min-width:0;font-size:.85rem;color:#222;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-top:8px;text-align:right;}
+  .entry{display:flex;align-items:center;background:#fff;border-radius:16px;margin:12px 43px 0 44px;padding:9px 12px 9px 18px;gap:12px;}
+  .entry .tx{flex:1;min-width:0;}
+  .entry .when{font-size:.85rem;color:#111;}
+  .entry .when b{margin-left:14px;font-weight:800;}
+  .entry .what{font-size:.8rem;color:var(--olive);margin-top:2px;}
+  .entry .thumb{width:46px;height:32px;border-radius:6px;background:#f2f2f2 center/cover;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1rem;}
+  .entry .ico{width:24px;height:24px;stroke:var(--olive);flex-shrink:0;}
+  .seg{display:flex;background:#fff;border-radius:12px;padding:2px;font-size:.72rem;margin-left:auto;}
+  .seg span{padding:3px 8px;border-radius:10px;cursor:pointer;color:#111;}
+  .seg span.on{background:var(--cyan);}
+  .dsel{font-size:1.4rem;font-weight:900;color:#000;display:flex;align-items:center;gap:22px;}
+  .dsel i{width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:8px solid #000;}
 
   /* ---- 長輩卡 ---- */
-  .elder-head{display:flex;align-items:center;gap:14px;padding:20px 16px 8px;}
-  .elder-head .photo{width:64px;height:64px;border-radius:50%;background:var(--line);flex-shrink:0;}
-  .elder-head h2{margin:0;font-size:1.15rem;color:var(--ink);}
-  .elder-head .sub-tag{font-size:.65rem;color:var(--sub);font-weight:400;margin-left:4px;}
-  .chip-small{display:inline-block;border:1px solid var(--accent);color:var(--accent);border-radius:14px;padding:3px 10px;font-size:.7rem;margin-top:6px;margin-right:6px;}
-  .care-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);}
-  .care-item .photo{width:38px;height:38px;border-radius:50%;background:var(--line);flex-shrink:0;}
-  .care-item .nm{font-size:.85rem;font-weight:700;color:var(--ink);}
-  .care-item .role{font-size:.68rem;color:var(--sub);font-weight:400;margin-left:4px;}
-  .care-item .upd{font-size:.7rem;color:var(--accent);margin-top:2px;}
-  .photo-grid{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;}
-  .photo-grid .ph{flex:0 0 100px;height:120px;border-radius:8px;background:#ccc center/cover;position:relative;}
-  .photo-grid .ph span{position:absolute;left:6px;bottom:6px;color:#fff;font-size:.65rem;text-shadow:0 1px 3px rgba(0,0,0,.7);}
+  .elder-head{display:flex;align-items:center;gap:22px;padding:50px 24px 22px 21px;}
+  .elder-photo{width:85px;height:85px;border-radius:50%;border:2px solid #111;background:#ddd center/cover;flex-shrink:0;}
+  .elder-info{flex:1;min-width:0;}
+  .elder-name{display:flex;align-items:baseline;gap:10px;font-size:1.5rem;font-weight:900;color:#000;}
+  .elder-name small{font-size:.82rem;font-weight:800;}
+  .elder-name .more{margin-left:auto;align-self:center;}
+  .elder-name .more svg{width:22px;height:22px;fill:none;stroke:#111;stroke-width:1.5;}
+  .chips{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;}
+  .chip-o{border:1px solid var(--orange);color:var(--orange);border-radius:16px;height:32px;padding:0 15px;font-size:1.02rem;display:inline-flex;align-items:center;}
+  .hr{height:1px;background:#e4e4e4;margin:0 24px;}
+  .sec-head{display:flex;justify-content:space-between;align-items:center;padding:22px 24px 0;}
+  .sec-head h2{margin:0;font-size:1.5rem;font-weight:900;color:#000;}
+  .sec-sub{padding:4px 24px 0;font-size:.95rem;color:#111;}
+  .sec-sub span{color:#888;margin-left:14px;}
+  .care-card{background:#fff;border-radius:32px;margin:12px 24px 0;padding:2px 14px 2px 24px;}
+  .care-item{display:flex;align-items:center;padding:13px 0;border-bottom:1px solid #ececec;}
+  .care-item:last-child{border-bottom:none;}
+  .care-item .ph{width:40px;height:40px;border-radius:50%;border:1px solid #222;background:#eee center/cover;flex-shrink:0;}
+  .care-item .tx{margin-left:36px;flex:1;min-width:0;}
+  .care-item .nm{font-size:.95rem;font-weight:900;color:#000;}
+  .care-item .role{font-size:.72rem;font-weight:800;margin-left:14px;}
+  .care-item .upd{font-size:.72rem;color:#ff8a5c;font-weight:700;margin-top:4px;}
+  .care-item .more svg{width:18px;height:5px;}
+  .strip.photos{padding-left:24px;margin-top:14px;gap:5px;}
+  .strip.photos .tile{flex:0 0 152px;height:206px;cursor:default;}
+  .strip.photos .tile:first-child{border-radius:30px 0 0 30px;}
+  .strip.photos .tile:last-of-type{border-radius:0 30px 30px 0;}
+  .strip.photos .lb{top:auto;bottom:12px;transform:none;font-size:.95rem;font-weight:800;}
 
   .toast{position:absolute;bottom:90px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:8px 16px;border-radius:20px;font-size:.78rem;z-index:60;opacity:0;transition:opacity .2s;pointer-events:none;}
   .toast.show{opacity:1;}
 
+  /* ---- Splash（啟動頁）---- */
+  .splash{height:100%;position:relative;background:linear-gradient(180deg,#fff 8%,#ffe7c8 52%,#fecb88 100%);display:flex;flex-direction:column;align-items:center;cursor:pointer;}
+  .splash-logo{width:174px;height:auto;margin-top:calc(41.2vh - 87px);filter:drop-shadow(0 6px 14px rgba(234,107,6,.18));animation:splashPop .7s cubic-bezier(.2,.9,.3,1.2) both;}
+  .phone .splash-logo{margin-top:261px;}
+  body.is-android-app .phone .splash-logo{margin-top:calc(41.2vh - 87px);}
+  .splash-tag{margin:22px 0 0;font-size:1.25rem;font-weight:800;color:#933d00;letter-spacing:1px;animation:splashUp .6s .25s both;}
+  .splash-tag span{margin-left:.7em;}
+  .splash-sub{margin:10px 0 0;font-size:.82rem;color:#444;letter-spacing:.5px;animation:splashUp .6s .4s both;}
+  @keyframes splashPop{from{opacity:0;transform:scale(.82)}to{opacity:1;transform:none}}
+  @keyframes splashUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
   /* ---- Onboarding ---- */
-  .onboard-wrap{position:relative;height:100%;background:linear-gradient(190deg,#fffcac 10%,#fff600 49%,#ddb23b 106%);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;overflow:hidden;}
-  .onboard-illust{flex:1;display:flex;align-items:center;justify-content:center;font-size:7rem;padding-top:40px;}
-  .onboard-card{background:#f9f9f9;border-radius:50px 50px 0 0;box-shadow:inset 0 5px 10px 3px rgba(0,0,0,.05);width:100%;padding:40px 24px 56px;text-align:center;position:relative;}
-  .onboard-card h2{margin:0 0 8px;font-size:1.6rem;font-weight:800;color:#000;}
-  .onboard-card p{margin:0;font-size:1.05rem;color:#999;}
-  .onboard-dots{display:flex;gap:6px;justify-content:center;margin-top:22px;}
-  .onboard-dots span{width:8px;height:8px;border-radius:4px;background:#ddd;display:inline-block;}
-  .onboard-dots span.on{width:24px;background:#f9b600;}
-  .onboard-next{position:absolute;right:20px;bottom:24px;background:#474747;color:#fff;border:none;border-radius:100px;padding:10px 18px;font-size:.78rem;cursor:pointer;}
-  .onboard-next.last{background:#000;}
+  .onboard-wrap{position:relative;height:100%;background:#ff6e01;display:flex;flex-direction:column;overflow:hidden;}
+  .onboard-illust{flex:1;min-height:0;background:#ff6e01 center bottom/cover no-repeat;animation:obFade .45s ease both;}
+  .onboard-card{flex:0 0 283px;background:#f8f8f8;border-radius:50px 50px 0 0;box-shadow:inset 0 5px 10px 3px rgba(0,0,0,.05);width:100%;padding:44px 20px 0;text-align:center;position:relative;}
+  .onboard-card h2{margin:0 0 12px;font-size:1.85rem;font-weight:900;color:#000;letter-spacing:2px;}
+  .onboard-card p{margin:0;font-size:1.42rem;color:#bdbdbd;letter-spacing:.5px;white-space:nowrap;}
+  .onboard-dots{position:absolute;left:33px;bottom:40px;display:flex;gap:8px;align-items:center;}
+  .onboard-dots span{width:8px;height:8px;border-radius:4px;background:#ddd;display:inline-block;transition:width .25s,background .25s;}
+  .onboard-dots span.on{width:24px;background:#f8b700;}
+  .onboard-next{position:absolute;right:34px;bottom:30px;background:#474747;color:#fff;border:none;border-radius:100px;padding:9px 12px;font-size:.78rem;cursor:pointer;}
+  .onboard-next.last{background:#000;right:27px;}
+  .onboard-skip{position:absolute;top:48px;right:20px;z-index:2;background:rgba(255,255,255,.55);border:none;border-radius:100px;padding:5px 12px;font-size:.72rem;color:#5a3b00;cursor:pointer;}
+  @keyframes obFade{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
 
   /* ---- Home ---- */
   .home-hero{background:#fff600;border-radius:0 0 41px 41px;padding:24px 16px 60px;position:relative;}
@@ -321,12 +382,13 @@
     <div class="sc-badge">IDDSI 照護協作</div>
   </div>
   <div class="sc-nav" id="showcaseNav">
-    <button class="sc-btn active" data-sc="invitation">💌 開場邀請函</button>
+    <button class="sc-btn active" data-sc="splash">🚀 啟動頁</button>
+    <button class="sc-btn" data-sc="invitation">💌 開場邀請函</button>
     <button class="sc-btn" data-sc="onboard">🤝 新手導覽</button>
     <button class="sc-btn" data-sc="home">🏠 首頁總覽</button>
     <button class="sc-btn" data-sc="texture">🥣 質地卡</button>
     <button class="sc-btn" data-sc="menu-5">🍲 料理示範</button>
-    <button class="sc-btn" data-sc="meal">🍳 自家菜</button>
+    <button class="sc-btn" data-sc="meal">🍳 飲食冊</button>
     <button class="sc-btn" data-sc="visit">📋 安心錄</button>
     <button class="sc-btn" data-sc="elder">👵 長輩卡</button>
   </div>
@@ -341,17 +403,17 @@
   </div>
   <div class="screen" id="screen"></div>
   <div class="tab-bump"></div>
-  <div class="fab" id="fab">＋</div>
+  <button class="fab" id="fab" aria-label="新增紀錄"><svg viewBox="0 0 30 30"><path d="M15 3v24M3 15h24"/></svg></button>
   <div class="tabbar" id="tabbar">
     <button class="tab" data-tab="texture">
       <span class="ic"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="M9 4v16M4 9h5M4 15h5"/><path d="M13 9l4 3-4 3z"/></svg></span>質地卡
     </button>
     <button class="tab" data-tab="meal">
-      <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4"/></svg></span>自家菜
+      <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4"/></svg></span>飲食冊
     </button>
     <div class="tab-spacer"></div>
     <button class="tab" data-tab="visit">
-      <span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 8v4a3 3 0 0 0 6 0V8"/><circle cx="6.5" cy="15.5" r="1"/></svg></span>安心錄
+      <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3a8.5 8.5 0 1 1-4.6 15.6L4 20.5l1.2-3.6A8.5 8.5 0 0 1 12 3z"/><path d="M12 16.5s-4-2.4-4-5.1A2.2 2.2 0 0 1 12 10a2.2 2.2 0 0 1 4 1.4c0 2.7-4 5.1-4 5.1z"/></svg></span>安心錄
     </button>
     <button class="tab" data-tab="elder">
       <span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg></span>長輩卡
@@ -373,13 +435,47 @@ function saveVisits(arr){ try{ localStorage.setItem(STORE_VISITS, JSON.stringify
 
 function seedIfEmpty(){
   if(loadMeals().length===0){
-    saveMeals([{id:1, date: fmt(new Date()), time:"10:03", who:"阿妮", name:"一杯燕麥", cat:"drink"}]);
+    const t = new Date(), day = n=>{ const d=new Date(t); d.setDate(t.getDate()-n); return fmt(d); };
+    saveMeals([
+      {id:1, date:day(0), time:"10:03", who:"阿妮", name:"一杯燕麥", cat:"drink", img:"assets/ui/meal-thumb.jpg"},
+      {id:2, date:day(0), time:"12:10", who:"阿妮", name:"一碗青菜", cat:"food"},
+      {id:3, date:day(0), time:"15:30", who:"王麗麗", name:"一杯溫開水", cat:"drink"},
+      {id:4, date:day(1), time:"12:00", who:"阿妮", name:"地瓜稀飯", cat:"food", img:"assets/ui/meal-1.jpg"},
+      {id:5, date:day(2), time:"18:20", who:"王大樹", name:"馬鈴薯泥", cat:"food", img:"assets/ui/meal-2.jpg"}
+    ]);
   }
   if(loadVisits().length===0){
-    saveVisits([{id:1, date:"2026-08-20", time:"10:33", clinic:"台北醫院", doctor:"陳醫師",
-       note:"評估吞嚥功能穩定，建議持續Level 5質地，三個月後複診。", recorder:"阿妮 看護"}]);
+    saveVisits([
+      {id:1, date:"2026-08-20", time:"10:33", clinic:"台北醫院", doctor:"陳醫師",
+       note:"評估吞嚥功能穩定，建議持續Level 5質地，三個月後複診。", recorder:"阿妮 看護（印）"},
+      {id:2, date:"2026-07-25", time:"09:40", clinic:"台北醫院", doctor:"陳醫師",
+       note:"吞嚥攝影檢查結果穩定，維持Level 5質地，水分以Level 2稍微稠為主。", recorder:"王麗麗"},
+      {id:3, date:"2026-07-10", time:"14:20", clinic:"台北醫院", doctor:"林語言治療師",
+       note:"進行吞嚥功能評估，建議由Level 4調整為Level 5，兩週後回診追蹤。", recorder:"阿妮 看護（印）"}
+    ]);
   }
 }
+const CAREGIVERS = [
+  {name:"阿妮", role:"看護（印）", upd:"2小時前 更新了午餐紀錄", img:"assets/ui/care-1.png", kind:"看護"},
+  {name:"王麗麗", role:"大女兒", upd:"1日前 更新了喝水紀錄", img:"assets/ui/care-2.png", kind:"家屬"},
+  {name:"王大樹", role:"二兒子", upd:"1日前 更新了喝水紀錄", img:"assets/ui/care-3.png", kind:"家屬"}
+];
+const ELDER_PHOTO = "assets/ui/elder-chen.png";
+const MONTHS_EN = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
+
+/* ---------------- 共用小圖示 ---------------- */
+const IC = {
+  more:`<svg viewBox="0 0 24 6"><circle cx="3" cy="3" r="2.6"/><circle cx="12" cy="3" r="2.6"/><circle cx="21" cy="3" r="2.6"/></svg>`,
+  mic:`<svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg>`,
+  cam:`<svg viewBox="0 0 24 24"><path d="M3 8h4l1.5-2.5h7L17 8h4v11H3z"/><circle cx="12" cy="13" r="3.5"/></svg>`,
+  cal:`<svg class="ico sm" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.4"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>`,
+  calPill:`<svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>`,
+  dine:(c="#111")=>`<svg class="ico" viewBox="0 0 26 26" fill="none" stroke="${c}" stroke-width="1.5" stroke-linecap="round"><circle cx="13" cy="13" r="12"/><path d="M8.5 7.5v4a2 2 0 0 0 4 0v-4M10.5 7.5v11"/><path d="M17.5 7.5c-1.3 0-2 1.8-2 4.2 0 1.6.9 2.3 2 2.3v4.5"/></svg>`,
+  pen:`<svg viewBox="0 0 24 24"><path d="M15.5 4.5l4 4L8 20H4v-4z"/><path d="M13.5 6.5l4 4"/></svg>`
+};
+const tri = `<span class="tri"></span>`;
+const caret = `<span class="caret"></span>`;
+
 function fmt(d){ const p=n=>String(n).padStart(2,"0"); return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`; }
 function uid(){ return Date.now()+Math.floor(Math.random()*1000); }
 
@@ -417,10 +513,14 @@ const SELF_TEST_DATA = {
 
 /* ---------------- onboarding & invitation ---------------- */
 const ONBOARD_KEY = "ansimjia_onboarded";
+const SPLASH_MS = 2200;
+let splashTimer = null;
+// 預先載入導覽插畫，避免切頁時閃白
+["assets/ui/onboard-1.jpg","assets/ui/onboard-2.jpg","assets/ui/onboard-3.jpg"].forEach(src=>{ const i=new Image(); i.src=src; });
 const ONBOARD_SLIDES = [
-  { emoji:"🤝", title:"溫暖陪伴", sub:"安心陪伴，不再單打獨鬥" },
-  { emoji:"🎬", title:"專業分級", sub:"專業依據影片，不再憑感覺" },
-  { emoji:"📖", title:"紀錄無憂", sub:"紀錄不遺忘，回顧看得見" }
+  { img:"assets/ui/onboard-1.jpg", title:"溫暖陪伴", sub:"安心陪伴，不再單打獨鬥" },
+  { img:"assets/ui/onboard-2.jpg", title:"專業分級", sub:"專業依據影片，不再憑感覺" },
+  { img:"assets/ui/onboard-3.jpg", title:"紀錄無憂", sub:"紀錄不遺忘，回顧看得見" }
 ];
 
 /* ---------------- state ---------------- */
@@ -430,7 +530,8 @@ const state = {
   textureView: "list", 
   selftestKey: null, 
   onboardStep: 1,
-  invitationOpen: false
+  invitationOpen: false,
+  visitSel: null
 };
 
 function toast(msg){
@@ -450,14 +551,15 @@ function render(){
 
   // Phone status bar color matching
   if(phoneBar){
-    phoneBar.className = (state.tab==="onboard" || state.tab==="home" || state.tab==="invitation") ? "phone-bar dark-text" : "phone-bar light-text";
+    phoneBar.className = (state.tab==="splash" || state.tab==="onboard" || state.tab==="home" || state.tab==="invitation") ? "phone-bar dark-text" : "phone-bar light-text";
   }
 
   // Update showcase active button
   document.querySelectorAll(".sc-btn").forEach(btn=>{
     const sc = btn.dataset.sc;
     let isActive = false;
-    if(sc === "invitation" && state.tab === "invitation") isActive = true;
+    if(sc === "splash" && state.tab === "splash") isActive = true;
+    else if(sc === "invitation" && state.tab === "invitation") isActive = true;
     else if(sc === "onboard" && state.tab === "onboard") isActive = true;
     else if(sc === "home" && state.tab === "home") isActive = true;
     else if(sc === "texture" && state.tab === "texture" && state.textureView === "list") isActive = true;
@@ -470,7 +572,21 @@ function render(){
 
   const isFullscreenView = (state.tab==="invitation" || state.tab==="onboard" || (state.tab==="texture" && state.textureView!=="list"));
 
-  if(state.tab==="invitation"){
+  if(splashTimer && state.tab!=="splash"){ clearTimeout(splashTimer); splashTimer=null; }
+  screen.dataset.page = (state.tab==="texture" && state.textureView!=="list") ? "detail" : state.tab;
+
+  if(state.tab==="splash"){
+    screen.innerHTML = renderSplash();
+    tabbar.style.display = "none";
+    if(bumpEl) bumpEl.style.display = "none";
+    fabEl.style.display = "none";
+    screen.style.paddingBottom = "0px";
+    screen.scrollTop = 0;
+    clearTimeout(splashTimer);
+    splashTimer = setTimeout(leaveSplash, SPLASH_MS);
+    document.getElementById("splash").addEventListener("click", leaveSplash);
+    return;
+  } else if(state.tab==="invitation"){
     screen.innerHTML = renderInvitation();
     tabbar.style.display = "none";
     if(bumpEl) bumpEl.style.display = "none";
@@ -513,7 +629,7 @@ function render(){
 
   if(bumpEl) bumpEl.style.display = isFullscreenView ? "none" : "block";
   fabEl.style.display = isFullscreenView ? "none" : "flex";
-  screen.style.paddingBottom = isFullscreenView ? "0px" : "96px";
+  screen.style.paddingBottom = isFullscreenView ? "0px" : "116px";
   screen.scrollTop = 0;
   
   document.querySelectorAll(".tab").forEach(b=>{
@@ -612,13 +728,31 @@ function renderInvitation(){
   </div>`;
 }
 
+/* ---------------- Splash（啟動頁） ---------------- */
+function renderSplash(){
+  return `
+  <div class="splash" id="splash">
+    <img class="splash-logo" src="assets/ui/logo-ansimjia.png" alt="安心呷">
+    <p class="splash-tag">你安心餵<span>我安心呷</span></p>
+    <p class="splash-sub">輔助咀嚼吞嚥困難照顧者質地判斷與紀錄</p>
+  </div>`;
+}
+function leaveSplash(){
+  if(state.tab!=="splash") return;
+  clearTimeout(splashTimer); splashTimer=null;
+  state.tab = "invitation";
+  state.invitationOpen = false;
+  render();
+}
+
 /* ---------------- Onboarding ---------------- */
 function renderOnboarding(step){
   const s = ONBOARD_SLIDES[step-1];
   const isLast = step===ONBOARD_SLIDES.length;
   return `
   <div class="onboard-wrap">
-    <div class="onboard-illust">${s.emoji}</div>
+    ${isLast? "" : `<button class="onboard-skip" id="onboardSkip">略過</button>`}
+    <div class="onboard-illust" role="img" aria-label="${s.title}" style="background-image:url('${s.img}')"></div>
     <div class="onboard-card">
       <h2>${s.title}</h2>
       <p>${s.sub}</p>
@@ -694,19 +828,14 @@ const QD_DEMO_LEVELS = [
   { key:"6",  label:"Level 6",   sub:"教學觀看", grad:"linear-gradient(160deg,#c9946a 0%,#754e28 100%)", img:IMG_LEVEL6 }
 ];
 const QD_MENU_LEVELS = [
-  { key:"5", label:"Level 5", sub:"軟質及一口量", grad:"linear-gradient(160deg,#d8cda0 0%,#b7ae85 100%)", img:IMG_MENU5 },
+  { key:"7", label:"Level 7", sub:"食物原狀、容易咀嚼", grad:"linear-gradient(160deg,#cbb98a 0%,#8a7a4d 100%)", img:IMG_MENU7 },
   { key:"6", label:"Level 6", sub:"軟質及一口量", grad:"linear-gradient(160deg,#b7ae85 0%,#6f7050 100%)", img:IMG_MENU6 },
-  { key:"7", label:"Level 7", sub:"食物原狀、容易咀嚼", grad:"linear-gradient(160deg,#cbb98a 0%,#8a7a4d 100%)", img:IMG_MENU7 }
+  { key:"5", label:"Level 5", sub:"細碎及軟濕", grad:"linear-gradient(160deg,#d8cda0 0%,#b7ae85 100%)", img:IMG_MENU5 }
 ];
 function qdCard(item, goto){
-  const bg = item.img
-    ? `background-image:url('${item.img}');background-size:cover;background-position:center;`
-    : `background:${item.grad};`;
-  return `
-  <button class="qd-card" style="${bg}" data-goto="${goto}" data-key="${item.key}">
-    <div class="qd-overlay"></div>
-    <div class="qd-lbl"><b>${item.label}</b><span>${item.sub}</span></div>
-  </button>`;
+  const bg = item.img ? `background-image:url('${item.img}')` : `background:${item.grad}`;
+  return `<button class="tile" style="${bg}" data-goto="${goto}" data-key="${item.key}" aria-label="${item.label} ${item.sub}">
+    <span class="wash"></span><span class="lb">${item.label}</span></button>`;
 }
 function renderTexture(){
   return `
@@ -715,21 +844,19 @@ function renderTexture(){
     <h2>IDDSI 質地測定下示範</h2>
     <p>觀看影片，學習居家質地檢測方法</p>
   </div>
-  <div class="qd-scroll">
-    ${QD_DEMO_LEVELS.map(it=>qdCard(it,"selftest")).join("")}
-  </div>
+  <div class="strip">${QD_DEMO_LEVELS.map(it=>qdCard(it,"selftest")).join("")}</div>
 
-  <div class="qd-section-title">咀嚼困難飲食之示範料理</div>
-  <div class="qd-section-sub">不同質地料理查詢</div>
-  <div class="qd-scroll">
-    ${QD_MENU_LEVELS.map(it=>qdCard(it,"menu")).join("")}
+  <div class="qd-section">
+    <h2>咀嚼困難飲食之示範料理</h2>
+    <p>不同質地料理查詢</p>
   </div>
+  <div class="strip">${QD_MENU_LEVELS.map(it=>qdCard(it,"menu")).join("")}</div>
 
-  <div class="qd-section-title">IDDSI 食物質地測定工具包</div>
-  <div class="qd-section-sub">兼具專業衛教與居家自主測定，輕巧便攜的食物質地檢測工具</div>
-  <div class="qd-toolkit">
-    <div class="qd-tk-card" style="background-image:url('${IMG_TOOLKIT}');background-size:cover;background-position:center;"></div>
-  </div>`;
+  <div class="qd-section">
+    <h2>IDDSI 食物質地測定工具包</h2>
+    <p>兼具專業衛教與居家自主測定，輕巧便攜的食物質地檢測工具</p>
+  </div>
+  <div class="qd-toolkit" style="background-image:url('${IMG_TOOLKIT}')"></div>`;
 }
 
 /* ---------------- 咀嚼困難飲食之示範料理 內容資料 ---------------- */
@@ -864,159 +991,154 @@ function creditsFooter(){
   </div>`;
 }
 
-/* ---------------- 自家菜（今日飲食紀錄） ---------------- */
+/* ---------------- 飲食冊（每日飲食紀錄） ---------------- */
+function catIcon(c){ return c==="drink" ? "🥛" : (c==="med" ? "💊" : "🍚"); }
 function renderMeal(){
-  const meals = loadMeals().filter(m=>m.date===state.mealSelDate).sort((a,b)=>a.time.localeCompare(b.time));
   const allMeals = loadMeals();
+  const meals = allMeals.filter(m=>m.date===state.mealSelDate).sort((a,b)=>a.time.localeCompare(b.time));
   const d = new Date(state.mealSelDate+"T00:00:00");
-  const wk = ["日","一","二","三","四","五","六"][d.getDay()];
-
+  const ampm = t=>{ const [h,m]=t.split(":").map(Number); return `${String(h%12||12).padStart(2,"0")}:${String(m).padStart(2,"0")} ${h<12?"AM":"PM"}`; };
   return `
-  <div class="yellow-panel">
-    <div class="yp-row">
-      <span class="pill-white">📅 ${d.getMonth()+1}月</span>
-      <div class="avatar">👵</div>
-    </div>
-    ${renderMiniCalendar(d, allMeals)}
-    <div class="today-title">${PATIENT.name}的今天飲食</div>
-    <div class="today-sub">${String(d.getDate()).padStart(2,"0")} ${["SUN","MON","TUE","WED","THU","FRI","SAT"][d.getDay()]}${wk}　${meals.length? meals.map(m=>m.name).join("、") : "尚無紀錄"}</div>
-    ${meals.map(m=>`
-      <div class="entry-item">
-        <div class="entry-badge">${m.cat==='drink'?'🥛':(m.cat==='med'?'💊':'🍚')}</div>
-        <div>
-          <div class="who">${m.who||"—"}</div>
-          <div class="what">${m.name}</div>
-        </div>
-        <div class="time">${m.time}</div>
-      </div>`).join("")}
+  <div class="meal-top">
+    <span class="month-pill">${IC.calPill}${MONTHS_EN[d.getMonth()]}</span>
+    <div class="avatar-ring" style="background-image:url('${ELDER_PHOTO}')" role="img" aria-label="${PATIENT.name}"></div>
   </div>
+  <div class="cal-panel">${renderMiniCalendar(d, allMeals)}</div>
 
-  <div class="form-panel">
-    <div class="fp-head">
-      <span class="dsel">${d.getMonth()+1}月${d.getDate()}日 ▾</span>
-      <div class="seg"><span class="on">記錄</span><span>新增</span></div>
-      <div class="cam-btn">📷</div>
+  <div class="today-title">${PATIENT.name}的今天飲食</div>
+  <div class="today-row">
+    <div class="today-date">${String(d.getDate()).padStart(2,"0")}<br>${["SUN","MON","TUE","WED","THU","FRI","SAT"][d.getDay()]}</div>
+    <div class="today-sum">${meals.length ? meals.map(m=>m.name).join("、") : "尚無紀錄"}</div>
+  </div>
+  ${meals.map(m=>`
+  <div class="entry">
+    <div class="tx">
+      <div class="when">${ampm(m.time)}<b>${m.who||"—"}</b></div>
+      <div class="what">${m.name}${m.note? "・"+m.note : ""}</div>
+    </div>
+    <div class="thumb" ${m.img? `style="background-image:url('${m.img}')"` : ""}>${m.img? "" : catIcon(m.cat)}</div>
+    ${IC.dine("var(--olive)")}
+  </div>`).join("")}
+
+  <div class="sheet">
+    <div class="sheet-head">
+      <span class="dsel">${d.getMonth()+1}月${d.getDate()}日<i></i></span>
+      <div class="seg" id="mealSeg"><span class="on">記錄</span><span>新增</span></div>
+      <button class="pill-btn" type="button" data-soon="拍照記錄" aria-label="拍照">${IC.cam}</button>
     </div>
     <form id="mealForm">
-      <div class="f-field"><label for="m_name">名稱</label><input type="text" id="m_name" placeholder="輸入菜色" required></div>
-      <div class="f-field"><label for="m_cat">類別</label>
-        <select id="m_cat">
-          <option value="food">餐食</option>
-          <option value="drink">飲水</option>
-          <option value="med">藥物</option>
-        </select>
-        <span class="icon-r">🍴</span>
+      <div class="f-field"><label for="m_name">名稱</label>${caret}<input type="text" id="m_name" placeholder="輸入菜色" required></div>
+      <div class="f-field"><label for="m_cat">類別</label>${caret}
+        <select id="m_cat"><option value="food">餐食</option><option value="drink">飲水</option><option value="med">藥物</option></select>
+        ${tri}${IC.dine()}
       </div>
-      <div class="f-field"><label for="m_note">備註</label><input type="text" id="m_note" placeholder="選填"></div>
-      <div class="f-field"><label for="m_who">照顧者</label><input type="text" id="m_who" placeholder="輸入照顧者稱呼" required></div>
+      <div class="f-field"><label for="m_note">備註</label>${caret}<input type="text" id="m_note" placeholder="選填"></div>
+      <div class="f-field"><label for="m_who">照顧者</label>${caret}<input type="text" id="m_who" list="caregiverList" required>${tri}</div>
+      <datalist id="caregiverList">${CAREGIVERS.map(c=>`<option value="${c.name}">`).join("")}</datalist>
       <button type="submit" class="btn-primary">儲存紀錄</button>
     </form>
-    <div class="list-title">歷史紀錄</div>
-    ${allMeals.length===0? `<div class="empty">還沒有任何紀錄</div>` : ""}
   </div>`;
 }
 
 function renderMiniCalendar(selectedDate, allMeals){
-  const days = ["MO","TU","WE","TH","FR","SA","SU"];
   const y = selectedDate.getFullYear(), m = selectedDate.getMonth();
   const first = new Date(y,m,1);
-  let startOffset = (first.getDay()+6)%7;
+  const lead = (first.getDay()+6)%7;
+  const start = new Date(y,m,1-lead);
   const daysInMonth = new Date(y,m+1,0).getDate();
-  const cells = [];
-  for(let i=0;i<startOffset;i++) cells.push(null);
-  for(let dd=1; dd<=daysInMonth; dd++) cells.push(dd);
+  const total = Math.ceil((lead+daysInMonth)/7)*7;
   const hasSet = new Set(allMeals.map(mm=>mm.date));
-  let html = `<div class="calendar">`;
-  days.forEach(dh=> html += `<div class="cal-h">${dh}</div>`);
-  cells.forEach(dd=>{
-    if(dd===null){ html += `<div></div>`; return; }
-    const dateStr = fmt(new Date(y,m,dd));
-    const isSel = dateStr===state.mealSelDate;
-    const has = hasSet.has(dateStr);
-    html += `<button class="cal-d ${isSel?"sel":""} ${has?"has":""}" data-date="${dateStr}">${dd}</button>`;
-  });
-  html += `</div>`;
-  return html;
+  let html = `<div class="calendar">` + ["MO","TU","WE","TH","FR","SA","SU"].map(h=>`<div class="cal-h">${h}</div>`).join("");
+  for(let i=0;i<total;i++){
+    const dt = new Date(start); dt.setDate(start.getDate()+i);
+    const ds = fmt(dt), out = dt.getMonth()!==m;
+    const cls = ["cal-d", out?"out":"", ds===state.mealSelDate?"sel":"", hasSet.has(ds)?"has":""].join(" ");
+    html += `<button class="${cls}" data-date="${ds}" aria-label="${dt.getMonth()+1}月${dt.getDate()}日"><span>${dt.getDate()}</span></button>`;
+  }
+  return html + `</div>`;
 }
 
 /* ---------------- 安心錄（看診紀錄） ---------------- */
+function shortClinic(c){ return (c||"門診").replace(/^[台臺]/,"").replace(/(醫院|院)$/,"醫").slice(0,2); }
 function renderVisit(){
   const visits = loadVisits().sort((a,b)=> b.date.localeCompare(a.date));
-  const last = visits[0];
+  const shown = visits.find(v=>v.id===state.visitSel) || visits[0];
+  const isLatest = shown && shown===visits[0];
+  const MON = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+  const zh = ds=>{ const [yy,mm,dd]=ds.split("-").map(Number); return `${yy} 年 ${mm} 月 ${dd} 日`; };
+  const years = [...new Set(visits.map(v=>v.date.slice(0,4)))];
   return `
-  <div style="padding:16px 16px 4px;display:flex;justify-content:space-between;align-items:center;">
-    <h2 style="margin:0;font-size:1.05rem;color:var(--ink);">上次看診</h2>
-    <span style="color:var(--sub);">⋯</span>
-  </div>
-  ${last? `
+  <div class="pg-head"><h2>${isLatest||!shown? "上次看診" : "看診紀錄"}</h2><button class="more" data-soon="更多選項" aria-label="更多">${IC.more}</button></div>
+  ${shown? `
   <div class="visit-hero">
-    <div class="vh-meta">${last.date.replace(/-/g,"/")}｜${last.time||""}　${last.clinic||""}　${last.doctor||""}</div>
-    <div class="vh-body">${last.note||""}</div>
-    <div class="vh-by">紀錄者：${last.recorder||"—"}</div>
+    <div class="vh-meta">${zh(shown.date)}<span class="sep"></span>${shown.time||""}<span class="right"><span>${shown.clinic||""}</span><span>${shown.doctor||""}</span></span></div>
+    <div class="vh-body">${shown.note||""}</div>
+    <div class="vh-by">紀錄者：${shown.recorder||"—"}</div>
   </div>` : `<div class="empty">還沒有看診紀錄</div>`}
 
+  ${years.map(yy=>`
+  <div class="year-title">${yy}</div>
   <div class="date-chip-row">
-    ${visits.slice(0,6).map(v=>{
+    ${visits.filter(v=>v.date.startsWith(yy)).map(v=>{
+      const i = visits.indexOf(v);
       const d=new Date(v.date+"T00:00:00");
-      const mon=["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"][d.getMonth()];
-      return `<div class="date-chip"><b>${mon}</b><span class="dnum">${String(d.getDate()).padStart(2,"0")}</span><span class="dtag">${v.clinic||"門診"}</span></div>`;
+      return `<button class="date-chip c${Math.min(i,2)} ${v===shown?"on":""}" data-visit="${v.id}"><b>${MON[d.getMonth()]}</b><span class="dnum">${String(d.getDate()).padStart(2,"0")}</span><span class="dtag">${shortClinic(v.clinic)}</span></button>`;
     }).join("")}
-  </div>
+  </div>`).join("")}
 
-  <div class="form-panel" style="margin-top:0;">
-    <div class="fp-head"><span class="dsel">新增看診紀錄</span><span style="margin-left:auto;">🎙</span></div>
+  <div class="sheet">
+    <div class="sheet-head"><h3>新增看診紀錄</h3><button class="pill-btn" type="button" data-soon="語音輸入" aria-label="語音輸入">${IC.mic}</button></div>
     <form id="visitForm">
-      <div class="f-field"><label for="v_date">日期</label><input type="date" id="v_date" required></div>
-      <div class="f-field"><label for="v_clinic">診所</label><input type="text" id="v_clinic" placeholder="輸入診所"></div>
-      <div class="f-field"><label for="v_doctor">醫師</label><input type="text" id="v_doctor" placeholder="輸入醫師"></div>
-      <div class="f-field"><label for="v_note">看診內容</label><input type="text" id="v_note" placeholder="醫囑、建議等級、複診時間"></div>
-      <div class="f-field"><label for="v_recorder">紀錄者</label><input type="text" id="v_recorder" placeholder="輸入紀錄者" required></div>
+      <div class="f-field"><label for="v_date">日期</label>${caret}<input type="date" id="v_date" required>${IC.cal}</div>
+      <div class="f-field"><label for="v_clinic">診所</label>${caret}<input type="text" id="v_clinic" list="clinicList" placeholder="輸入診所">${tri}${IC.dine()}</div>
+      <div class="f-field"><label for="v_doctor">醫師</label>${caret}<input type="text" id="v_doctor" list="doctorList">${tri}${IC.dine()}</div>
+      <div class="f-field"><label for="v_recorder">紀錄者</label>${caret}<input type="text" id="v_recorder" list="caregiverList" required>${tri}</div>
+      <div class="f-field"><label for="v_note">看診內容</label>${caret}<input type="text" id="v_note" placeholder="醫囑、建議等級、複診時間"></div>
+      <datalist id="clinicList">${[...new Set(visits.map(v=>v.clinic).filter(Boolean))].map(c=>`<option value="${c}">`).join("")}</datalist>
+      <datalist id="doctorList">${[...new Set(visits.map(v=>v.doctor).filter(Boolean))].map(c=>`<option value="${c}">`).join("")}</datalist>
+      <datalist id="caregiverList">${CAREGIVERS.map(c=>`<option value="${c.name}">`).join("")}</datalist>
       <button type="submit" class="btn-primary">儲存看診紀錄</button>
     </form>
     <div class="list-title">歷史看診紀錄</div>
     ${visits.length===0? `<div class="empty">還沒有看診紀錄</div>` :
-      visits.map(v=>`<div class="entry-item" style="background:var(--card);">
-        <div style="flex:1;">
-          <div class="who">${v.date.replace(/-/g,"/")}　${v.clinic||""} ${v.doctor||""}</div>
-          <div class="what">${v.note||""}</div>
-        </div>
-      </div>`).join("")}
+      visits.map(v=>`<div class="hist"><div class="h1">${v.date.replace(/-/g,"/")}　${v.clinic||""} ${v.doctor||""}</div><div class="h2">${v.note||""}</div></div>`).join("")}
   </div>`;
 }
 
 /* ---------------- 長輩卡 ---------------- */
 function renderElder(){
-  const CAREGIVERS = [
-    {name:"阿妮", role:"看護（印）", upd:"2小時前 更新了午餐紀錄", em:"👩‍⚕️"},
-    {name:"王麗麗", role:"大女兒", upd:"1日前 更新了喝水紀錄", em:"👩"},
-    {name:"王大樹", role:"二兒子", upd:"1日前 更新了喝水紀錄", em:"🧔"},
-  ];
-  const PHOTOS = ["#f4a460","#d2b48c","#c1a173","#e0c097"];
+  const fam = CAREGIVERS.filter(c=>c.kind==="家屬").length;
+  const start = new Date(); start.setDate(start.getDate()-((start.getDay()+6)%7));
+  const end = new Date(start); end.setDate(start.getDate()+6);
+  const jan1 = new Date(start.getFullYear(),0,1);
+  const wk = Math.ceil(((start-jan1)/864e5 + jan1.getDay()+1)/7);
+  const range = `${start.getMonth()+1}月${start.getDate()}日 至 ${end.getMonth()===start.getMonth()? "" : (end.getMonth()+1)+"月"}${end.getDate()}日`;
+  const PHOTOS = ["assets/ui/meal-1.jpg","assets/ui/meal-2.jpg",IMG_MENU5,IMG_MENU6];
   return `
   <div class="elder-head">
-    <div class="photo" style="display:flex;align-items:center;justify-content:center;font-size:1.8rem;">👵</div>
-    <div>
-      <h2>${PATIENT.name} <span class="sub-tag">奶奶</span></h2>
-      <span class="chip-small">${PATIENT.age}歲</span><span class="chip-small">${PATIENT.level}</span>
+    <div class="elder-photo" style="background-image:url('${ELDER_PHOTO}')" role="img" aria-label="${PATIENT.name}"></div>
+    <div class="elder-info">
+      <div class="elder-name">${PATIENT.name}<small>奶奶</small><button class="more" data-soon="編輯長輩資料" aria-label="編輯">${IC.pen}</button></div>
+      <div class="chips"><span class="chip-o">${PATIENT.age}歲</span><span class="chip-o">${PATIENT.level}</span></div>
     </div>
   </div>
-  <div style="padding:8px 16px;">
-    <div class="list-title" style="display:flex;justify-content:space-between;">${PATIENT.name}的照顧者<span style="color:var(--sub);font-weight:400;">⋯</span></div>
-    <p style="font-size:.72rem;color:var(--sub);margin:0 0 8px;">共 ${CAREGIVERS.length} 位照顧者協作中　家屬 ${CAREGIVERS.length-1} / 看護 1</p>
-    ${CAREGIVERS.map(c=>`
-      <div class="care-item">
-        <div class="photo" style="display:flex;align-items:center;justify-content:center;">${c.em}</div>
-        <div>
-          <div class="nm">${c.name}<span class="role">${c.role}</span></div>
-          <div class="upd">${c.upd}</div>
-        </div>
-      </div>`).join("")}
+  <div class="hr"></div>
 
-    <div class="list-title" style="display:flex;justify-content:space-between;">${PATIENT.name}的餐飲紀錄<span style="color:var(--sub);font-weight:400;">⋯</span></div>
-    <p style="font-size:.72rem;color:var(--sub);margin:0 0 8px;">第37週　9月7日 至 13日</p>
-    <div class="photo-grid">
-      ${PHOTOS.map((c,i)=>`<div class="ph" style="background-color:${c};"><span>週${["一","二","三","四"][i]}</span></div>`).join("")}
-    </div>
+  <div class="sec-head"><h2>${PATIENT.name}的照顧者</h2><button class="more" data-soon="管理照顧者" aria-label="更多">${IC.more}</button></div>
+  <div class="sec-sub">共 ${CAREGIVERS.length} 位照顧者協作中<span>家屬 ${fam} / 看護 ${CAREGIVERS.length-fam}</span></div>
+  <div class="care-card">
+    ${CAREGIVERS.map(c=>`
+    <div class="care-item">
+      <div class="ph" style="background-image:url('${c.img}')"></div>
+      <div class="tx"><div class="nm">${c.name}<span class="role">${c.role}</span></div><div class="upd">${c.upd}</div></div>
+      <button class="more" data-soon="照顧者選項" aria-label="更多">${IC.more}</button>
+    </div>`).join("")}
+  </div>
+
+  <div class="sec-head"><h2>${PATIENT.name}的餐飲紀錄</h2><button class="more" data-soon="查看全部紀錄" aria-label="更多">${IC.more}</button></div>
+  <div class="sec-sub">第${wk}週<span>${range}</span></div>
+  <div class="strip photos">
+    ${PHOTOS.map((src,i)=>`<div class="tile" style="background-image:url('${src}')"><span class="lb">週${["一","二","三","四","五","六","日"][i]}</span></div>`).join("")}
   </div>`;
 }
 
@@ -1058,6 +1180,22 @@ function wireEvents(){
       render();
     });
   }
+
+  // 看診日期卡：切換上方顯示的紀錄
+  document.querySelectorAll("[data-visit]").forEach(b=>{
+    b.addEventListener("click", ()=>{ state.visitSel = Number(b.dataset.visit); render(); });
+  });
+  // 飲食冊「記錄／新增」切換
+  document.querySelectorAll("#mealSeg span").forEach((sp,i,all)=>{
+    sp.addEventListener("click", ()=>{
+      all.forEach(x=>x.classList.toggle("on", x===sp));
+      if(i===1) document.getElementById("m_name")?.focus();
+    });
+  });
+  // 尚未實作的按鈕
+  document.querySelectorAll("[data-soon]").forEach(b=>{
+    b.addEventListener("click", ()=> toast(`「${b.dataset.soon}」功能開發中`));
+  });
 
   // Calendar date selection
   document.querySelectorAll("[data-date]").forEach(b=>{
@@ -1103,6 +1241,7 @@ function wireEvents(){
         recorder: document.getElementById("v_recorder").value.trim()
       });
       saveVisits(arr);
+      state.visitSel = null;
       toast("已儲存看診紀錄");
       render();
     });
@@ -1132,6 +1271,16 @@ function wireEvents(){
       }
     });
   });
+
+  // Onboarding skip
+  const onboardSkip = document.getElementById("onboardSkip");
+  if(onboardSkip){
+    onboardSkip.addEventListener("click", ()=>{
+      try{ localStorage.setItem(ONBOARD_KEY, "1"); }catch(e){}
+      state.tab = "home";
+      render();
+    });
+  }
 
   // Onboarding next button
   const onboardNext = document.getElementById("onboardNext");
@@ -1197,7 +1346,9 @@ document.getElementById("fab").addEventListener("click", ()=>{
 document.querySelectorAll(".sc-btn").forEach(btn=>{
   btn.addEventListener("click", ()=>{
     const sc = btn.dataset.sc;
-    if(sc === "invitation"){
+    if(sc === "splash"){
+      state.tab = "splash";
+    } else if(sc === "invitation"){
       state.tab = "invitation";
       state.invitationOpen = false;
     } else if(sc === "onboard"){
@@ -1232,9 +1383,8 @@ function start(){
     document.body.classList.add('is-android-app');
   }
   seedIfEmpty();
-  // Default to Invitation Animation for a warm first impression
-  state.tab = "invitation";
-  state.invitationOpen = false;
+  // 啟動頁 → 開場邀請函 → 新手導覽 → 首頁
+  state.tab = "splash";
   render();
 }
 start();
