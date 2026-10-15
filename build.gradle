@@ -1,0 +1,56 @@
+plugins {
+    id 'com.android.application'
+}
+
+// Upload-key signing for Google Play. Values come from environment variables
+// (GitHub Actions secrets) or from ~/.gradle/gradle.properties on your own computer.
+def signingValue = { String name -> System.getenv(name) ?: (project.findProperty(name) ?: null) }
+def keystorePath = signingValue('SWALLOWCARE_KEYSTORE_FILE')
+def hasReleaseKey = keystorePath != null && file(keystorePath).exists()
+
+android {
+    namespace 'com.ansimjia.swallowcare'
+    compileSdk 36
+
+    defaultConfig {
+        applicationId "com.ansimjia.swallowcare"
+        minSdk 24
+        targetSdk 36
+        // Increase versionCode by 1 for every upload to Google Play.
+        versionCode 2
+        versionName "1.1.0"
+    }
+
+    signingConfigs {
+        if (hasReleaseKey) {
+            release {
+                storeFile file(keystorePath)
+                storePassword signingValue('SWALLOWCARE_KEYSTORE_PASSWORD')
+                keyAlias signingValue('SWALLOWCARE_KEY_ALIAS')
+                keyPassword signingValue('SWALLOWCARE_KEY_PASSWORD')
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            if (hasReleaseKey) {
+                signingConfig signingConfigs.release
+            }
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.7.1'
+    implementation 'androidx.activity:activity:1.10.1'
+    implementation 'androidx.core:core:1.16.0'
+    implementation 'androidx.webkit:webkit:1.14.0'
+    implementation 'com.google.android.material:material:1.12.0'
+}
