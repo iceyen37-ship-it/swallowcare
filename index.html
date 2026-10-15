@@ -339,11 +339,11 @@ function seedIfEmpty(){
   if(loadMeals().length===0){
     const t = new Date(), day = n=>{ const d=new Date(t); d.setDate(t.getDate()-n); return fmt(d); };
     saveMeals([
-      {id:1, date:day(0), time:"10:03", who:"阿妮", name:"一杯燕麥", cat:"drink", img:"assets/ui/meal-thumb.jpg"},
+      {id:1, date:day(0), time:"10:03", who:"阿妮", name:"一杯燕麥", cat:"drink", img:"meal-thumb.jpg"},
       {id:2, date:day(0), time:"12:10", who:"阿妮", name:"一碗青菜", cat:"food"},
       {id:3, date:day(0), time:"15:30", who:"王麗麗", name:"一杯溫開水", cat:"drink"},
-      {id:4, date:day(1), time:"12:00", who:"阿妮", name:"地瓜稀飯", cat:"food", img:"assets/ui/meal-1.jpg"},
-      {id:5, date:day(2), time:"18:20", who:"王大樹", name:"馬鈴薯泥", cat:"food", img:"assets/ui/meal-2.jpg"}
+      {id:4, date:day(1), time:"12:00", who:"阿妮", name:"地瓜稀飯", cat:"food", img:"meal-1.jpg"},
+      {id:5, date:day(2), time:"18:20", who:"王大樹", name:"馬鈴薯泥", cat:"food", img:"meal-2.jpg"}
     ]);
   }
   if(loadVisits().length===0){
@@ -358,11 +358,11 @@ function seedIfEmpty(){
   }
 }
 const CAREGIVERS = [
-  {name:"阿妮", role:"看護（印）", upd:"2小時前 更新了午餐紀錄", img:"assets/ui/care-1.png", kind:"看護"},
-  {name:"王麗麗", role:"大女兒", upd:"1日前 更新了喝水紀錄", img:"assets/ui/care-2.png", kind:"家屬"},
-  {name:"王大樹", role:"二兒子", upd:"1日前 更新了喝水紀錄", img:"assets/ui/care-3.png", kind:"家屬"}
+  {name:"阿妮", role:"看護（印）", upd:"2小時前 更新了午餐紀錄", img:"care-1.png", kind:"看護"},
+  {name:"王麗麗", role:"大女兒", upd:"1日前 更新了喝水紀錄", img:"care-2.png", kind:"家屬"},
+  {name:"王大樹", role:"二兒子", upd:"1日前 更新了喝水紀錄", img:"care-3.png", kind:"家屬"}
 ];
-const ELDER_PHOTO = "assets/ui/elder-chen.png";
+const ELDER_PHOTO = "elder-chen.png";
 const MONTHS_EN = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
 
 /* ---------------- 共用小圖示 ---------------- */
@@ -418,11 +418,11 @@ const ONBOARD_KEY = "ansimjia_onboarded";
 const SPLASH_MS = 2200;
 let splashTimer = null;
 // 預先載入導覽插畫，避免切頁時閃白
-["assets/ui/onboard-1.jpg","assets/ui/onboard-2.jpg","assets/ui/onboard-3.jpg"].forEach(src=>{ const i=new Image(); i.src=src; });
+["onboard-1.jpg","onboard-2.jpg","onboard-3.jpg"].forEach(src=>{ const i=new Image(); i.src=src; });
 const ONBOARD_SLIDES = [
-  { img:"assets/ui/onboard-1.jpg", title:"溫暖陪伴", sub:"安心陪伴，不再單打獨鬥" },
-  { img:"assets/ui/onboard-2.jpg", title:"專業分級", sub:"專業依據影片，不再憑感覺" },
-  { img:"assets/ui/onboard-3.jpg", title:"紀錄無憂", sub:"紀錄不遺忘，回顧看得見" }
+  { img:"onboard-1.jpg", title:"溫暖陪伴", sub:"安心陪伴，不再單打獨鬥" },
+  { img:"onboard-2.jpg", title:"專業分級", sub:"專業依據影片，不再憑感覺" },
+  { img:"onboard-3.jpg", title:"紀錄無憂", sub:"紀錄不遺忘，回顧看得見" }
 ];
 
 /* ---------------- state ---------------- */
@@ -518,7 +518,7 @@ function render(){
 function renderSplash(){
   return `
   <div class="splash" id="splash">
-    <img class="splash-logo" src="assets/ui/logo-ansimjia.png" alt="安心呷">
+    <img class="splash-logo" src="logo-ansimjia.png" alt="安心呷">
     <p class="splash-tag">你安心餵<span>我安心呷</span></p>
     <p class="splash-sub">輔助咀嚼吞嚥困難照顧者質地判斷與紀錄</p>
   </div>`;
@@ -901,7 +901,7 @@ function renderElder(){
   const jan1 = new Date(start.getFullYear(),0,1);
   const wk = Math.ceil(((start-jan1)/864e5 + jan1.getDay()+1)/7);
   const range = `${start.getMonth()+1}月${start.getDate()}日 至 ${end.getMonth()===start.getMonth()? "" : (end.getMonth()+1)+"月"}${end.getDate()}日`;
-  const PHOTOS = ["assets/ui/meal-1.jpg","assets/ui/meal-2.jpg",IMG_MENU5,IMG_MENU6];
+  const PHOTOS = ["meal-1.jpg","meal-2.jpg",IMG_MENU5,IMG_MENU6];
   return `
   <div class="elder-head">
     <div class="elder-photo" style="background-image:url('${ELDER_PHOTO}')" role="img" aria-label="${PATIENT.name}"></div>
