@@ -7,17 +7,8 @@
     --num:"Helvetica Neue",Arial,"PingFang TC","Microsoft JhengHei",sans-serif;
   }
   *{box-sizing:border-box;}
-  body{margin:0;font-family:"PingFang TC","Microsoft JhengHei",sans-serif;background:linear-gradient(135deg, #1f1c19 0%, #2b2520 50%, #171412 100%);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px;color:var(--ink);}
+  body{margin:0;font-family:"PingFang TC","Microsoft JhengHei",sans-serif;background:linear-gradient(135deg, #1f1c19 0%, #2b2520 50%, #171412 100%);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 16px;color:var(--ink);}
   
-  /* ---- Showcase Header Bar ---- */
-  .showcase-header{width:100%;max-width:440px;margin-bottom:14px;background:rgba(255,255,255,.08);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:10px 14px;color:#fff;box-shadow:0 8px 32px rgba(0,0,0,.3);}
-  .sc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
-  .sc-title{font-size:.85rem;font-weight:800;letter-spacing:.5px;display:flex;align-items:center;gap:6px;color:#ffdd99;}
-  .sc-badge{background:rgba(246,129,42,.25);border:1px solid var(--accent);color:#ffaa5e;font-size:.65rem;padding:2px 8px;border-radius:10px;font-weight:700;}
-  .sc-nav{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch;}
-  .sc-btn{flex:0 0 auto;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.12);color:#eee;font-size:.72rem;padding:5px 10px;border-radius:12px;cursor:pointer;transition:all .2s;font-weight:600;}
-  .sc-btn:hover,.sc-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 2px 8px rgba(246,129,42,.4);}
-
   /* ---- Phone Device Mockup ---- */
   .phone{width:390px;max-width:100%;height:844px;background:var(--bg);border-radius:44px;box-shadow:0 25px 60px rgba(0,0,0,.6),0 0 0 10px #1c1917,0 0 0 12px rgba(255,255,255,.15);overflow:hidden;position:relative;}
   .phone-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:160px;height:30px;background:#1c1917;border-radius:0 0 20px 20px;z-index:50;display:flex;align-items:center;justify-content:center;}
@@ -51,9 +42,6 @@
       padding: 0;
       background: var(--bg);
     }
-    .showcase-header {
-      display: none !important;
-    }
     .phone {
       width: 100vw !important;
       max-width: 100vw !important;
@@ -79,9 +67,6 @@
     padding: 0 !important;
     background: var(--bg) !important;
   }
-  body.is-android-app .showcase-header {
-    display: none !important;
-  }
   body.is-android-app .phone {
     width: 100vw !important;
     max-width: 100vw !important;
@@ -95,70 +80,6 @@
   body.is-android-app .phone-bar {
     display: none !important;
   }
-
-  /* ---- 💌 開場邀請函動畫 (Invitation Animation) ---- */
-  .inv-container{position:relative;min-height:100%;background:linear-gradient(165deg,#fff8ee 0%,#fde8ce 40%,#f8cfa5 100%);padding:44px 20px 30px;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;perspective:1000px;}
-  .inv-sparkles{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(246,129,42,.15) 1.5px,transparent 1.5px),radial-gradient(circle,rgba(253,219,0,.2) 1.5px,transparent 1.5px);background-size:24px 24px,36px 36px;background-position:0 0,12px 12px;pointer-events:none;}
-  .inv-glow{position:absolute;top:20%;left:50%;transform:translate(-50%,-50%);width:320px;height:320px;background:radial-gradient(circle,rgba(255,200,100,.45) 0%,rgba(255,255,255,0) 70%);border-radius:50%;filter:blur(30px);pointer-events:none;}
-  
-  .inv-hero{text-align:center;margin-bottom:20px;z-index:2;animation:fadeInDown .8s ease forwards;}
-  .inv-tag{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid rgba(246,129,42,.3);color:var(--accent-d);font-size:.75rem;font-weight:800;padding:5px 14px;border-radius:30px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:10px;}
-  .inv-hero h1{margin:0 0 4px;font-size:1.45rem;font-weight:900;color:#2c2014;letter-spacing:.3px;}
-  .inv-hero p{margin:0;font-size:.82rem;color:#7c6248;}
-
-  /* 3D Envelope Component */
-  .env-stage{position:relative;width:320px;height:220px;margin-bottom:24px;z-index:5;perspective:1000px;cursor:pointer;}
-  .env-body{position:absolute;inset:0;background:linear-gradient(145deg,#fcf7ee 0%,#f0dfc8 100%);border-radius:18px;border:2px solid #dfcaa8;box-shadow:0 15px 35px rgba(138,97,66,.25),inset 0 1px 0 #fff;z-index:2;overflow:visible;}
-  .env-pocket{position:absolute;left:0;right:0;bottom:0;height:140px;background:linear-gradient(180deg,#eedbbf 0%,#e4cdad 100%);border-radius:0 0 16px 16px;clip-path:polygon(0% 25%, 50% 100%, 100% 25%, 100% 100%, 0% 100%);z-index:4;box-shadow:inset 0 2px 4px rgba(0,0,0,.04);}
-  .env-flap{position:absolute;top:0;left:0;right:0;height:120px;background:linear-gradient(180deg,#e8d0ae 0%,#f5e5ce 100%);border-radius:16px 16px 0 0;clip-path:polygon(0% 0%, 100% 0%, 50% 100%);transform-origin:top center;transition:transform .8s cubic-bezier(.4,0,.2,1);z-index:6;box-shadow:0 3px 8px rgba(0,0,0,.1);}
-  .env-stage.open .env-flap{transform:rotateX(180deg);z-index:1;}
-
-  /* Wax Seal */
-  .wax-seal{position:absolute;left:50%;top:95px;transform:translate(-50%,-50%);width:58px;height:58px;background:radial-gradient(circle,#e63946 0%,#b71c1c 70%,#7f0000 100%);border-radius:50%;border:2px solid #ffccd5;box-shadow:0 6px 16px rgba(183,28,28,.45),inset 0 2px 4px rgba(255,255,255,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:1.4rem;z-index:7;transition:all .3s cubic-bezier(.175,.885,.32,1.275);animation:sealPulse 2s infinite;}
-  .wax-seal span{font-size:.58rem;font-weight:800;letter-spacing:.5px;margin-top:-2px;color:#ffebee;}
-  .env-stage:hover .wax-seal{transform:translate(-50%,-50%) scale(1.12);box-shadow:0 8px 22px rgba(183,28,28,.6);}
-  .env-stage.open .wax-seal{opacity:0;transform:translate(-50%,-50%) scale(0);pointer-events:none;}
-
-  @keyframes sealPulse{
-    0%,100%{box-shadow:0 6px 16px rgba(183,28,28,.45),0 0 0 0 rgba(230,57,70,.4);}
-    50%{box-shadow:0 8px 20px rgba(183,28,28,.55),0 0 0 10px rgba(230,57,70,0);}
-  }
-
-  /* Unfolded Invitation Letter */
-  .inv-letter-card{width:100%;max-width:340px;background:#ffffff;border-radius:24px;padding:24px 20px 20px;box-shadow:0 12px 36px rgba(100,70,40,.18),0 1px 3px rgba(0,0,0,.05);border:1px solid #faeade;position:relative;z-index:10;transform:translateY(30px);opacity:0;transition:all .8s cubic-bezier(.16,1,.3,1);display:none;}
-  .inv-stage-opened .inv-letter-card{display:block;transform:translateY(0);opacity:1;animation:slideUpCard .7s ease forwards;}
-  .inv-stage-opened .env-stage{display:none;}
-  .inv-stage-opened .inv-hero{display:none;}
-
-  .letter-stamp{position:absolute;right:18px;top:18px;width:44px;height:44px;border:1.5px dashed #f6812a;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#f6812a;font-size:.6rem;font-weight:800;transform:rotate(6deg);}
-  .letter-stamp b{font-size:.9rem;}
-  .letter-to{font-size:.78rem;font-weight:800;color:#f6812a;margin-bottom:6px;display:flex;align-items:center;gap:4px;}
-  .letter-heading{font-size:1.15rem;font-weight:900;color:#1c1c1c;margin:0 0 12px;line-height:1.35;}
-  .letter-body{font-size:.82rem;color:#4b453e;line-height:1.65;background:#fdf9f4;border-radius:14px;padding:12px 14px;margin-bottom:14px;border-left:3px solid #f6812a;}
-  
-  .team-section{margin-bottom:16px;}
-  .team-title{font-size:.74rem;font-weight:800;color:#8a7765;margin-bottom:8px;}
-  .team-pills{display:flex;flex-direction:column;gap:6px;}
-  .team-pill{display:flex;align-items:center;gap:8px;background:#f7f6f3;padding:7px 10px;border-radius:12px;}
-  .team-pill .tp-av{font-size:1.1rem;}
-  .team-pill .tp-nm{font-size:.78rem;font-weight:700;color:#222;}
-  .team-pill .tp-role{font-size:.68rem;color:#888;margin-left:auto;}
-  .team-pill.founder{background:#fff3e8;border:1px solid #ffd8b8;}
-  .team-pill.founder .tp-role{color:#e75900;font-weight:700;}
-
-  .target-badge{background:linear-gradient(135deg,#fff600 0%,#ffd700 100%);border-radius:14px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;box-shadow:0 2px 8px rgba(218,165,32,.25);}
-  .tb-left b{display:block;font-size:.84rem;color:#3d3400;font-weight:900;}
-  .tb-left span{display:block;font-size:.68rem;color:#6b5c00;}
-  .tb-icon{font-size:1.6rem;}
-
-  .inv-actions{display:flex;flex-direction:column;gap:8px;}
-  .btn-accept{background:linear-gradient(135deg,#f6812a 0%,#e75900 100%);color:#fff;border:none;padding:13px 20px;border-radius:18px;font-size:.92rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 6px 18px rgba(246,129,42,.4);transition:all .2s;}
-  .btn-accept:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(246,129,42,.5);}
-  .btn-replay{background:none;border:1px solid #ddd;color:#777;padding:9px;border-radius:14px;font-size:.76rem;cursor:pointer;font-weight:700;}
-  .btn-replay:hover{background:#f5f5f5;color:#333;}
-
-  @keyframes fadeInDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
-  @keyframes slideUpCard{from{opacity:0;transform:translateY(40px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
 
   /* ---- 質地卡 ---- */
   .qd-head{padding:40px 20px 0;}
@@ -375,25 +296,6 @@
   .log-card.past .log-row{background:rgba(255,255,255,.6);}
 </style></head><body>
 
-<!-- 🌟 全專案展示導覽列 (Showcase Controller) -->
-<div class="showcase-header">
-  <div class="sc-top">
-    <div class="sc-title"><span>📱</span> 吞嚥照護本 · 專案展示</div>
-    <div class="sc-badge">IDDSI 照護協作</div>
-  </div>
-  <div class="sc-nav" id="showcaseNav">
-    <button class="sc-btn active" data-sc="splash">🚀 啟動頁</button>
-    <button class="sc-btn" data-sc="invitation">💌 開場邀請函</button>
-    <button class="sc-btn" data-sc="onboard">🤝 新手導覽</button>
-    <button class="sc-btn" data-sc="home">🏠 首頁總覽</button>
-    <button class="sc-btn" data-sc="texture">🥣 質地卡</button>
-    <button class="sc-btn" data-sc="menu-5">🍲 料理示範</button>
-    <button class="sc-btn" data-sc="meal">🍳 飲食冊</button>
-    <button class="sc-btn" data-sc="visit">📋 安心錄</button>
-    <button class="sc-btn" data-sc="elder">👵 長輩卡</button>
-  </div>
-</div>
-
 <!-- 📱 手機模擬外框 -->
 <div class="phone">
   <div class="phone-notch"><div class="notch-cam"></div></div>
@@ -511,7 +413,7 @@ const SELF_TEST_DATA = {
     sections:[{ key:"step", pill:"步驟教學", heading:"步驟教學", videos:[{label:null}] }] }
 };
 
-/* ---------------- onboarding & invitation ---------------- */
+/* ---------------- splash & onboarding ---------------- */
 const ONBOARD_KEY = "ansimjia_onboarded";
 const SPLASH_MS = 2200;
 let splashTimer = null;
@@ -525,12 +427,11 @@ const ONBOARD_SLIDES = [
 
 /* ---------------- state ---------------- */
 const state = { 
-  tab: "invitation", 
+  tab: "splash", 
   mealSelDate: fmt(new Date()), 
   textureView: "list", 
   selftestKey: null, 
   onboardStep: 1,
-  invitationOpen: false,
   visitSel: null
 };
 
@@ -551,26 +452,10 @@ function render(){
 
   // Phone status bar color matching
   if(phoneBar){
-    phoneBar.className = (state.tab==="splash" || state.tab==="onboard" || state.tab==="home" || state.tab==="invitation") ? "phone-bar dark-text" : "phone-bar light-text";
+    phoneBar.className = (state.tab==="splash" || state.tab==="onboard" || state.tab==="home") ? "phone-bar dark-text" : "phone-bar light-text";
   }
 
-  // Update showcase active button
-  document.querySelectorAll(".sc-btn").forEach(btn=>{
-    const sc = btn.dataset.sc;
-    let isActive = false;
-    if(sc === "splash" && state.tab === "splash") isActive = true;
-    else if(sc === "invitation" && state.tab === "invitation") isActive = true;
-    else if(sc === "onboard" && state.tab === "onboard") isActive = true;
-    else if(sc === "home" && state.tab === "home") isActive = true;
-    else if(sc === "texture" && state.tab === "texture" && state.textureView === "list") isActive = true;
-    else if(sc === "menu-5" && state.tab === "texture" && state.textureView === "menu" && state.selftestKey === "5") isActive = true;
-    else if(sc === "meal" && state.tab === "meal") isActive = true;
-    else if(sc === "visit" && state.tab === "visit") isActive = true;
-    else if(sc === "elder" && state.tab === "elder") isActive = true;
-    btn.classList.toggle("active", isActive);
-  });
-
-  const isFullscreenView = (state.tab==="invitation" || state.tab==="onboard" || (state.tab==="texture" && state.textureView!=="list"));
+  const isFullscreenView = (state.tab==="onboard" || (state.tab==="texture" && state.textureView!=="list"));
 
   if(splashTimer && state.tab!=="splash"){ clearTimeout(splashTimer); splashTimer=null; }
   screen.dataset.page = (state.tab==="texture" && state.textureView!=="list") ? "detail" : state.tab;
@@ -585,15 +470,6 @@ function render(){
     clearTimeout(splashTimer);
     splashTimer = setTimeout(leaveSplash, SPLASH_MS);
     document.getElementById("splash").addEventListener("click", leaveSplash);
-    return;
-  } else if(state.tab==="invitation"){
-    screen.innerHTML = renderInvitation();
-    tabbar.style.display = "none";
-    if(bumpEl) bumpEl.style.display = "none";
-    fabEl.style.display = "none";
-    screen.style.paddingBottom = "0px";
-    screen.scrollTop = 0;
-    wireEvents();
     return;
   } else if(state.tab==="onboard"){
     screen.innerHTML = renderOnboarding(state.onboardStep);
@@ -638,96 +514,6 @@ function render(){
   wireEvents();
 }
 
-/* ---------------- 💌 開場邀請函 (Caregiver Invitation) ---------------- */
-function renderInvitation(){
-  const isOpen = state.invitationOpen;
-  return `
-  <div class="inv-container ${isOpen ? 'inv-stage-opened' : ''}">
-    <div class="inv-sparkles"></div>
-    <div class="inv-glow"></div>
-
-    <!-- 頂部標題（未拆信時） -->
-    <div class="inv-hero">
-      <div class="inv-tag">💌 家庭照護協作邀請</div>
-      <h1>吞嚥照護本</h1>
-      <p>專為長輩吞嚥安全設計的數位陪伴手冊</p>
-    </div>
-
-    <!-- 3D 信封主體 -->
-    <div class="env-stage ${isOpen ? 'open' : ''}" id="envelopeStage">
-      <div class="env-body">
-        <div class="env-pocket"></div>
-        <div class="env-flap"></div>
-        <div class="wax-seal" id="waxSealBtn">
-          <span>👵</span>
-          <span>寶珠</span>
-        </div>
-      </div>
-      <div style="position:absolute;bottom:-36px;left:0;right:0;text-align:center;font-size:.78rem;font-weight:800;color:#936c44;animation:fadeInDown 1s infinite alternate;">
-        👆 點擊火漆印章拆開邀請函
-      </div>
-    </div>
-
-    <!-- 展開後的邀請函卡片 -->
-    <div class="inv-letter-card">
-      <div class="letter-stamp">
-        <b>IDDSI</b>
-        <span>照護認證</span>
-      </div>
-
-      <div class="letter-to">💌 致 最關心寶珠奶奶的家人與夥伴</div>
-      <h2 class="letter-heading">邀請您加入《陳寶珠奶奶》的吞嚥照護團隊</h2>
-
-      <div class="letter-body">
-        照顧長輩的每一餐，都是我們最深的牽掛與愛。<br><br>
-        誠摯邀請您一同使用<b>《吞嚥照護本》</b>，共同記錄每日餐食質地、觀看專業 IDDSI 分級示範影片、掌握門診醫囑叮嚀，陪伴奶奶安心進食每一天！
-      </div>
-
-      <!-- 目標質地 -->
-      <div class="target-badge">
-        <div class="tb-left">
-          <b>陳寶珠奶奶 · 目前目標質地</b>
-          <span>Level 4 糊狀 / 軟質飲食（一口量）</span>
-        </div>
-        <div class="tb-icon">🍲</div>
-      </div>
-
-      <!-- 照護團隊列表 -->
-      <div class="team-section">
-        <div class="team-title">👥 協作成員（共 3 位已加入）</div>
-        <div class="team-pills">
-          <div class="team-pill founder">
-            <span class="tp-av">👩‍⚕️</span>
-            <span class="tp-nm">阿妮</span>
-            <span class="tp-role">看護（邀請發起人）</span>
-          </div>
-          <div class="team-pill">
-            <span class="tp-av">👩</span>
-            <span class="tp-nm">王麗麗</span>
-            <span class="tp-role">大女兒（已加入）</span>
-          </div>
-          <div class="team-pill">
-            <span class="tp-av">🧔</span>
-            <span class="tp-nm">王大樹</span>
-            <span class="tp-role">二兒子（已加入）</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 操作按鈕 -->
-      <div class="inv-actions">
-        <button class="btn-accept" id="btnAcceptInvitation">
-          <span>✨ 接受邀請 · 進入照護本</span>
-          <span>➔</span>
-        </button>
-        <button class="btn-replay" id="btnReplayInvitation">
-          <span>🔁 重新體驗拆信動畫</span>
-        </button>
-      </div>
-    </div>
-  </div>`;
-}
-
 /* ---------------- Splash（啟動頁） ---------------- */
 function renderSplash(){
   return `
@@ -740,8 +526,10 @@ function renderSplash(){
 function leaveSplash(){
   if(state.tab!=="splash") return;
   clearTimeout(splashTimer); splashTimer=null;
-  state.tab = "invitation";
-  state.invitationOpen = false;
+  let onboarded = false;
+  try{ onboarded = !!localStorage.getItem(ONBOARD_KEY); }catch(e){}
+  state.tab = onboarded ? "home" : "onboard";
+  state.onboardStep = 1;
   render();
 }
 
@@ -1144,43 +932,6 @@ function renderElder(){
 
 /* ---------------- events ---------------- */
 function wireEvents(){
-  // Wax Seal click to open envelope with smooth animation
-  const envStage = document.getElementById("envelopeStage");
-  const waxBtn = document.getElementById("waxSealBtn");
-  if(envStage && !state.invitationOpen){
-    const openHandler = ()=>{
-      envStage.classList.add("open");
-      setTimeout(()=>{
-        state.invitationOpen = true;
-        render();
-      }, 700);
-    };
-    envStage.addEventListener("click", openHandler);
-    if(waxBtn) waxBtn.addEventListener("click", (e)=>{ e.stopPropagation(); openHandler(); });
-  }
-
-  // Accept Invitation button -> enter Onboarding or Home
-  const btnAccept = document.getElementById("btnAcceptInvitation");
-  if(btnAccept){
-    btnAccept.addEventListener("click", ()=>{
-      let onboarded = false;
-      try{ onboarded = !!localStorage.getItem(ONBOARD_KEY); }catch(e){}
-      state.tab = onboarded ? "home" : "onboard";
-      state.textureView = "list";
-      render();
-      toast("✨ 歡迎加入陳寶珠奶奶的照護團隊！");
-    });
-  }
-
-  // Replay Invitation Animation
-  const btnReplay = document.getElementById("btnReplayInvitation");
-  if(btnReplay){
-    btnReplay.addEventListener("click", ()=>{
-      state.invitationOpen = false;
-      render();
-    });
-  }
-
   // 看診日期卡：切換上方顯示的紀錄
   document.querySelectorAll("[data-visit]").forEach(b=>{
     b.addEventListener("click", ()=>{ state.visitSel = Number(b.dataset.visit); render(); });
@@ -1342,48 +1093,12 @@ document.getElementById("fab").addEventListener("click", ()=>{
   else { state.tab="meal"; state.textureView="list"; render(); }
 });
 
-// Showcase Navigation Bar click events (Quick preview any feature)
-document.querySelectorAll(".sc-btn").forEach(btn=>{
-  btn.addEventListener("click", ()=>{
-    const sc = btn.dataset.sc;
-    if(sc === "splash"){
-      state.tab = "splash";
-    } else if(sc === "invitation"){
-      state.tab = "invitation";
-      state.invitationOpen = false;
-    } else if(sc === "onboard"){
-      state.tab = "onboard";
-      state.onboardStep = 1;
-    } else if(sc === "home"){
-      state.tab = "home";
-    } else if(sc === "texture"){
-      state.tab = "texture";
-      state.textureView = "list";
-      state.selftestKey = null;
-    } else if(sc === "menu-5"){
-      state.tab = "texture";
-      state.textureView = "menu";
-      state.selftestKey = "5";
-    } else if(sc === "meal"){
-      state.tab = "meal";
-      state.textureView = "list";
-    } else if(sc === "visit"){
-      state.tab = "visit";
-      state.textureView = "list";
-    } else if(sc === "elder"){
-      state.tab = "elder";
-      state.textureView = "list";
-    }
-    render();
-  });
-});
-
 function start(){
   if(navigator.userAgent.includes('SwallowCareApp') || window.Android || window.matchMedia('(max-width: 600px)').matches){
     document.body.classList.add('is-android-app');
   }
   seedIfEmpty();
-  // 啟動頁 → 開場邀請函 → 新手導覽 → 首頁
+  // 啟動頁 → 新手導覽（首次）→ 首頁
   state.tab = "splash";
   render();
 }
