@@ -526,9 +526,8 @@ function renderSplash(){
 function leaveSplash(){
   if(state.tab!=="splash") return;
   clearTimeout(splashTimer); splashTimer=null;
-  let onboarded = false;
-  try{ onboarded = !!localStorage.getItem(ONBOARD_KEY); }catch(e){}
-  state.tab = onboarded ? "home" : "onboard";
+  // 每次啟動都顯示新手導覽（可按「略過」）
+  state.tab = "onboard";
   state.onboardStep = 1;
   render();
 }
