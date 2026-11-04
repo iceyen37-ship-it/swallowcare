@@ -10,18 +10,19 @@
   body{margin:0;font-family:"PingFang TC","Microsoft JhengHei",sans-serif;background:linear-gradient(135deg, #1f1c19 0%, #2b2520 50%, #171412 100%);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 16px;color:var(--ink);}
   
   /* ---- Phone Device Mockup ---- */
-  .phone{width:390px;max-width:100%;height:844px;background:var(--bg);border-radius:44px;box-shadow:0 25px 60px rgba(0,0,0,.6),0 0 0 10px #1c1917,0 0 0 12px rgba(255,255,255,.15);overflow:hidden;position:relative;}
+  .phone{width:390px;max-width:100%;height:844px;background:var(--bg);border-radius:44px;box-shadow:0 25px 60px rgba(0,0,0,.6),0 0 0 10px #1c1917,0 0 0 12px rgba(255,255,255,.15);overflow:hidden;position:relative;background:#171717;isolation:isolate;}
+  .phone.with-tabbar .screen,.phone.with-tabbar .sheet-layer{clip-path:inset(0 0 56px 0);}
   .phone-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:160px;height:30px;background:#1c1917;border-radius:0 0 20px 20px;z-index:50;display:flex;align-items:center;justify-content:center;}
   .notch-cam{width:12px;height:12px;border-radius:50%;background:#09090b;margin-left:auto;margin-right:24px;border:1px solid rgba(255,255,255,.1);}
   .phone-bar{position:absolute;top:8px;left:24px;right:24px;display:flex;justify-content:space-between;align-items:center;font-size:.72rem;font-weight:700;color:#1c1c1c;z-index:49;pointer-events:none;}
   .phone-bar.dark-text{color:#222;}
   .phone-bar.light-text{color:#fff;}
 
-  .screen{height:100%;overflow-y:auto;padding-bottom:96px;position:relative;-webkit-overflow-scrolling:touch;}
+  .screen{background:var(--bg);height:100%;overflow-y:auto;padding-bottom:96px;position:relative;-webkit-overflow-scrolling:touch;}
   .screen[data-page=visit]{background:#fff;}
   .screen[data-page=meal]{background:#fff600;}
   .screen[data-page=elder],.screen[data-page=texture]{background:var(--grey-bg);}
-  .tabbar{position:absolute;bottom:0;left:0;right:0;height:104px;background:#171717;display:flex;align-items:flex-end;padding:0 8px 20px;border-radius:40px 40px 0 0;z-index:20;}
+  .tabbar{position:absolute;bottom:-1px;left:-1px;right:-1px;height:104px;background:#171717;display:flex;align-items:flex-end;padding:0 8px 20px;border-radius:40px 40px 0 0;z-index:20;}
   .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font-size:.75rem;color:#fff;cursor:pointer;background:none;border:none;font-family:inherit;padding:0;}
   .tab.active{color:var(--cyan);}
   .tab.active .ic svg{stroke:var(--cyan);}
@@ -143,6 +144,9 @@
   .pill-btn{width:38px;height:26px;border-radius:13px;background:#fff;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}
   .pill-btn svg{width:18px;height:18px;stroke:#222;fill:none;stroke-width:1.4;}
   .sheet-head .pill-btn:last-child{margin-left:auto;}
+  .sheet-head .cam-btn{margin-left:auto;position:relative;background:#fff center/cover no-repeat;}
+  .sheet-head .cam-btn.has{width:44px;height:32px;border-radius:10px;box-shadow:0 0 0 2px #ED6C01;}
+  .cam-x{margin-left:-14px;align-self:flex-start;width:20px;height:20px;border-radius:50%;border:none;background:#222;color:#fff;font-size:.8rem;line-height:20px;padding:0;cursor:pointer;transform:translateY(-6px);}
   .f-field{position:relative;background:#fff;border:1px solid var(--orange);border-radius:18px;height:36px;padding:0 6px 0 22px;margin-bottom:13px;display:flex;align-items:center;gap:6px;}
   .f-field label{color:var(--orange);font-size:.95rem;flex-shrink:0;}
   .f-field .caret{width:1.5px;height:18px;background:#111;flex-shrink:0;margin-left:6px;transition:opacity .15s;}
@@ -266,13 +270,16 @@
 
   /* ---- Onboarding ---- */
   .onboard-wrap{position:relative;height:100%;background:#ff6e01;display:flex;flex-direction:column;overflow:hidden;}
-  .onboard-illust{flex:1;min-height:0;background:#ff6e01 center bottom/cover no-repeat;animation:obFade .45s ease both;}
+  .onboard-illust{flex:1;min-height:0;position:relative;background:#ff6e01 url(onboard-bg.jpg) center bottom/cover no-repeat;touch-action:pan-y;}
+  .ob-art{position:absolute;left:50%;bottom:18px;height:64%;max-width:78%;object-fit:contain;object-position:center bottom;transform:translateX(-50%);animation:obArt .45s ease both;pointer-events:none;user-select:none;-webkit-user-drag:none;}
+  @keyframes obArt{from{opacity:0;transform:translateX(calc(-50% + var(--obdir,16px)))}to{opacity:1;transform:translateX(-50%)}}
   .onboard-card{flex:0 0 283px;background:#f8f8f8;border-radius:50px 50px 0 0;box-shadow:inset 0 5px 10px 3px rgba(0,0,0,.05);width:100%;padding:44px 20px 0;text-align:center;position:relative;}
   .onboard-card h2{margin:0 0 12px;font-size:1.85rem;font-weight:900;color:#000;}
   .onboard-card p{margin:0 auto;max-width:300px;font-size:1.25rem;line-height:1.4;color:#bdbdbd;}
-  .onboard-dots{position:absolute;left:33px;bottom:40px;display:flex;gap:8px;align-items:center;}
-  .onboard-dots span{width:8px;height:8px;border-radius:4px;background:#ddd;display:inline-block;transition:width .25s,background .25s;}
-  .onboard-dots span.on{width:24px;background:#f8b700;}
+  .onboard-dots{position:absolute;left:33px;bottom:40px;display:flex;gap:8px;align-items:center;height:8px;}
+  .onboard-dots span{width:8px;height:8px;border-radius:4px;background:#ddd;display:inline-block;}
+  .onboard-dots .ob-ind{position:absolute;top:0;left:0;width:8px;height:8px;border-radius:4px;background:#ED6C01;transition:left .2s cubic-bezier(.4,0,.2,1),width .2s cubic-bezier(.4,0,.2,1);}
+  
   .onboard-next{position:absolute;right:34px;bottom:30px;background:#474747;color:#fff;border:none;border-radius:100px;padding:9px 12px;font-size:.78rem;cursor:pointer;}
   .onboard-next.last{background:#000;right:27px;}
   .onboard-skip{position:absolute;top:48px;right:20px;z-index:2;background:rgba(255,255,255,.55);border:none;border-radius:100px;padding:5px 12px;font-size:.72rem;color:#5a3b00;cursor:pointer;}
@@ -341,7 +348,21 @@ const STORE_VISITS = "ansimjia_visits";
 const PATIENT = { name:"Pao-Chu Chen", age:78, level:"Level 4 or below" };
 
 function loadMeals(){ try{ return JSON.parse(localStorage.getItem(STORE_MEALS)||"[]"); }catch(e){ return []; } }
-function saveMeals(arr){ try{ localStorage.setItem(STORE_MEALS, JSON.stringify(arr)); }catch(e){} }
+function saveMeals(arr){ try{ localStorage.setItem(STORE_MEALS, JSON.stringify(arr)); return true; }catch(e){ return false; } }
+// shrink photos to 720px JPEG
+function shrinkPhoto(file, max=720){
+  return new Promise((ok, bad)=>{
+    const url = URL.createObjectURL(file), im = new Image();
+    im.onload = ()=>{
+      const k = Math.min(1, max/Math.max(im.width, im.height));
+      const c = document.createElement("canvas"); c.width = Math.round(im.width*k); c.height = Math.round(im.height*k);
+      c.getContext("2d").drawImage(im, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
+      ok(c.toDataURL("image/jpeg", .72));
+    };
+    im.onerror = ()=>{ URL.revokeObjectURL(url); bad(); };
+    im.src = url;
+  });
+}
 function loadVisits(){ try{ return JSON.parse(localStorage.getItem(STORE_VISITS)||"[]"); }catch(e){ return []; } }
 function saveVisits(arr){ try{ localStorage.setItem(STORE_VISITS, JSON.stringify(arr)); }catch(e){} }
 
@@ -370,7 +391,7 @@ function seedIfEmpty(){
 const CAREGIVERS = [
   {name:"Ani", role:"Care worker", upd:"Updated lunch 2 hours ago", img:"care-1.png", kind:"worker"},
   {name:"Li-Li Wang", role:"Eldest daughter", upd:"Updated water intake 1 day ago", img:"care-2.png", kind:"family"},
-  {name:"Da-Shu Wang", role:"Second son", upd:"Updated water intake 1 day ago", img:"care-3.png", kind:"family"}
+  {name:"Da-Shu Wang", role:"Second son", upd:"Updated water intake 1 day ago", img:"avatar-sweetpotato.png", kind:"family"}
 ];
 const ELDER_PHOTO = "elder-chen.png";
 const MONTHS_EN = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
@@ -397,7 +418,7 @@ const SELF_TEST_DATA = {
     title: "Level 1–2 · Texture test demo",
     warn: "The kit doesn't include a syringe. Buy a 10 ml syringe at a pharmacy.",
     sections: [
-      { key:"step", pill:"Step-by-step", heading:"Step-by-step", videos:[{label:null, videoId:"ZAgWRgrYxpQ"}] },
+      { key:"step", pill:"Step-by-step", heading:"Step-by-step", videos:[{label:null, videoId:"gfTxiIFlnVU"}] },
       { key:"l1", pill:"Level 1", heading:"Level 1", exp:"Examples: drinking yogurt, oat drink",
         videos:[{label:"Drinking yogurt", videoId:"na2gVQXbpEU"},{label:"Oat drink", videoId:"C4ozJu4w994"}] },
       { key:"l2", pill:"Level 2", heading:"Level 2", exp:"Examples: avocado milk, vegetable juice with thickener",
@@ -408,19 +429,15 @@ const SELF_TEST_DATA = {
     title: "Level 3 · Texture test demo",
     warn: "The kit doesn't include a syringe. Buy a 10 ml syringe at a pharmacy.",
     sections: [
-      { key:"step", pill:"Step-by-step", heading:"Step-by-step", videos:[{label:null}] },
-      { key:"fruit", pill:"Fruit purée", heading:"Fruit purée", exp:"Syringe flow test, fork drip test",
-        videos:[{label:"Syringe flow test"},{label:"Fork drip test"}] },
-      { key:"jelly", pill:"Hot grass jelly", heading:"Hot grass jelly", exp:"Syringe flow test, fork drip test",
-        videos:[{label:"Syringe flow test"},{label:"Fork drip test"}] }
+      { key:"step", pill:"Step-by-step", heading:"Step-by-step", exp:"Examples: fruit purée, hot grass jelly (syringe flow test, fork drip test)", videos:[{label:null, videoId:"KG0jwnsM_uU"}] }
     ]
   },
   "4": { title:"Level 4 · Texture test demo", warn:"Fork drip test: food should sit on the fork without dripping through.",
-    sections:[{ key:"step", pill:"Step-by-step", heading:"Step-by-step", videos:[{label:null}] }] },
+    sections:[{ key:"step", pill:"Step-by-step", heading:"Step-by-step", videos:[{label:null, videoId:"8WIzgShhC0c"}] }] },
   "5": { title:"Level 5 · Texture test demo", warn:"Spoon tilt test: food should hold its shape and not fall apart.",
-    sections:[{ key:"step", pill:"Step-by-step", heading:"Step-by-step", videos:[{label:null}] }] },
+    sections:[{ key:"step", pill:"Step-by-step", heading:"Step-by-step", videos:[{label:null, videoId:"NZgQeECHNqU"}] }] },
   "6": { title:"Level 6 · Texture test demo", warn:"Fork pressure test: food should mash easily with a fork.",
-    sections:[{ key:"step", pill:"Step-by-step", heading:"Step-by-step", videos:[{label:null}] }] }
+    sections:[{ key:"step", pill:"Step-by-step", heading:"Step-by-step", videos:[{label:null, videoId:"Hny08Ao6ra8"}] }] }
 };
 
 /* ---------------- splash & onboarding ---------------- */
@@ -428,11 +445,11 @@ const ONBOARD_KEY = "ansimjia_onboarded";
 const SPLASH_MS = 2200;
 let splashTimer = null;
 // Preload onboarding art so slides do not flash white
-["onboard-1.jpg","onboard-2.jpg","onboard-3.jpg"].forEach(src=>{ const i=new Image(); i.src=src; });
+["onboard-bg.jpg","onboard-1.png","onboard-2.png","onboard-3.png"].forEach(src=>{ const i=new Image(); i.src=src; });
 const ONBOARD_SLIDES = [
-  { img:"onboard-1.jpg", title:"Support", sub:"You're not caring alone anymore" },
-  { img:"onboard-2.jpg", title:"Clinical levels", sub:"Clear videos, not guesswork" },
-  { img:"onboard-3.jpg", title:"Easy records", sub:"Nothing forgotten, easy to review" }
+  { img:"onboard-1.png", title:"Support", sub:"You're not caring alone anymore" },
+  { img:"onboard-2.png", title:"Clinical levels", sub:"Clear videos, not guesswork" },
+  { img:"onboard-3.png", title:"Easy records", sub:"Nothing forgotten, easy to review" }
 ];
 
 /* ---------------- state ---------------- */
@@ -453,7 +470,8 @@ function toast(msg){
 }
 
 /* ---------------- render dispatcher ---------------- */
-function render(){
+function render(){ _render0(); const tb=document.getElementById("tabbar"); document.querySelector(".phone").classList.toggle("with-tabbar", !!tb && tb.style.display!=="none"); }
+function _render0(){
   const screen = document.getElementById("screen");
   const tabbar = document.getElementById("tabbar");
   const fabEl = document.getElementById("fab");
@@ -533,12 +551,14 @@ function renderSplash(){
     <p class="splash-sub">Texture checks and meal logs for caregivers of elders with chewing and swallowing difficulties</p>
   </div>`;
 }
+function goOnboard(n){ state.onboardPrev = state.onboardStep; state.onboardStep = n; render(); }
 function leaveSplash(){
   if(state.tab!=="splash") return;
   clearTimeout(splashTimer); splashTimer=null;
   // Always show onboarding after the splash (Skip is available)
   state.tab = "onboard";
   state.onboardStep = 1;
+  state.onboardPrev = 1;
   render();
 }
 
@@ -549,11 +569,11 @@ function renderOnboarding(step){
   return `
   <div class="onboard-wrap">
     ${isLast? "" : `<button class="onboard-skip" id="onboardSkip">Skip</button>`}
-    <div class="onboard-illust" role="img" aria-label="${s.title}" style="background-image:url('${s.img}')"></div>
+    <div class="onboard-illust" id="obIllust"><img class="ob-art" src="${s.img}" alt="${s.title}" style="--obdir:${(state.onboardPrev||step)>step?"-16px":"16px"}" draggable="false"></div>
     <div class="onboard-card">
       <h2>${s.title}</h2>
       <p>${s.sub}</p>
-      <div class="onboard-dots">${ONBOARD_SLIDES.map((_,i)=>`<span class="${i+1===step?"on":""}"></span>`).join("")}</div>
+      <div class="onboard-dots" id="obDots" data-from="${state.onboardPrev||step}" data-to="${step}" aria-label="${step} / ${ONBOARD_SLIDES.length}">${ONBOARD_SLIDES.map(()=>`<span></span>`).join("")}<i class="ob-ind"></i></div>
       <button class="onboard-next ${isLast?"last":""}" id="onboardNext">${isLast? "Start logging" : "Next"}</button>
     </div>
   </div>`;
@@ -670,6 +690,7 @@ const MENU_DATA = {
     nutri: "Protein 30 g / Fat 27.5 g / Carbs 90 g / 730 kcal",
     intro: MENU_SOFT_VEG_INTRO,
     sections: [
+      { key:"video", pill:"Video", heading:"Video demo", videos:[{label:null, videoId:"pAx8Ab8k-M8"}] },
       { key:"demo", pill:"Plating", heading:"Plating" },
       { key:"rice", pill:"Brown rice congee", heading:"Brown rice congee", ing:"Brown rice 20 g, white rice 40 g, water 420 g" },
       { key:"pumpkin", pill:"Steamed pumpkin purée", heading:"Steamed pumpkin purée", ing:"Pumpkin 85 g" },
@@ -685,6 +706,7 @@ const MENU_DATA = {
     info: "Soft & bite-sized | 1 serving",
     nutri: "Protein 30 g / Fat 27.5 g / Carbs 90 g / 730 kcal",
     sections: [
+      { key:"video", pill:"Video", heading:"Video demo", videos:[{label:"Level 6 dishes", videoId:"nByXQPPj6A0"},{label:"Level 6 & Level 5 dishes", videoId:"pAx8Ab8k-M8"}] },
       { key:"demo", pill:"Plating", heading:"Plating" },
       { key:"rice", pill:"Brown rice", heading:"Brown rice (soft)", ing:"Brown rice 20 g, white rice 40 g, water 90 g" },
       { key:"pumpkin", pill:"Steamed pumpkin", heading:"Steamed pumpkin", ing:"Pumpkin 85 g" },
@@ -700,6 +722,7 @@ const MENU_DATA = {
     info: "Regular, easy to chew | 1 serving",
     nutri: "Protein 30 g / Fat 27.5 g / Carbs 90 g / 730 kcal",
     sections: [
+      { key:"video", pill:"Video", heading:"Video demo", videos:[{label:null, videoId:"zIfJQn-6CW8"}] },
       { key:"demo", pill:"Plating", heading:"Plating" },
       { key:"rice", pill:"Brown rice", heading:"Brown rice", ing:"Brown rice 20 g, white rice 40 g, water 72 g" },
       { key:"pumpkin", pill:"Steamed pumpkin", heading:"Steamed pumpkin", ing:"Pumpkin 85 g" },
@@ -735,7 +758,9 @@ function renderMenuDetail(key){
       <h3>${s.heading}</h3>
       ${s.warn? `<p class="mn-warn">${s.warn}</p>` : ""}
       ${s.ing? `<p class="mn-ing">Ingredients (1 serving): ${s.ing}</p>` : ""}
-      <div class="mn-photo"></div>
+      ${s.videos? s.videos.map(v=>`
+        ${v.label? `<div class="st-video-label">${v.label}</div>` : ""}
+        <div class="st-video"><iframe src="https://www.youtube.com/embed/${v.videoId}?rel=0&playsinline=1" loading="lazy" title="${v.label||s.heading}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`).join("") : `<div class="mn-photo"></div>`}
     </div>
   `).join("")}
   ${creditsFooter()}
@@ -762,7 +787,7 @@ function renderSelfTestDetail(key){
       ${s.videos.map(v=>`
         ${v.label? `<div class="st-video-label">${v.label}</div>` : ""}
         <div class="st-video">${v.videoId
-          ? `<iframe src="https://www.youtube.com/embed/${v.videoId}" title="${v.label||s.heading}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="width:100%;height:100%;border:none;border-radius:12px;"></iframe>`
+          ? `<iframe src="https://www.youtube.com/embed/${v.videoId}?rel=0&playsinline=1" loading="lazy" title="${v.label||s.heading}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="width:100%;height:100%;border:none;border-radius:12px;"></iframe>`
           : `📹 Video demo (coming soon)`}</div>
       `).join("")}
     </div>
@@ -821,7 +846,8 @@ function renderMeal(){
     <div class="sheet-head">
       <span class="dsel">${MONTHS_EN[d.getMonth()].charAt(0)+MONTHS_EN[d.getMonth()].slice(1,3).toLowerCase()} ${d.getDate()}<i></i></span>
       <div class="seg" id="mealSeg"><span class="on">Log</span><span>Add</span></div>
-      <button class="pill-btn" type="button" data-soon="Photo log" aria-label="Take a photo">${IC.cam}</button>
+      <label class="pill-btn cam-btn ${state.mealPhoto?"has":""}" id="mealCam" aria-label="Photo log" ${state.mealPhoto? `style="background-image:url('${state.mealPhoto}')"` : ""}>${state.mealPhoto? "" : IC.cam}<input type="file" id="m_photo" accept="image/*" capture="environment" hidden></label>
+      ${state.mealPhoto? `<button class="cam-x" type="button" id="mealCamX" aria-label="Remove photo">×</button>` : ""}
     </div>
     <form id="mealForm">
       <div class="f-field"><label for="m_name">Name</label>${caret}<input type="text" id="m_name" placeholder="Enter a dish" required></div>
@@ -966,6 +992,20 @@ function wireEvents(){
     b.addEventListener("click", ()=>{ state.mealSelDate = b.dataset.date; render(); });
   });
 
+  // 相機：選好／拍好照片後縮圖並預覽，儲存紀錄時一起存
+  const camIn = document.getElementById("m_photo");
+  if(camIn){
+    camIn.addEventListener("change", async ()=>{
+      const f = camIn.files && camIn.files[0]; if(!f) return;
+      const keep = {name: document.getElementById("m_name").value, cat: document.getElementById("m_cat").value, note: document.getElementById("m_note").value, who: document.getElementById("m_who").value};
+      try{ state.mealPhoto = await shrinkPhoto(f); }catch(e){ toast("Could not read this photo"); return; }
+      state.mealSheetOpen = true; render();
+      document.getElementById("m_name").value = keep.name; document.getElementById("m_cat").value = keep.cat;
+      document.getElementById("m_note").value = keep.note; if(keep.who) document.getElementById("m_who").value = keep.who;
+      toast("Photo added");
+    });
+    document.getElementById("mealCamX")?.addEventListener("click", ()=>{ state.mealPhoto = null; render(); });
+  }
   // Meal record form
   const mf = document.getElementById("mealForm");
   if(mf){
@@ -979,10 +1019,16 @@ function wireEvents(){
         who: document.getElementById("m_who").value.trim(),
         name: document.getElementById("m_name").value.trim(),
         cat: document.getElementById("m_cat").value,
-        note: document.getElementById("m_note").value.trim()
+        note: document.getElementById("m_note").value.trim(),
+        ...(state.mealPhoto? {img: state.mealPhoto} : {})
       });
-      saveMeals(arr);
-      toast("Meal saved");
+      if(saveMeals(arr)){
+        toast("Meal saved");
+      } else {
+        delete arr[arr.length-1].img; saveMeals(arr);
+        toast("Phone storage is full. The record was saved without the photo.");
+      }
+      state.mealPhoto = null;
       render();
     });
   }
@@ -1051,13 +1097,44 @@ function wireEvents(){
   if(onboardNext){
     onboardNext.addEventListener("click", ()=>{
       if(state.onboardStep < ONBOARD_SLIDES.length){
-        state.onboardStep++;
+        goOnboard(state.onboardStep + 1);
       } else {
         try{ localStorage.setItem(ONBOARD_KEY, "1"); }catch(e){}
         state.tab = "home";
+        render();
       }
-      render();
     });
+  }
+  // 導覽頁：左右滑動換頁
+  const obWrap = document.querySelector(".onboard-wrap");
+  if(obWrap){
+    let sx=null, sy=null;
+    obWrap.addEventListener("touchstart", e=>{ sx=e.touches[0].clientX; sy=e.touches[0].clientY; }, {passive:true});
+    obWrap.addEventListener("touchend", e=>{
+      if(sx===null) return;
+      const dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy; sx=null;
+      if(Math.abs(dx)<50 || Math.abs(dx)<Math.abs(dy)) return;
+      if(dx<0 && state.onboardStep<ONBOARD_SLIDES.length) goOnboard(state.onboardStep+1);
+      else if(dx>0 && state.onboardStep>1) goOnboard(state.onboardStep-1);
+    });
+  }
+  // 頁碼點：橘點先拉長成線連到新位置，再縮回圓點
+  const obDots = document.getElementById("obDots");
+  if(obDots){
+    const ind = obDots.querySelector(".ob-ind"), STEP = 16;
+    const from = +obDots.dataset.from - 1, to = +obDots.dataset.to - 1;
+    ind.style.transition = "none";
+    ind.style.left = (from*STEP) + "px"; ind.style.width = "8px";
+    void ind.offsetWidth;
+    ind.style.transition = "";
+    if(from !== to){
+      requestAnimationFrame(()=>{
+        ind.style.left = (Math.min(from,to)*STEP) + "px";
+        ind.style.width = (Math.abs(to-from)*STEP + 8) + "px";
+        setTimeout(()=>{ ind.style.left = (to*STEP) + "px"; ind.style.width = "8px"; }, 210);
+      });
+    }
+    state.onboardPrev = state.onboardStep;
   }
 
   // Back buttons
