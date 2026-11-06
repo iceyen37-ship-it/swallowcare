@@ -1,0 +1,16 @@
+{
+  "name": "安心呷",
+  "short_name": "安心呷",
+  "description": "輔助咀嚼吞嚥困難照顧者質地判斷與紀錄",
+  "lang": "zh-TW",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ED6C01",
+  "theme_color": "#ED6C01",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png"}
+  ]
+}
