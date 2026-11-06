@@ -415,29 +415,51 @@ function uid(){ return Date.now()+Math.floor(Math.random()*1000); }
 /* ---------------- Texture test demo data ---------------- */
 const SELF_TEST_DATA = {
   "12": {
-    title: "Level 1–2 · Texture test demo",
+    title: "Level 1-2 · Texture test demo",
     warn: "The kit doesn't include a syringe. Buy a 10 ml syringe at a pharmacy.",
     sections: [
-      { key:"step", pill:"Step-by-step", heading:"Step-by-step", videos:[{label:null, videoId:"gfTxiIFlnVU"}] },
-      { key:"l1", pill:"Level 1", heading:"Level 1", exp:"Examples: drinking yogurt, oat drink",
-        videos:[{label:"Drinking yogurt", videoId:"na2gVQXbpEU"},{label:"Oat drink", videoId:"C4ozJu4w994"}] },
-      { key:"l2", pill:"Level 2", heading:"Level 2", exp:"Examples: avocado milk, vegetable juice with thickener",
-        videos:[{label:"Avocado milk", videoId:"RKBnwPXRSU0"},{label:"Vegetable juice with thickener", videoId:"MyJ1kkomUUY"}] }
+      { key:"step", pill:"Step-by-step", heading:"Step-by-step", videos:[{label:"Full demo", videoId:"gfTxiIFlnVU"},{label:"How to test", videoId:"ZAgWRgrYxpQ"}] },
+      { key:"l1", pill:"Level 1", heading:"Level 1", exp:"Examples: oat drink, vegetable juice with thickener",
+        videos:[{label:"Oat drink", videoId:"C4ozJu4w994"},{label:"Vegetable juice with thickener", videoId:"MyJ1kkomUUY"}] },
+      { key:"l2", pill:"Level 2", heading:"Level 2", exp:"Examples: drinking yogurt, avocado milk",
+        videos:[{label:"Drinking yogurt", videoId:"na2gVQXbpEU"},{label:"Avocado milk", videoId:"RKBnwPXRSU0"}] }
     ]
   },
   "3": {
     title: "Level 3 · Texture test demo",
     warn: "The kit doesn't include a syringe. Buy a 10 ml syringe at a pharmacy.",
     sections: [
-      { key:"step", pill:"Step-by-step", heading:"Step-by-step", exp:"Examples: fruit purée, hot grass jelly (syringe flow test, fork drip test)", videos:[{label:null, videoId:"KG0jwnsM_uU"}] }
+      { key:"step", pill:"Step-by-step", heading:"Step-by-step", videos:[{label:"Full demo", videoId:"KG0jwnsM_uU"},{label:"Syringe test method", videoId:"Ya4DvNnDCBU"}] },
+      { key:"jam", pill:"Jam", heading:"Jam", exp:"Syringe flow test, fork drip test",
+        videos:[{label:"Syringe flow test", videoId:"AeIGI4V_Lqk"},{label:"Fork drip test", videoId:"pIPKnjRa3wo"}] },
+      { key:"jelly", pill:"Hot grass jelly", heading:"Hot grass jelly", exp:"Syringe flow test, fork drip test",
+        videos:[{label:"Syringe flow test", videoId:"rlJXpw-ryIU"},{label:"Fork drip test", videoId:"MfB_0uYlmtM"}] }
     ]
   },
   "4": { title:"Level 4 · Texture test demo", warn:"Fork drip test: food should sit on the fork without dripping through.",
-    sections:[{ key:"step", pill:"Step-by-step", heading:"Step-by-step", videos:[{label:null, videoId:"8WIzgShhC0c"}] }] },
+    sections:[
+      { key:"step", pill:"Step-by-step", heading:"Step-by-step", videos:[{label:null, videoId:"8WIzgShhC0c"}] },
+      { key:"congee", pill:"Sweet potato congee", heading:"Sweet potato congee", exp:"Spoon tilt test, fork drip test",
+        videos:[{label:"Spoon tilt test", videoId:"9zvQ3qIeIBs"},{label:"Fork drip test", videoId:"w9x9P4tLtbE"}] },
+      { key:"konjac", pill:"Konjac jelly", heading:"Konjac jelly", exp:"Spoon tilt test, fork drip test",
+        videos:[{label:"Spoon tilt test", videoId:"vkhn2baFgXw"},{label:"Fork drip test", videoId:"nLDmmc-6HVc"}] }
+    ] },
   "5": { title:"Level 5 · Texture test demo", warn:"Spoon tilt test: food should hold its shape and not fall apart.",
-    sections:[{ key:"step", pill:"Step-by-step", heading:"Step-by-step", videos:[{label:null, videoId:"NZgQeECHNqU"}] }] },
+    sections:[
+      { key:"step", pill:"Step-by-step", heading:"Step-by-step", videos:[{label:null, videoId:"NZgQeECHNqU"}] },
+      { key:"pudding", pill:"Milk pudding", heading:"Milk pudding", exp:"Spoon tilt test, fork texture test",
+        videos:[{label:"Spoon tilt test", videoId:"Wsj51iih1pI"},{label:"Spoon tilt test (close-up)", videoId:"Qvl_UMwDoUI"},{label:"Fork texture test", videoId:"fA1nWXJrEME"}] },
+      { key:"pork", pill:"Canned pork with pickles", heading:"Canned pork with pickles", exp:"Fork texture test",
+        videos:[{label:"Fork texture test", videoId:"xEgu3GRb4VY"}] }
+    ] },
   "6": { title:"Level 6 · Texture test demo", warn:"Fork pressure test: food should mash easily with a fork.",
-    sections:[{ key:"step", pill:"Step-by-step", heading:"Step-by-step", videos:[{label:null, videoId:"Hny08Ao6ra8"}] }] }
+    sections:[
+      { key:"step", pill:"Step-by-step", heading:"Step-by-step", videos:[{label:null, videoId:"Hny08Ao6ra8"}] },
+      { key:"yam", pill:"Steamed sweet potato", heading:"Steamed sweet potato", exp:"Fork pressure test, fork texture test",
+        videos:[{label:"Fork pressure test", videoId:"r_y8-bLCoio"},{label:"Fork texture test", videoId:"HcbYCKuT3uM"}] },
+      { key:"banana", pill:"Banana", heading:"Banana", exp:"Fork pressure test, fork texture test",
+        videos:[{label:"Fork pressure test", videoId:"Ms3-p2i-nAA"},{label:"Fork texture test", videoId:"dKXlb2dMb6E"}] }
+    ] }
 };
 
 /* ---------------- splash & onboarding ---------------- */
@@ -691,14 +713,14 @@ const MENU_DATA = {
     intro: MENU_SOFT_VEG_INTRO,
     sections: [
       { key:"video", pill:"Video", heading:"Video demo", videos:[{label:null, videoId:"pAx8Ab8k-M8"}] },
-      { key:"demo", pill:"Plating", heading:"Plating" },
-      { key:"rice", pill:"Brown rice congee", heading:"Brown rice congee", ing:"Brown rice 20 g, white rice 40 g, water 420 g" },
-      { key:"pumpkin", pill:"Steamed pumpkin purée", heading:"Steamed pumpkin purée", ing:"Pumpkin 85 g" },
-      { key:"egg", pill:"Steamed egg", heading:"Steamed egg", ing:"Egg 55 g, stock 110 g, salt / soy sauce to taste" },
-      { key:"chicken", pill:"Chicken & tofu..", heading:"Chicken and tofu patty", ing:"Chicken thigh 60 g, tofu 40 g, rice wine 5 g, sesame paste 10 g", warn:MENU_L5_WARN },
-      { key:"veg2", pill:"Two-color vegetables", heading:"Two-color vegetables", ing:"Cauliflower 50 g, carrot 10 g, oil 5 g", warn:MENU_L5_WARN },
-      { key:"cucumber", pill:"Boiled cucumb..", heading:"Boiled cucumber", ing:"Cucumber 90 g", warn:MENU_L5_WARN },
-      { key:"fruit", pill:"Two-fruit pl..", heading:"Two-fruit plate", ing:"Papaya 75 g, banana 70 g" }
+      { key:"demo", vid:"sNmw4gGwxy8", pill:"Plating", heading:"Plating" },
+      { key:"rice", vid:"W48jG-D1xZY", pill:"Brown rice congee", heading:"Brown rice congee", ing:"Brown rice 20 g, white rice 40 g, water 420 g" },
+      { key:"pumpkin", vid:"jCrV_RNpe7w", pill:"Steamed pumpkin purée", heading:"Steamed pumpkin purée", ing:"Pumpkin 85 g" },
+      { key:"egg", vid:"yo1FMzfKpEY", pill:"Steamed egg", heading:"Steamed egg", ing:"Egg 55 g, stock 110 g, salt / soy sauce to taste" },
+      { key:"chicken", vid:"Cu2_szuhLY0", pill:"Chicken & tofu..", heading:"Chicken and tofu patty", ing:"Chicken thigh 60 g, tofu 40 g, rice wine 5 g, sesame paste 10 g", warn:MENU_L5_WARN },
+      { key:"veg2", vid:"UhGjb3YbS34", pill:"Two-color vegetables", heading:"Two-color vegetables", ing:"Cauliflower 50 g, carrot 10 g, oil 5 g", warn:MENU_L5_WARN },
+      { key:"cucumber", vid:"KE0n4BTHu1I", pill:"Boiled cucumb..", heading:"Boiled cucumber", ing:"Cucumber 90 g", warn:MENU_L5_WARN },
+      { key:"fruit", vid:"lELiZPPOXjg", pill:"Two-fruit pl..", heading:"Two-fruit plate", ing:"Papaya 75 g, banana 70 g" }
     ]
   },
   "6": {
@@ -707,14 +729,14 @@ const MENU_DATA = {
     nutri: "Protein 30 g / Fat 27.5 g / Carbs 90 g / 730 kcal",
     sections: [
       { key:"video", pill:"Video", heading:"Video demo", videos:[{label:"Level 6 dishes", videoId:"nByXQPPj6A0"},{label:"Level 6 & Level 5 dishes", videoId:"pAx8Ab8k-M8"}] },
-      { key:"demo", pill:"Plating", heading:"Plating" },
-      { key:"rice", pill:"Brown rice", heading:"Brown rice (soft)", ing:"Brown rice 20 g, white rice 40 g, water 90 g" },
-      { key:"pumpkin", pill:"Steamed pumpkin", heading:"Steamed pumpkin", ing:"Pumpkin 85 g" },
-      { key:"egg", pill:"Chinese scrambled egg", heading:"Chinese scrambled egg", ing:"Egg 55 g, oil 7.5 g, salt / soy sauce to taste" },
-      { key:"chicken", pill:"Chicken & tofu..", heading:"Chicken and tofu patty", ing:"Chicken thigh 60 g, firm tofu 40 g, rice wine 5 g, ketchup 5 g" },
-      { key:"veg3", pill:"Three-color vegetables", heading:"Three-color vegetables", ing:"Cauliflower 25 g, broccoli 25 g, carrot 10 g, garlic 2 g, oil 5 g" },
-      { key:"cucumber", pill:"Boiled cucumb..", heading:"Boiled cucumber", ing:"Cucumber 90 g" },
-      { key:"fruit", pill:"Two-fruit pl..", heading:"Two-fruit plate", ing:"Papaya 75 g, banana 70 g" }
+      { key:"demo", vid:"I_PnCtoEQAc", pill:"Plating", heading:"Plating" },
+      { key:"rice", vid:"GdEkfgUMqKU", pill:"Brown rice", heading:"Brown rice (soft)", ing:"Brown rice 20 g, white rice 40 g, water 90 g" },
+      { key:"pumpkin", vid:"g237mJ906RQ", pill:"Steamed pumpkin", heading:"Steamed pumpkin", ing:"Pumpkin 85 g" },
+      { key:"egg", vid:"xjCHkaF86QY", pill:"Chinese scrambled egg", heading:"Chinese scrambled egg", ing:"Egg 55 g, oil 7.5 g, salt / soy sauce to taste" },
+      { key:"chicken", vid:"SCxe_iScbU8", pill:"Chicken & tofu..", heading:"Chicken and tofu patty", ing:"Chicken thigh 60 g, firm tofu 40 g, rice wine 5 g, ketchup 5 g" },
+      { key:"veg3", vid:"ngHbi64yLcY", pill:"Three-color vegetables", heading:"Three-color vegetables", ing:"Cauliflower 25 g, broccoli 25 g, carrot 10 g, garlic 2 g, oil 5 g" },
+      { key:"cucumber", vid:"uabxVW_6ow0", pill:"Boiled cucumb..", heading:"Boiled cucumber", ing:"Cucumber 90 g" },
+      { key:"fruit", vid:"pDAwk6Qw1lk", pill:"Two-fruit pl..", heading:"Two-fruit plate", ing:"Papaya 75 g, banana 70 g" }
     ]
   },
   "7": {
@@ -723,14 +745,14 @@ const MENU_DATA = {
     nutri: "Protein 30 g / Fat 27.5 g / Carbs 90 g / 730 kcal",
     sections: [
       { key:"video", pill:"Video", heading:"Video demo", videos:[{label:null, videoId:"zIfJQn-6CW8"}] },
-      { key:"demo", pill:"Plating", heading:"Plating" },
-      { key:"rice", pill:"Brown rice", heading:"Brown rice", ing:"Brown rice 20 g, white rice 40 g, water 72 g" },
-      { key:"pumpkin", pill:"Steamed pumpkin", heading:"Steamed pumpkin", ing:"Pumpkin 85 g" },
-      { key:"egg", pill:"Fried egg", heading:"Fried egg", ing:"Egg 55 g, oil 7.5 g, salt / soy sauce to taste" },
-      { key:"chicken", pill:"Chicken thigh with two sauces", heading:"Chicken thigh with two sauces", ing:"Boneless chicken thigh 80 g, garlic 5 g, rice wine 5 g, sugar 5 g, soy sauce 5 g" },
-      { key:"veg-mix", pill:"Mixed vegetables", heading:"Mixed vegetables", ing:"Cauliflower 22.5 g, broccoli 22.5 g, carrot 5 g, baby corn 10 g, garlic 2 g, oil 5 g" },
-      { key:"cucumber", pill:"Boiled cucumb..", heading:"Boiled cucumber", ing:"Cucumber 90 g" },
-      { key:"fruit", pill:"Two-fruit pl..", heading:"Two-fruit plate", ing:"Papaya 75 g, banana 70 g" }
+      { key:"demo", vid:"vy1M4RIS5cM", pill:"Plating", heading:"Plating" },
+      { key:"rice", vid:"RLxcLiA4tvE", pill:"Brown rice", heading:"Brown rice", ing:"Brown rice 20 g, white rice 40 g, water 72 g" },
+      { key:"pumpkin", vid:"sTuySqD1lfc", pill:"Steamed pumpkin", heading:"Steamed pumpkin", ing:"Pumpkin 85 g" },
+      { key:"egg", vid:"gxRbEB19JXo", pill:"Fried egg", heading:"Fried egg", ing:"Egg 55 g, oil 7.5 g, salt / soy sauce to taste" },
+      { key:"chicken", vid:"v5qXGckjjcA", pill:"Chicken thigh with two sauces", heading:"Chicken thigh with two sauces", ing:"Boneless chicken thigh 80 g, garlic 5 g, rice wine 5 g, sugar 5 g, soy sauce 5 g" },
+      { key:"veg-mix", vid:"NHPmuxqbxyw", pill:"Mixed vegetables", heading:"Mixed vegetables", ing:"Cauliflower 22.5 g, broccoli 22.5 g, carrot 5 g, baby corn 10 g, garlic 2 g, oil 5 g" },
+      { key:"cucumber", vid:"Q5xDyGJ75Ps", pill:"Boiled cucumb..", heading:"Boiled cucumber", ing:"Cucumber 90 g" },
+      { key:"fruit", vid:"lvbmlx4XfUk", pill:"Two-fruit pl..", heading:"Two-fruit plate", ing:"Papaya 75 g, banana 70 g" }
     ]
   }
 };
@@ -760,7 +782,7 @@ function renderMenuDetail(key){
       ${s.ing? `<p class="mn-ing">Ingredients (1 serving): ${s.ing}</p>` : ""}
       ${s.videos? s.videos.map(v=>`
         ${v.label? `<div class="st-video-label">${v.label}</div>` : ""}
-        <div class="st-video"><iframe src="https://www.youtube.com/embed/${v.videoId}?rel=0&playsinline=1" loading="lazy" title="${v.label||s.heading}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`).join("") : `<div class="mn-photo"></div>`}
+        <div class="st-video"><iframe src="https://www.youtube.com/embed/${v.videoId}?rel=0&playsinline=1" loading="lazy" title="${v.label||s.heading}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`).join("") : `${s.vid? `<div class="st-video"><iframe src="https://www.youtube.com/embed/${s.vid}?rel=0&playsinline=1" loading="lazy" title="${s.heading}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>` : `<div class="mn-photo"></div>`}`}
     </div>
   `).join("")}
   ${creditsFooter()}
