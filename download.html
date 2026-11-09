@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>下載安心呷</title>
+<meta name="description" content="安心呷 Android 測試版與 iPhone 網頁版的使用方式。">
+<style>
+:root{--bg:#FFF8F0;--card:#FFFFFF;--ink:#3B2A1E;--soft:#5A4A3E;--muted:#7A6A5C;--accent:#C8601E;--accent-ink:#9A4214;--line:#EBD5B8;--hl:#FFEE58;--tint:#F7ECDD}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;font-size:18px;line-height:1.7}
+header{background:var(--hl);padding:36px 16px 30px;text-align:center}
+.eyebrow{margin:0;font-weight:700;color:var(--accent-ink);letter-spacing:.06em;font-size:15px}
+h1{margin:4px 0 6px;font-size:44px;line-height:1.2}
+.slogan{margin:0;font-weight:700;color:var(--accent-ink);font-size:20px}
+main{max-width:620px;margin:0 auto;padding:24px 16px 48px}
+.pick{display:flex;gap:10px;margin:0 0 20px}
+.pick button{flex:1;font:inherit;font-weight:700;font-size:18px;padding:12px 8px;border-radius:14px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.pick button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+section{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 20px;margin:0 0 18px}
+section[hidden]{display:none}
+h2{margin:0 0 4px;font-size:24px}
+.sub{margin:0 0 16px;color:var(--soft);font-size:16px}
+ol.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px}
+.steps li{display:flex;gap:14px;align-items:flex-start}
+.num{flex:none;width:36px;height:36px;border-radius:50%;background:var(--accent);color:#FFF8F0;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:18px}
+.steps h3{margin:2px 0 2px;font-size:19px}
+.steps p{margin:0 0 10px;color:var(--soft);font-size:16px}
+.btn{display:inline-block;background:var(--accent);color:#FFF8F0;text-decoration:none;font-weight:700;padding:11px 20px;border-radius:12px;font-size:17px}
+.btn.alt{background:var(--ink)}
+.warn{background:var(--tint);border-radius:14px;padding:12px 14px;font-size:16px;margin:16px 0 0}
+details{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 18px;margin:0 0 12px}
+summary{font-weight:700;cursor:pointer}
+details p{margin:8px 0 4px;color:var(--soft);font-size:16px}
+.foot{color:var(--muted);font-size:14px;text-align:center;margin-top:28px}
+.foot a{color:var(--accent-ink)}
+</style>
+</head>
+<body>
+<header>
+  <p class="eyebrow">咀嚼吞嚥困難照護 App</p>
+  <h1>安心呷</h1>
+  <p class="slogan">你安心餵，我安心吃</p>
+</header>
+<main>
+  <div class="pick" role="group" aria-label="選擇手機">
+    <button type="button" id="b-android" aria-pressed="true">Android 手機</button>
+    <button type="button" id="b-ios" aria-pressed="false">iPhone</button>
+  </div>
+
+  <section id="android">
+    <h2>Android：下載測試版 App</h2>
+    <p class="sub">照順序按下面三個按鈕，約 2 分鐘完成，免費。</p>
+    <ol class="steps">
+      <li><span class="num">1</span><div>
+        <h3>加入測試群組</h3>
+        <p>打開後按「加入群組」。</p>
+        <a class="btn" href="https://groups.google.com/g/ansimjia-testers" target="_blank" rel="noopener">加入測試群組</a>
+      </div></li>
+      <li><span class="num">2</span><div>
+        <h3>成為測試人員</h3>
+        <p>打開後按「成為測試人員」。</p>
+        <a class="btn" href="https://play.google.com/apps/testing/com.ansimjia.swallowcare" target="_blank" rel="noopener">成為測試人員</a>
+      </div></li>
+      <li><span class="num">3</span><div>
+        <h3>安裝安心呷</h3>
+        <p>在 Google Play 按「安裝」。</p>
+        <a class="btn" href="https://play.google.com/store/apps/details?id=com.ansimjia.swallowcare" target="_blank" rel="noopener">前往 Google Play 安裝</a>
+      </div></li>
+    </ol>
+    <p class="warn"><b>重要：</b>步驟 1、2 使用的 Google 帳號，要和手機上 Google Play 登入的是<b>同一個</b>，否則會顯示無法下載。</p>
+  </section>
+
+  <section id="ios" hidden>
+    <h2>iPhone：使用網頁版</h2>
+    <p class="sub">不用下載，打開網頁就能用，功能和 App 相同。</p>
+    <ol class="steps">
+      <li><span class="num">1</span><div>
+        <h3>用 Safari 打開安心呷</h3>
+        <a class="btn alt" href="https://iceyen37-ship-it.github.io/swallowcare/">開啟網頁版</a>
+      </div></li>
+      <li><span class="num">2</span><div>
+        <h3>加入主畫面</h3>
+        <p>在 Safari 下方按「分享」圖示，選「加入主畫面」。之後從桌面圖示打開，就像 App 一樣。</p>
+      </div></li>
+    </ol>
+  </section>
+
+  <details>
+    <summary>步驟 2 或 3 顯示「無法使用」？</summary>
+    <p>先確認步驟 1 已加入群組，而且用的是手機 Google Play 的同一個帳號。加入後可能要等幾分鐘，再重新打開步驟 2 的按鈕。</p>
+  </details>
+  <details>
+    <summary>這是正式版嗎？</summary>
+    <p>目前是測試版，由國立臺灣科技大學設計系研究開發，仍在持續改進。安心呷是照護輔助工具，不能取代專業評估、診斷與醫囑。</p>
+  </details>
+
+  <p class="foot">使用問題與回饋：<a href="mailto:iceyen37@gmail.com">iceyen37@gmail.com</a>　·　<a href="privacy.html">隱私權政策</a></p>
+</main>
+<script>
+(function(){
+  var bA=document.getElementById('b-android'),bI=document.getElementById('b-ios'),
+      sA=document.getElementById('android'),sI=document.getElementById('ios');
+  function show(ios){sA.hidden=ios;sI.hidden=!ios;bA.setAttribute('aria-pressed',String(!ios));bI.setAttribute('aria-pressed',String(ios));}
+  bA.addEventListener('click',function(){show(false)});
+  bI.addEventListener('click',function(){show(true)});
+  if(/iPhone|iPad|iPod/i.test(navigator.userAgent)) show(true);
+})();
+</script>
+</body>
+</html>
