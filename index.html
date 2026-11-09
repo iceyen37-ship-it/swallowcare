@@ -278,6 +278,7 @@
   .combo-btn{display:flex;align-items:center;gap:2px;background:#FFF1E6;border:none;border-radius:14px;height:28px;padding:0 0 0 10px;margin-right:4px;font-family:inherit;font-size:.82rem;font-weight:700;color:#D65A00;cursor:pointer;flex-shrink:0;}
   .combo-btn .ph{color:#e0a27a;font-weight:500;}
   .combo-btn.bare{background:none;padding:0 0 0 4px;}
+  .combo-btn span[id]:empty{display:none;}
   .f-field.menu-open{z-index:30;}
   .combo-menu{position:absolute;top:calc(100% + 6px);right:0;left:0;background:#fff;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.18);padding:6px;max-height:300px;overflow-y:auto;z-index:31;}
   .combo-menu.up{top:auto;bottom:calc(100% + 6px);}
@@ -3810,8 +3811,8 @@ function renderVisit(){
     <div class="sheet-head"><h3>新增看診紀錄</h3><button class="pill-btn" type="button" data-act="voice" aria-label="語音輸入">${IC.mic}</button></div>
     <form id="visitForm" novalidate>
       <div class="f-field clickable" id="vf_date"><label for="v_date">日期</label>${caret}<input type="date" id="v_date" value="${esc(d.date||fmt(now))}" required>${IC.cal}</div>
-      <div class="f-field combo"><label for="v_clinic">地點</label>${caret}<input type="text" id="v_clinic" placeholder="名稱，例：福華診所" value="${esc(d.clinic||"")}" autocomplete="off"><button type="button" class="combo-btn" data-combo="place" aria-label="選擇地點類型"><span id="v_place_t" class="${d.placeType?"":"ph"}">${esc(d.placeType||"類型")}</span>${tri}</button></div>
-      <div class="f-field combo"><label for="v_doctor">醫療人員</label>${caret}<input type="text" id="v_doctor" placeholder="姓名" value="${esc(d.doctor||"")}" autocomplete="off"><button type="button" class="combo-btn" data-combo="staff" aria-label="選擇醫療人員"><span id="v_staff_t" class="${d.staffType?"":"ph"}">${esc(d.staffType||"類別")}</span>${tri}</button></div>
+      <div class="f-field combo"><label for="v_clinic">地點</label>${caret}<input type="text" id="v_clinic" placeholder="名稱，例：福華診所" value="${esc(d.clinic||"")}" autocomplete="off"><button type="button" class="combo-btn ${d.placeType?"":"bare"}" data-combo="place" aria-label="選擇地點類型"><span id="v_place_t">${esc(d.placeType||"")}</span>${tri}</button></div>
+      <div class="f-field combo"><label for="v_doctor">醫療人員</label>${caret}<input type="text" id="v_doctor" placeholder="姓名" value="${esc(d.doctor||"")}" autocomplete="off"><button type="button" class="combo-btn ${d.staffType?"":"bare"}" data-combo="staff" aria-label="選擇醫療人員"><span id="v_staff_t">${esc(d.staffType||"")}</span>${tri}</button></div>
       <div class="f-field combo"><label for="v_recorder">紀錄者</label>${caret}<input type="text" id="v_recorder" placeholder="選擇或輸入" value="${esc(d.recorder ?? currentUser())}" autocomplete="off"><button type="button" class="combo-btn bare" data-combo="recorder" aria-label="選擇紀錄者">${tri}</button></div>
       <div class="f-field note-field" id="vf_note"><label>看診內容</label>${caret}<div class="note-prev ${d.note?"":"ph"}" id="v_note_prev">${esc(d.note? d.note.replace(/\n/g," ") : "醫囑、建議等級、複診時間")}</div><button type="button" class="note-add" id="v_note_open" aria-label="記錄看診內容">＋</button></div>
       <div class="md-err" id="v_err" role="alert"></div>
@@ -3837,8 +3838,8 @@ function comboOptions(kind){
 }
 function applyVisitField(set){
   const g = id=>document.getElementById(id);
-  if("placeType" in set){ const t = g("v_place_t"); t.textContent = set.placeType || tr("類型"); t.classList.toggle("ph", !set.placeType); t.dataset.v = set.placeType||""; }
-  if("staffType" in set){ const t = g("v_staff_t"); t.textContent = set.staffType || tr("類別"); t.classList.toggle("ph", !set.staffType); t.dataset.v = set.staffType||""; }
+  if("placeType" in set){ const t = g("v_place_t"); t.textContent = set.placeType || ""; t.parentElement.classList.toggle("bare", !set.placeType); t.dataset.v = set.placeType||""; }
+  if("staffType" in set){ const t = g("v_staff_t"); t.textContent = set.staffType || ""; t.parentElement.classList.toggle("bare", !set.staffType); t.dataset.v = set.staffType||""; }
   if("clinic" in set) g("v_clinic").value = set.clinic;
   if(set.clinicIfEmpty && !g("v_clinic").value.trim()){ g("v_clinic").value = set.clinicIfEmpty; applyVisitField({placeType:"醫院"}); }
   if("doctor" in set) g("v_doctor").value = set.doctor;
