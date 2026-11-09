@@ -400,6 +400,23 @@
   .care-group small{margin-left:6px;color:#bbb;font-weight:700;}
   .care-none{font-size:.78rem;color:#999;padding:10px 0 12px;border-bottom:1px solid #ececec;}
   button.care-item{background:none;border:none;border-bottom:1px solid #ececec;width:100%;font-family:inherit;text-align:left;cursor:pointer;}
+  .acc-card{background:#fff;border-radius:28px;margin:10px 20px 0;padding:8px 18px 6px;}
+  .acc-me{display:flex;align-items:center;gap:12px;padding:12px 0 14px;border-bottom:1px solid #f0f0f0;}
+  .acc-me .ph{width:48px;height:48px;border-radius:50%;background:#eee center/cover;flex:none;}
+  .acc-me .nm{font-size:1.05rem;font-weight:900;}
+  .acc-me .sb{font-size:.78rem;color:#888;margin-top:2px;word-break:break-all;}
+  .acc-row{display:flex;align-items:center;gap:10px;width:100%;min-height:52px;background:none;border:none;border-bottom:1px solid #f3f3f3;font-family:inherit;font-size:.95rem;font-weight:700;color:#222;text-align:left;cursor:pointer;padding:0 2px;}
+  .acc-row:last-child{border-bottom:none;}
+  .acc-row span:first-child{flex:1;}
+  .acc-row em{font-style:normal;color:#888;font-size:.85rem;}
+  .acc-row em b{font-family:var(--num);color:#ED6C01;letter-spacing:.06em;}
+  .acc-row i{font-style:normal;color:#ccc;font-size:1.3rem;}
+  .acc-row.danger{color:#D93A1E;}
+  .acc-row.primary{color:#ED6C01;}
+  .sw{display:inline-block;width:44px;height:26px;border-radius:13px;background:#ddd;position:relative;transition:background .2s;vertical-align:middle;}
+  .sw::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:left .2s;}
+  .sw.on{background:#2FC2A6;} .sw.on::after{left:21px;}
+  .acc-ver{text-align:center;font-size:.72rem;color:#bbb;margin:14px 0 24px;}
   .badge-admin{display:inline-block;font-size:.66rem;font-weight:800;color:#fff;background:#ED6C01;border-radius:999px;padding:1px 8px;margin-left:8px;vertical-align:2px;white-space:nowrap;}
   .md-rowbtn{width:100%;border:none;font-family:inherit;text-align:left;cursor:pointer;margin:0 0 8px;}
   .md-rowbtn .chev{font-size:1.4rem;color:#bbb;}
@@ -555,6 +572,8 @@
   .home-level .lv-lbl{font-size:.9rem;font-weight:800;}
   .home-level .lv-num{font-size:2.9rem;font-weight:900;line-height:1;font-family:var(--num);}
   .home-level .lv-num small{font-size:.9rem;margin-left:8px;font-weight:800;}
+  .home-level .lv-pair{display:flex;gap:26px;flex-wrap:wrap;}
+  .md-sub{font-size:.85rem;font-weight:900;color:#ED6C01;margin:6px 0 8px;}
   .home-potato{position:absolute;right:-8px;top:150px;width:168px;height:auto;pointer-events:none;animation:potatoBob 3.2s ease-in-out infinite;}
   @keyframes potatoBob{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-6px) rotate(2deg)}}
   .home-logs{padding:14px 14px 0;}
@@ -942,6 +961,9 @@ const IDDSI_DIET = [
   {v:"1", t:"Level 1 輕微稠"},
   {v:"0", t:"Level 0 稀薄"}
 ];
+// IDDSI 分兩種：吃的食物（固體，Level 3–7）和喝的液體（流質，Level 0–4）
+const IDDSI_FOOD = [{v:"", t:"尚未設定"}, ...IDDSI_DIET.filter(o=>o.v!=="" && +o.v>=3)];
+const IDDSI_DRINK = [{v:"", t:"尚未設定"}, {v:"4", t:"Level 4 高度稠"}, {v:"3", t:"Level 3 中度稠"}, {v:"2", t:"Level 2 稍微稠"}, {v:"1", t:"Level 1 輕微稠"}, {v:"0", t:"Level 0 稀薄"}];
 const CARE_ROLES = ["子女","配偶","孫子女","看護","親友","其他"];
 const MED_ROLES = ["營養師","語言治療師","復健科醫師","其他"];
 const SELF_FILL = "__self";
@@ -1091,6 +1113,8 @@ Object.entries({"地點": ["Place", "Tempat", "Lugar"], "醫療人員": ["Health
 Object.entries({"本月總覽": ["Monthly overview", "Ringkasan bulan", "Buod ng buwan"], "上個月": ["Previous month", "Bulan lalu", "Nakaraang buwan"], "下個月": ["Next month", "Bulan depan", "Susunod na buwan"], "點心": ["Snack", "Camilan", "Meryenda"], "營養補充品": ["Supplement", "Suplemen", "Supplement"], "增稠飲品": ["Thickened drink", "Minuman kental", "Pinalapot na inumin"], "自己加的": ["Added by you", "Ditambahkan", "Idinagdag mo"], "選擇類別": ["Choose category", "Pilih kategori", "Pumili ng kategorya"], "選擇照顧者": ["Choose caregiver", "Pilih pengasuh", "Pumili ng tagapag-alaga"], "例：水果、流質飲食": ["e.g. fruit, liquid diet", "mis. buah, makanan cair", "hal. prutas, liquid diet"], "例：外籍看護 Siti": ["e.g. caregiver Siti", "mis. pengasuh Siti", "hal. caregiver Siti"], "請輸入類別": ["Enter category", "Ketik kategori", "Ilagay ang kategorya"], "選擇日期": ["Choose date", "Pilih tanggal", "Pumili ng petsa"], "回到今天": ["Back to today", "Kembali ke hari ini", "Bumalik sa ngayon"], "有橘色小點的日子已經有紀錄。": ["Days with an orange dot already have records.", "Hari dengan titik oranye sudah ada catatan.", "May tala na ang mga araw na may orange na tuldok."], "換日期": ["Change date", "Ganti tanggal", "Palitan ang petsa"], "有記錄的天數": ["Days recorded", "Hari tercatat", "Mga araw na may tala"], "總紀錄筆數": ["Total records", "Total catatan", "Kabuuang tala"], "照片": ["Photos", "Foto", "Mga larawan"], "每天的紀錄": ["Records per day", "Catatan per hari", "Tala bawat araw"], "類別": ["Category", "Kategori", "Kategorya"], "誰記錄的": ["Recorded by", "Dicatat oleh", "Itinala ni"], "還沒有記錄的日子": ["Days without records", "Hari tanpa catatan", "Mga araw na walang tala"], "這個月還沒有飲食紀錄。": ["No meal records this month yet.", "Belum ada catatan makan bulan ini.", "Wala pang tala ng pagkain ngayong buwan."], "下載這個月的週報與照片": ["Download this month's weekly reports and photos", "Unduh laporan mingguan dan foto bulan ini", "I-download ang lingguhang ulat at larawan ngayong buwan"]}).forEach(([k,v])=>{ if(I18N.en[k]===undefined){ I18N.en[k]=v[0]; I18N.id[k]=v[1]; I18N.fil[k]=v[2]; } });  // 飲食冊
 Object.entries({"飲食": ["Food", "Makan", "Pagkain"], "身體": ["Body", "Tubuh", "Katawan"], "項目": ["Item", "Item", "Item"], "選擇項目": ["Choose item", "Pilih item", "Pumili ng item"], "血壓": ["Blood pressure", "Tekanan darah", "Presyon ng dugo"], "體溫": ["Temperature", "Suhu tubuh", "Temperatura"], "心跳": ["Heart rate", "Detak jantung", "Tibok ng puso"], "血氧": ["Blood oxygen", "Oksigen darah", "Oxygen sa dugo"], "血糖": ["Blood sugar", "Gula darah", "Asukal sa dugo"], "體重": ["Weight", "Berat badan", "Timbang"], "排便": ["Bowel movement", "Buang air besar", "Pagdumi"], "排尿": ["Urination", "Buang air kecil", "Pag-ihi"], "收縮壓": ["Systolic", "Sistolik", "Systolic"], "舒張壓": ["Diastolic", "Diastolik", "Diastolic"], "心跳（選填）": ["Heart rate (optional)", "Detak jantung (opsional)", "Tibok ng puso (opsyonal)"], "次/分": ["bpm", "bpm", "bpm"], "公斤": ["kg", "kg", "kg"], "數值": ["Value", "Nilai", "Halaga"], "狀況": ["Status", "Kondisi", "Kalagayan"], "時間": ["Time", "Waktu", "Oras"], "選填，例：飯後量、剛起床": ["Optional, e.g. after meal, just woke up", "Opsional, mis. setelah makan, baru bangun", "Opsyonal, hal. pagkatapos kumain, bagong gising"], "儲存身體紀錄": ["Save body record", "Simpan catatan tubuh", "I-save ang tala ng katawan"], "已儲存身體紀錄": ["Body record saved", "Catatan tubuh disimpan", "Na-save ang tala ng katawan"], "身體狀況": ["Body status", "Kondisi tubuh", "Kalagayan ng katawan"], "請輸入收縮壓和舒張壓": ["Enter systolic and diastolic", "Isi sistolik dan diastolik", "Ilagay ang systolic at diastolic"], "請輸入數值或狀況": ["Enter a value or status", "Isi nilai atau kondisi", "Ilagay ang halaga o kalagayan"], "請選擇或輸入照顧者": ["Choose or type a caregiver", "Pilih atau ketik pengasuh", "Pumili o mag-type ng tagapag-alaga"], "例：痰量、水腫、睡眠": ["e.g. phlegm, swelling, sleep", "mis. dahak, bengkak, tidur", "hal. plema, pamamaga, tulog"], "例：正常、偏硬、腹瀉": ["e.g. normal, hard, diarrhea", "mis. normal, keras, diare", "hal. normal, matigas, pagtatae"], "例：次數、顏色": ["e.g. times, color", "mis. jumlah, warna", "hal. dalas, kulay"], "輸入數值或狀況": ["Enter value or status", "Isi nilai atau kondisi", "Ilagay ang halaga o kalagayan"]}).forEach(([k,v])=>{ if(I18N.en[k]===undefined){ I18N.en[k]=v[0]; I18N.id[k]=v[1]; I18N.fil[k]=v[2]; } });  // 身體紀錄
 Object.entries({"＋ 這天還沒有身體紀錄，點這裡新增": ["+ No body records this day. Tap to add", "+ Belum ada catatan tubuh hari ini. Ketuk untuk menambah", "+ Wala pang tala ng katawan ngayong araw. Pindutin para magdagdag"]}).forEach(([k,v])=>{ if(I18N.en[k]===undefined){ I18N.en[k]=v[0]; I18N.id[k]=v[1]; I18N.fil[k]=v[2]; } });
+Object.entries({"適合的質地（IDDSI）": ["Suitable texture (IDDSI)", "Tekstur yang sesuai (IDDSI)", "Angkop na tekstura (IDDSI)"], "🍚 吃的食物（固體）": ["🍚 Food (solids)", "🍚 Makanan (padat)", "🍚 Pagkain (solido)"], "🥛 喝的液體（流質）": ["🥛 Drinks (liquids)", "🥛 Minuman (cair)", "🥛 Inumin (likido)"], "請依語言治療師或醫師的評估選擇；不確定可以先不設定。": ["Choose based on the speech therapist's or doctor's assessment. Leave unset if unsure.", "Pilih sesuai penilaian terapis wicara atau dokter. Kosongkan jika ragu.", "Pumili ayon sa pagsusuri ng speech therapist o doktor. Iwanang blangko kung di sigurado."], "Level 4 高度稠": ["Level 4 Extremely thick", "Level 4 Sangat kental", "Level 4 Napakalapot"], "Level 3 中度稠": ["Level 3 Moderately thick", "Level 3 Cukup kental", "Level 3 Katamtamang lapot"], "高度稠": ["Extremely thick", "Sangat kental", "Napakalapot"], "中度稠": ["Moderately thick", "Cukup kental", "Katamtamang lapot"], "吃": ["Eat", "Makan", "Kain"], "喝": ["Drink", "Minum", "Inom"], "可以喝": ["Can drink", "Boleh minum", "Puwedeng inumin"]}).forEach(([k,v])=>{ if(I18N.en[k]===undefined){ I18N.en[k]=v[0]; I18N.id[k]=v[1]; I18N.fil[k]=v[2]; } });
+Object.entries({"個人帳號設定": ["Account settings", "Pengaturan akun", "Mga setting ng account"], "編輯我的資料": ["Edit my profile", "Ubah profil saya", "I-edit ang aking profile"], "研究團隊 Email 邀請": ["Research invitations by email", "Undangan riset lewat email", "Imbitasyon sa research sa email"], "語言與字體大小": ["Language & text size", "Bahasa & ukuran teks", "Wika at laki ng teksto"], "照護團隊邀請碼": ["Care team invite code", "Kode undangan tim", "Invite code ng care team"], "隱私權政策": ["Privacy policy", "Kebijakan privasi", "Patakaran sa privacy"], "申請刪除帳號": ["Request account deletion", "Minta hapus akun", "Humiling na burahin ang account"], "登出": ["Sign out", "Keluar", "Mag-sign out"], "登入，和家人一起記錄": ["Sign in to record with family", "Masuk untuk mencatat bersama keluarga", "Mag-sign in para magtala kasama ang pamilya"], "尚未設定 Email": ["No email yet", "Belum ada email", "Wala pang email"], "只存在這支手機": ["Saved on this phone only", "Hanya tersimpan di ponsel ini", "Sa phone na ito lang naka-save"], "已同意研究團隊以 Email 邀請": ["You'll receive research invitations by email", "Anda akan menerima undangan riset lewat email", "Makakatanggap ka ng imbitasyon sa email"], "已取消研究邀請": ["Research invitations turned off", "Undangan riset dimatikan", "Pinatay ang imbitasyon sa research"], "沒有連上網路，請稍後再試": ["No connection. Please try again later.", "Tidak ada koneksi. Coba lagi nanti.", "Walang koneksyon. Subukan mamaya."]}).forEach(([k,v])=>{ if(I18N.en[k]===undefined){ I18N.en[k]=v[0]; I18N.id[k]=v[1]; I18N.fil[k]=v[2]; } });
 Object.entries({"Email": ["Email", "Email", "Email"], "例：name@gmail.com": ["e.g. name@gmail.com", "contoh: name@gmail.com", "hal.: name@gmail.com"], "同意研究團隊以 Email 邀請我參與研究（選填）": ["I agree the research team may invite me to studies by email (optional)", "Saya setuju tim peneliti mengundang saya ikut penelitian lewat email (opsional)", "Pumapayag akong imbitahan ng research team sa pag-aaral sa email (opsyonal)"], "Email 只用於聯絡您與協助找回帳號，不會公開或提供給第三方。": ["Your email is only used to contact you and help recover your account. It is never made public or shared.", "Email hanya dipakai untuk menghubungi Anda dan memulihkan akun, tidak dipublikasikan atau dibagikan.", "Gagamitin lang ang email para makontak ka at mabawi ang account; hindi ito ipapakita o ibabahagi."], "請輸入正確的 Email": ["Please enter a valid email", "Masukkan email yang benar", "Ilagay ang tamang email"], "Email 格式不正確": ["Invalid email format", "Format email tidak benar", "Mali ang format ng email"], "補填 Email": ["Add your email", "Tambahkan email", "Idagdag ang email"], "請留下您的 Email，帳號有問題時方便聯絡您，也能協助找回帳號。": ["Please add your email so we can reach you about your account and help you recover it.", "Tambahkan email Anda agar kami bisa menghubungi Anda soal akun dan membantu memulihkannya.", "Idagdag ang iyong email para makontak ka namin tungkol sa account at matulungan kang mabawi ito."], "稍後再填": ["Later", "Nanti saja", "Mamaya na"], "已儲存 Email": ["Email saved", "Email tersimpan", "Na-save ang email"]}).forEach(([k,v])=>{ I18N.en[k]=v[0]; I18N.id[k]=v[1]; I18N.fil[k]=v[2]; });  // Email 欄位
 /* ================= 多語言（中文／English／Bahasa Indonesia／Filipino）與字體大小 ================= */
 const LANGS = [
@@ -1460,7 +1484,10 @@ function openElderEdit(){
     <p class="md-fine" style="margin-top:-6px">稱呼只有您自己看得到，每位照顧者可以用自己習慣的叫法。</p>
     <label class="md-field"><span>年齡</span><input id="el_age" type="number" inputmode="numeric" min="1" max="130" placeholder="例：82" value="${elderAge()||""}"></label>
     <label class="md-field"><span>生日（選填）</span><input id="el_bday" type="date" max="${fmt(new Date())}" value="${esc(ELDER.birthday||"")}"></label>
-    <label class="md-field"><span>適合吃的質地（IDDSI）</span><select id="el_level">${IDDSI_DIET.map(o=>`<option value="${o.v}" ${String(ELDER.level||"")===o.v?"selected":""}>${o.t}</option>`).join("")}</select></label>
+    <div class="md-sub">適合的質地（IDDSI）</div>
+    <label class="md-field"><span>🍚 吃的食物（固體）</span><select id="el_level">${IDDSI_FOOD.map(o=>`<option value="${o.v}" ${String(ELDER.level||"")===o.v?"selected":""}>${o.t}</option>`).join("")}</select></label>
+    <label class="md-field"><span>🥛 喝的液體（流質）</span><select id="el_drink">${IDDSI_DRINK.map(o=>`<option value="${o.v}" ${String(ELDER.drinkLevel??"")===o.v?"selected":""}>${o.t}</option>`).join("")}</select></label>
+    <p class="md-fine" style="margin-top:-6px">請依語言治療師或醫師的評估選擇；不確定可以先不設定。</p>
     <div class="md-err" id="el_err" role="alert"></div>
     <button type="submit" class="md-btn">儲存</button>
   </form>`, layer=>{
@@ -1478,9 +1505,10 @@ function openElderEdit(){
       if(!age) return err("請輸入長輩的年齡");
       if(+age < 1 || +age > 130) return err("請輸入正確的年齡");
       if(bday){ const a = ageFromBirthday(bday); if(a==null || a<0) return err("請輸入正確的生日"); if(a!==+age) return err("年齡和生日對不起來，請再確認一次"); }
-      const lv = f.el_level.value, opt = IDDSI_DIET.find(o=>o.v===lv);
+      const lv = f.el_level.value, opt = IDDSI_FOOD.find(o=>o.v===lv);
+      const dl = f.el_drink.value, dopt = IDDSI_DRINK.find(o=>o.v===dl);
       setMyTitle(f.el_title.value.trim());
-      Object.assign(ELDER, { name: f.el_name.value.trim(), title: "", age: +age, birthday: bday, level: lv, diet: lv? opt.t : "", photo });
+      Object.assign(ELDER, { name: f.el_name.value.trim(), title: "", age: +age, birthday: bday, level: lv, diet: lv? opt.t : "", drinkLevel: dl, drinkDiet: dl? dopt.t : "", photo });
       if(!saveElder()){ ELDER.photo = ""; saveElder(); toast("手機空間不足，照片沒有儲存"); }
       closePrefs(); render(); toast("已儲存長輩資料");
     });
@@ -1522,6 +1550,66 @@ function cropImage(file){
       ov.remove(); done(c.toDataURL("image/jpeg", .8));
     });
   });
+}
+
+/* ---------- 個人帳號設定（長輩卡最下方） ---------- */
+const PRIVACY_URL = "https://iceyen37-ship-it.github.io/swallowcare/privacy.html";
+function accountSectionHTML(){
+  const S = getSession(), me = caregivers()[0];
+  const row = (act, label, val, cls)=> `<button type="button" class="acc-row ${cls||""}" data-acc="${act}"><span>${esc(tr(label))}</span>${val!=null? `<em>${val}</em>` : ""}<i aria-hidden="true">›</i></button>`;
+  return `
+  <div class="sec-head"><h2>個人帳號設定</h2></div>
+  <div class="acc-card">
+    <div class="acc-me">
+      <div class="ph" style="background-image:url('${DEFAULT_AVATAR}')"></div>
+      <div class="tx"><div class="nm">${esc(me.name)}${me.admin? ADMIN_BADGE : ""}</div>
+        <div class="sb">${esc(tr(me.role||""))}${S? `・${esc(S.email || tr("尚未設定 Email"))}` : `・${tr("只存在這支手機")}`}</div></div>
+    </div>
+    ${S? [
+      row("edit", "編輯我的資料"),
+      row("contact", "研究團隊 Email 邀請", `<span class="sw ${S.contact? "on":""}" role="switch" aria-checked="${!!S.contact}"></span>`),
+      row("prefs", "語言與字體大小"),
+      row("team", "照護團隊邀請碼", `<b>${esc(S.team)}</b>`),
+      row("privacy", "隱私權政策"),
+      row("delete", "申請刪除帳號"),
+      row("logout", "登出", null, "danger")
+    ].join("") : [
+      row("login", "登入，和家人一起記錄", null, "primary"),
+      row("edit", "編輯我的資料"),
+      row("prefs", "語言與字體大小"),
+      row("privacy", "隱私權政策")
+    ].join("")}
+  </div>
+  <p class="acc-ver">安心呷 v${APP_VERSION}</p>`;
+}
+function wireAccount(){
+  document.querySelectorAll("[data-acc]").forEach(b=> b.addEventListener("click", async ()=>{
+    const S = getSession(), a = b.dataset.acc;
+    if(a==="edit") openCareEdit("me");
+    else if(a==="prefs") openPrefs();
+    else if(a==="team") shareInvite();
+    else if(a==="privacy") window.open(PRIVACY_URL, "_blank");
+    else if(a==="delete") location.href = "mailto:iceyen37@gmail.com?subject=" + encodeURIComponent("安心呷 刪除帳號申請") + "&body=" + encodeURIComponent(`${tr("帳號")}：${S? S.account : ""}\n${tr("名字")}：${currentUser()}\n`);
+    else if(a==="login"){ state.tab = "login"; render(); }
+    else if(a==="logout"){
+      const n = pendingCount();
+      if(n && !b.dataset.confirm){ b.dataset.confirm = "1"; b.querySelector("span").textContent = tr(`還有 ${n} 筆紀錄沒同步，再按一次仍要登出`); return; }
+      logout();
+    } else if(a==="contact"){
+      const sw = b.querySelector(".sw"), v = !S.contact;
+      sw.classList.toggle("on", v); sw.setAttribute("aria-checked", v);
+      let j; try{ j = await api("updateMe", {token:S.token, contact:v}); }catch(e){ j = {ok:false}; }
+      if(j.ok){ S.contact = v; rawSet(SESSION_KEY, S); toast(v? "已同意研究團隊以 Email 邀請" : "已取消研究邀請"); }
+      else { sw.classList.toggle("on", !v); sw.setAttribute("aria-checked", !v); toast("沒有連上網路，請稍後再試"); }
+    }
+  }));
+  // 進到這頁時，順便從雲端更新 Email 和研究同意狀態
+  const S = getSession();
+  if(S && !wireAccount._done){ wireAccount._done = true;
+    api("me", {token:S.token}).then(j=>{ if(!j.ok) return; const S2 = getSession(); if(!S2) return;
+      const changed = (j.email||"")!==(S2.email||"") || !!j.contact!==!!S2.contact;
+      S2.email = j.email||S2.email; S2.contact = !!j.contact; rawSet(SESSION_KEY, S2); if(changed && state.tab==="elder") render(); }).catch(()=>{});
+  }
 }
 
 /* ---------- 照顧者 ---------- */
@@ -2169,8 +2257,12 @@ function renderHome(){
       <button class="visit" data-tabgo="visit">${HOME_IC.review}診斷回顧</button>
     </div>
     <div class="home-level">
-      <div class="lv-lbl">${elderName()}可以吃</div>
-      <div class="lv-num">Level ${lv||"–"}<small>${lv? "以下" : "尚未設定"}</small></div>
+      <div class="lv-pair">
+        <div><div class="lv-lbl">${elderName()}可以吃</div>
+          <div class="lv-num">Level ${lv||"–"}<small>${lv? tr(((IDDSI_FOOD.find(o=>o.v===String(lv))||{}).t||"").replace(/^Level \d /,"")) : "尚未設定"}</small></div></div>
+        ${ELDER.drinkLevel? `<div><div class="lv-lbl">可以喝</div>
+          <div class="lv-num">Level ${ELDER.drinkLevel}<small>${tr(((IDDSI_DRINK.find(o=>o.v===String(ELDER.drinkLevel))||{}).t||"").replace(/^Level \d /,""))}</small></div></div>` : ""}
+      </div>
     </div>
     <img class="home-potato" src="sweetpotato.png" alt="">
   </div>
@@ -3930,7 +4022,7 @@ function renderElder(){
     <div class="elder-photo" style="background-image:url('${elderPhoto()}')" role="img" aria-label="長輩頭像"></div>
     <div class="elder-info">
       <div class="elder-name">${elderName()}${myTitle()? `<small>${esc(myTitle())}</small>` : ""}<button class="more" data-act="elderEdit" aria-label="編輯長輩資料">${IC.pen}</button></div>
-      <div class="chips"><span class="chip-o">${elderAge()? elderAge()+"歲" : "X歲"}</span><span class="chip-o">${ELDER.level? "Level "+ELDER.level : "適合吃..."}</span></div>
+      <div class="chips"><span class="chip-o">${elderAge()? elderAge()+"歲" : "X歲"}</span><span class="chip-o">${ELDER.level? tr("吃")+" L"+ELDER.level : "適合吃..."}</span>${ELDER.drinkLevel? `<span class="chip-o">${tr("喝")} L${ELDER.drinkLevel}</span>` : ""}</div>
     </div>
   </div>
   <div class="hr"></div>
@@ -3954,7 +4046,8 @@ function renderElder(){
   <div class="strip photos">
     ${days.map((d,i)=>{ const ph = loadMeals().filter(m=>m.date===fmt(d) && m.img).pop();
       return `<button class="tile ${ph?"":"empty"} ${fmt(d)===fmt(today)?"today":""}" data-addmeal="${fmt(d)}" ${ph? `style="background-image:url('${ph.img}')"` : ""} aria-label="新增${d.getMonth()+1}月${d.getDate()}日餐飲紀錄">${ph? `<span class="wash"></span>` : `<span class="plus">＋</span>`}<span class="lb">週${["一","二","三","四","五","六","日"][i]}</span></button>`; }).join("")}
-  </div>`;
+  </div>
+  ${accountSectionHTML()}`;
 }
 
 /* ---------------- events ---------------- */
@@ -4021,7 +4114,8 @@ function wireEvents(){
     drawer._setOpen = setOpen;
   }
 
-  // 飲食冊：切換月份
+  if(state.tab==="elder") wireAccount();
+  // 紀錄冊：切換月份
   document.querySelectorAll("[data-mshift]").forEach(b=> b.addEventListener("click", ()=>{ state.mealSelDate = shiftMonth(state.mealSelDate, +b.dataset.mshift); render(); }));
   // 主頁
   document.getElementById("goHome")?.addEventListener("click", ()=>{ state.tab="home"; state.textureView="list"; render(); });
