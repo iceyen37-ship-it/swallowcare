@@ -1317,7 +1317,6 @@ function openEmailPrompt(){
   <p class="md-note">請留下您的 Email，帳號有問題時方便聯絡您，也能協助找回帳號。</p>
   <form id="emForm" novalidate>
     <label class="md-field"><span>Email</span><input id="em_email" type="email" maxlength="100" placeholder="例：name@gmail.com" autocomplete="email" inputmode="email"></label>
-    <label class="md-check"><input id="em_contact" type="checkbox"><span>同意研究團隊以 Email 邀請我參與研究（選填）</span></label>
     <p class="md-fine">Email 只用於聯絡您與協助找回帳號，不會公開或提供給第三方。</p>
     <div class="md-err" id="em_err" role="alert"></div>
     <button type="submit" class="md-btn">儲存</button>
@@ -1330,7 +1329,7 @@ function openEmailPrompt(){
       const email = f.em_email.value.trim().toLowerCase();
       if(!isEmail(email)){ err.textContent = tr("請輸入正確的 Email"); return; }
       const btn = f.querySelector(".md-btn"); btn.disabled = true; btn.textContent = tr("處理中…");
-      let j; try{ j = await api("updateMe", {token:S.token, email, contact: f.em_contact.checked}); }catch(er){ j = {ok:false}; }
+      let j; try{ j = await api("updateMe", {token:S.token, email}); }catch(er){ j = {ok:false}; }
       btn.disabled = false; btn.textContent = tr("儲存");
       if(!j.ok){ err.textContent = tr(cloudErr(j.error)); return; }
       saveSessionEmail(email); closePrefs(); toast("已儲存 Email");
@@ -1416,7 +1415,6 @@ function openGoogleProfile(idToken, info){
     <label class="md-field"><span>您的名字（顯示給其他照顧者）</span><input id="gp_name" type="text" maxlength="20" placeholder="例：王小明" autocomplete="name" value="${esc(String(info.name||"").slice(0,20))}"></label>
     ${identityFieldsHTML(null, "gp")}
     <label class="md-field"><span>照護團隊邀請碼（選填）</span><input id="gp_team" type="text" maxlength="6" placeholder="家人給的 6 碼，沒有就留空" autocapitalize="characters" value="${esc(rawGet(INVITE_KEY,"")||"")}"></label>
-    <label class="md-check"><input id="gp_contact" type="checkbox"><span>同意研究團隊以 Email 邀請我參與研究（選填）</span></label>
     <p class="md-fine">Email 只用於聯絡您與協助找回帳號，不會公開或提供給第三方。</p>
     <div class="md-err" id="gp_err" role="alert"></div>
     <button type="submit" class="md-btn">完成註冊並登入</button>
@@ -1428,13 +1426,13 @@ function openGoogleProfile(idToken, info){
     f.addEventListener("submit", async e=>{
       e.preventDefault();
       const idn = readIdentity(layer, "gp"), role = idn.role;
-      const name = f.gp_name.value.trim(), team = f.gp_team.value.trim().toUpperCase(), contact = f.gp_contact.checked;
+      const name = f.gp_name.value.trim(), team = f.gp_team.value.trim().toUpperCase();
       const fail = m=>{ err.textContent = tr(m); };
       if(!name) return fail("請輸入您的名字");
       if(idn.error) return fail(idn.error);
       if(team && !/^[A-Z0-9]{6}$/.test(team)) return fail("照護團隊邀請碼是 6 個英文或數字");
       const btn = f.querySelector(".md-btn"); btn.disabled = true; btn.textContent = tr("處理中…");
-      let j; try{ j = await api("googleRegister", {idToken, name, role, team, contact}); }catch(er){ j = {ok:false}; }
+      let j; try{ j = await api("googleRegister", {idToken, name, role, team}); }catch(er){ j = {ok:false}; }
       btn.disabled = false; btn.textContent = tr("完成註冊並登入");
       if(j.ok){ finishLogin(j, "Google 註冊"); saveProfile(j.account, {...pickProf(idn), role}); return; }
       if(j.error==="account_taken") return openGoogleLink(idToken, info, "這個 Gmail 以前註冊過帳號，請輸入舊密碼完成連結");
@@ -1567,7 +1565,6 @@ function accountSectionHTML(){
     </div>
     ${S? [
       row("edit", "編輯我的資料"),
-      row("contact", "研究團隊 Email 邀請", `<span class="sw ${S.contact? "on":""}" role="switch" aria-checked="${!!S.contact}"></span>`),
       row("prefs", "語言與字體大小"),
       row("team", "照護團隊邀請碼", `<b>${esc(S.team)}</b>`),
       row("privacy", "隱私權政策"),
@@ -1595,20 +1592,14 @@ function wireAccount(){
       const n = pendingCount();
       if(n && !b.dataset.confirm){ b.dataset.confirm = "1"; b.querySelector("span").textContent = tr(`還有 ${n} 筆紀錄沒同步，再按一次仍要登出`); return; }
       logout();
-    } else if(a==="contact"){
-      const sw = b.querySelector(".sw"), v = !S.contact;
-      sw.classList.toggle("on", v); sw.setAttribute("aria-checked", v);
-      let j; try{ j = await api("updateMe", {token:S.token, contact:v}); }catch(e){ j = {ok:false}; }
-      if(j.ok){ S.contact = v; rawSet(SESSION_KEY, S); toast(v? "已同意研究團隊以 Email 邀請" : "已取消研究邀請"); }
-      else { sw.classList.toggle("on", !v); sw.setAttribute("aria-checked", !v); toast("沒有連上網路，請稍後再試"); }
     }
   }));
   // 進到這頁時，順便從雲端更新 Email 和研究同意狀態
   const S = getSession();
   if(S && !wireAccount._done){ wireAccount._done = true;
     api("me", {token:S.token}).then(j=>{ if(!j.ok) return; const S2 = getSession(); if(!S2) return;
-      const changed = (j.email||"")!==(S2.email||"") || !!j.contact!==!!S2.contact;
-      S2.email = j.email||S2.email; S2.contact = !!j.contact; rawSet(SESSION_KEY, S2); if(changed && state.tab==="elder") render(); }).catch(()=>{});
+      const changed = (j.email||"")!==(S2.email||"");
+      S2.email = j.email||S2.email; rawSet(SESSION_KEY, S2); if(changed && state.tab==="elder") render(); }).catch(()=>{});
   }
 }
 
