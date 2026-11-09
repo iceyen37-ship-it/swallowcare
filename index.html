@@ -410,6 +410,18 @@
   .a2hs-steps li{display:flex;align-items:center;gap:12px;background:#f7f2ec;border-radius:16px;padding:12px 14px;font-size:.95rem;line-height:1.6;}
   .a2hs-steps li svg{vertical-align:-5px;margin-left:2px;}
   .a2hs-steps .n{width:28px;height:28px;border-radius:50%;background:var(--orange);color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center;flex:none;}
+  .me-btn{width:34px;height:34px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.12);background:#eee center/cover;margin-left:8px;cursor:pointer;padding:0;flex:none;}
+  .acc-mini{display:flex;align-items:center;gap:12px;width:calc(100% - 40px);margin:26px 20px 0;background:#fff;border:none;border-radius:24px;padding:12px 16px;font-family:inherit;text-align:left;cursor:pointer;}
+  .acc-mini .ph{width:44px;height:44px;border-radius:50%;background:#eee center/cover;flex:none;}
+  .acc-mini .tx{flex:1;min-width:0;}
+  .acc-mini .nm{font-size:1rem;font-weight:900;color:#222;}
+  .acc-mini .nm small{font-size:.75rem;font-weight:700;color:#ED6C01;margin-left:8px;}
+  .acc-mini .sb{font-size:.75rem;color:#999;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .acc-mini i{font-style:normal;color:#ccc;font-size:1.4rem;}
+  .acc-ph{position:relative;width:64px;height:64px;border-radius:50%;background:#eee center/cover;flex:none;cursor:pointer;}
+  .acc-ph span{position:absolute;right:-4px;bottom:-4px;width:26px;height:26px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;font-size:.8rem;}
+  .acc-list{margin-top:4px;}
+  .cv-ph{width:88px;height:88px;border-radius:50%;background:#eee center/cover;margin:0 auto 14px;}
   .acc-card{background:#fff;border-radius:28px;margin:10px 20px 0;padding:8px 18px 6px;}
   .acc-me{display:flex;align-items:center;gap:12px;padding:12px 0 14px;border-bottom:1px solid #f0f0f0;}
   .acc-me .ph{width:48px;height:48px;border-radius:50%;background:#eee center/cover;flex:none;}
@@ -820,7 +832,7 @@ async function api(action, body){
   } finally { clearTimeout(t); }
 }
 async function uploadPhotos(kind, id, data, token){
-  const field = kind==="meal" ? "img" : (kind==="elder" ? "photo" : null);
+  const field = kind==="meal" ? "img" : (kind==="elder" || kind==="care" ? "photo" : null);
   if(!field || !data[field] || !String(data[field]).startsWith("data:")) return data;
   const j = await api("upload", {token, dataUrl: data[field]});
   if(!j.ok) throw new Error(j.error||"upload_failed");
@@ -1003,7 +1015,8 @@ function saveProfile(acc, data){
   const old = allCare(), id = PROF_PREFIX+acc, full = [...old.filter(c=>c.id!==id), {...data, id}];
   if(rawSet(CARE_KEY, full)) trackDiff("care", old, full);
 }
-const PROF_FIELDS = ["kind","hospital","dept","doctor","phone"];
+const PROF_FIELDS = ["kind","hospital","dept","doctor","phone","photo"];
+function careAvatar(c){ return (c && c.photo) || DEFAULT_AVATAR; }
 function pickProf(p){ const o = {}; if(p) PROF_FIELDS.forEach(k=>{ if(p[k]) o[k] = p[k]; }); return o; }
 function careKind(c){ return c.kind || (MED_ROLES.includes(c.role) && c.role!=="其他" ? "medical" : "family"); }
 function teamMembers(){ return getSession()? rawGet(MEMBERS_KEY, []) : []; }
@@ -1126,6 +1139,7 @@ Object.entries({"＋ 這天還沒有身體紀錄，點這裡新增": ["+ No body
 Object.entries({"適合的質地（IDDSI）": ["Suitable texture (IDDSI)", "Tekstur yang sesuai (IDDSI)", "Angkop na tekstura (IDDSI)"], "🍚 吃的食物（固體）": ["🍚 Food (solids)", "🍚 Makanan (padat)", "🍚 Pagkain (solido)"], "🥛 喝的液體（流質）": ["🥛 Drinks (liquids)", "🥛 Minuman (cair)", "🥛 Inumin (likido)"], "請依語言治療師或醫師的評估選擇；不確定可以先不設定。": ["Choose based on the speech therapist's or doctor's assessment. Leave unset if unsure.", "Pilih sesuai penilaian terapis wicara atau dokter. Kosongkan jika ragu.", "Pumili ayon sa pagsusuri ng speech therapist o doktor. Iwanang blangko kung di sigurado."], "Level 4 高度稠": ["Level 4 Extremely thick", "Level 4 Sangat kental", "Level 4 Napakalapot"], "Level 3 中度稠": ["Level 3 Moderately thick", "Level 3 Cukup kental", "Level 3 Katamtamang lapot"], "高度稠": ["Extremely thick", "Sangat kental", "Napakalapot"], "中度稠": ["Moderately thick", "Cukup kental", "Katamtamang lapot"], "吃": ["Eat", "Makan", "Kain"], "喝": ["Drink", "Minum", "Inom"], "可以喝": ["Can drink", "Boleh minum", "Puwedeng inumin"]}).forEach(([k,v])=>{ if(I18N.en[k]===undefined){ I18N.en[k]=v[0]; I18N.id[k]=v[1]; I18N.fil[k]=v[2]; } });
 Object.entries({"個人帳號設定": ["Account settings", "Pengaturan akun", "Mga setting ng account"], "編輯我的資料": ["Edit my profile", "Ubah profil saya", "I-edit ang aking profile"], "研究團隊 Email 邀請": ["Research invitations by email", "Undangan riset lewat email", "Imbitasyon sa research sa email"], "語言與字體大小": ["Language & text size", "Bahasa & ukuran teks", "Wika at laki ng teksto"], "照護團隊邀請碼": ["Care team invite code", "Kode undangan tim", "Invite code ng care team"], "隱私權政策": ["Privacy policy", "Kebijakan privasi", "Patakaran sa privacy"], "申請刪除帳號": ["Request account deletion", "Minta hapus akun", "Humiling na burahin ang account"], "登出": ["Sign out", "Keluar", "Mag-sign out"], "登入，和家人一起記錄": ["Sign in to record with family", "Masuk untuk mencatat bersama keluarga", "Mag-sign in para magtala kasama ang pamilya"], "尚未設定 Email": ["No email yet", "Belum ada email", "Wala pang email"], "只存在這支手機": ["Saved on this phone only", "Hanya tersimpan di ponsel ini", "Sa phone na ito lang naka-save"], "已同意研究團隊以 Email 邀請": ["You'll receive research invitations by email", "Anda akan menerima undangan riset lewat email", "Makakatanggap ka ng imbitasyon sa email"], "已取消研究邀請": ["Research invitations turned off", "Undangan riset dimatikan", "Pinatay ang imbitasyon sa research"], "沒有連上網路，請稍後再試": ["No connection. Please try again later.", "Tidak ada koneksi. Coba lagi nanti.", "Walang koneksyon. Subukan mamaya."]}).forEach(([k,v])=>{ if(I18N.en[k]===undefined){ I18N.en[k]=v[0]; I18N.id[k]=v[1]; I18N.fil[k]=v[2]; } });
 Object.entries({"輸入邀請碼加入照護團隊": ["Join a care team with a code", "Gabung tim dengan kode", "Sumali sa care team gamit ang code"], "加入照護團隊": ["Join a care team", "Gabung tim perawatan", "Sumali sa care team"], "輸入家人或其他照顧者給你的 6 碼邀請碼，加入後就會看到那個團隊長輩的資料和紀錄。": ["Enter the 6-character code from family or another caregiver to see that team's elder and records.", "Masukkan kode 6 karakter dari keluarga atau pengasuh lain untuk melihat data lansia dan catatan tim itu.", "Ilagay ang 6-character code mula sa pamilya o ibang tagapag-alaga para makita ang datos at tala ng team na iyon."], "目前的照護團隊": ["Current care team", "Tim saat ini", "Kasalukuyang team"], "請先記下這組碼": ["Note this code first", "Catat kode ini dulu", "Itala muna ang code na ito"], "新的照護團隊邀請碼": ["New care team code", "Kode tim baru", "Bagong code ng team"], "一次只能在一個照護團隊。原本團隊的紀錄會留在原本的團隊，不會刪除；之後想回去，輸入上面那組舊的邀請碼就可以。": ["You can be in one care team at a time. Records stay with your current team and aren't deleted; to go back, enter the old code above.", "Anda hanya bisa di satu tim. Catatan tetap di tim lama dan tidak dihapus; untuk kembali, masukkan kode lama di atas.", "Isang team lang sa isang pagkakataon. Mananatili ang mga tala sa dating team; para bumalik, ilagay ang lumang code sa itaas."], "加入": ["Join", "Gabung", "Sumali"], "你已經在這個照護團隊了": ["You're already in this care team", "Anda sudah di tim ini", "Nasa team na ito ka na"], "還有紀錄沒同步到雲端，請連上網路後再試一次": ["Some records haven't synced yet. Connect to the internet and try again.", "Ada catatan yang belum tersinkron. Sambungkan internet lalu coba lagi.", "May mga talang hindi pa naka-sync. Kumonekta sa internet at subukan muli."], "已加入新的照護團隊": ["Joined the new care team", "Bergabung dengan tim baru", "Nakasali sa bagong team"], "把安心呷加到主畫面": ["Add Ansimjia to your Home Screen", "Tambahkan ke Layar Utama", "Idagdag sa Home Screen"], "紀錄才不會被 Safari 自動清掉": ["So Safari won't clear your records", "Agar Safari tidak menghapus catatan", "Para hindi burahin ng Safari ang mga tala"], "怎麼做": ["How", "Caranya", "Paano"], "加到主畫面": ["Add to Home Screen", "Tambah ke Layar Utama", "Idagdag sa Home Screen"], "我加好了": ["Done", "Sudah", "Tapos na"], "之後再說": ["Later", "Nanti", "Mamaya"], "加到主畫面後，Safari 就不會在 7 天沒打開時清掉紀錄。從主畫面第一次打開時，請再用 Google 登入一次，雲端的紀錄會自動回來。": ["Once on your Home Screen, Safari won't clear records after 7 days unused. The first time you open it from the Home Screen, sign in with Google again and your cloud records come back.", "Setelah di Layar Utama, Safari tidak akan menghapus catatan setelah 7 hari. Saat pertama dibuka dari Layar Utama, masuk lagi dengan Google dan catatan cloud akan kembali.", "Kapag nasa Home Screen na, hindi buburahin ng Safari ang tala pagkalipas ng 7 araw. Sa unang bukas mula sa Home Screen, mag-sign in muli sa Google at babalik ang mga tala."]}).forEach(([k,v])=>{ if(I18N.en[k]===undefined){ I18N.en[k]=v[0]; I18N.id[k]=v[1]; I18N.fil[k]=v[2]; } });
+Object.entries({"更換我的頭貼": ["Change my photo", "Ganti foto saya", "Palitan ang aking larawan"], "更換頭貼": ["Change photo", "Ganti foto", "Palitan ang larawan"], "已更換頭貼": ["Photo updated", "Foto diperbarui", "Napalitan ang larawan"]}).forEach(([k,v])=>{ if(I18N.en[k]===undefined){ I18N.en[k]=v[0]; I18N.id[k]=v[1]; I18N.fil[k]=v[2]; } });
 Object.entries({"Email": ["Email", "Email", "Email"], "例：name@gmail.com": ["e.g. name@gmail.com", "contoh: name@gmail.com", "hal.: name@gmail.com"], "同意研究團隊以 Email 邀請我參與研究（選填）": ["I agree the research team may invite me to studies by email (optional)", "Saya setuju tim peneliti mengundang saya ikut penelitian lewat email (opsional)", "Pumapayag akong imbitahan ng research team sa pag-aaral sa email (opsyonal)"], "Email 只用於聯絡您與協助找回帳號，不會公開或提供給第三方。": ["Your email is only used to contact you and help recover your account. It is never made public or shared.", "Email hanya dipakai untuk menghubungi Anda dan memulihkan akun, tidak dipublikasikan atau dibagikan.", "Gagamitin lang ang email para makontak ka at mabawi ang account; hindi ito ipapakita o ibabahagi."], "請輸入正確的 Email": ["Please enter a valid email", "Masukkan email yang benar", "Ilagay ang tamang email"], "Email 格式不正確": ["Invalid email format", "Format email tidak benar", "Mali ang format ng email"], "補填 Email": ["Add your email", "Tambahkan email", "Idagdag ang email"], "請留下您的 Email，帳號有問題時方便聯絡您，也能協助找回帳號。": ["Please add your email so we can reach you about your account and help you recover it.", "Tambahkan email Anda agar kami bisa menghubungi Anda soal akun dan membantu memulihkannya.", "Idagdag ang iyong email para makontak ka namin tungkol sa account at matulungan kang mabawi ito."], "稍後再填": ["Later", "Nanti saja", "Mamaya na"], "已儲存 Email": ["Email saved", "Email tersimpan", "Na-save ang email"]}).forEach(([k,v])=>{ I18N.en[k]=v[0]; I18N.id[k]=v[1]; I18N.fil[k]=v[2]; });  // Email 欄位
 /* ================= 多語言（中文／English／Bahasa Indonesia／Filipino）與字體大小 ================= */
 const LANGS = [
@@ -1525,7 +1539,8 @@ function openElderEdit(){
   });
 }
 /* 照片裁切：拖曳移動、兩指或滑桿縮放，輸出正方形 */
-function cropImage(file){
+function cropImage(file, size){
+  size = size || 480;
   return new Promise(async done=>{
     let src; try{ src = await shrinkPhoto(file, 1400); }catch(e){ toast("無法讀取這張照片"); return done(null); }
     const ov = document.createElement("div"); ov.className = "crop-ov";
@@ -1555,8 +1570,8 @@ function cropImage(file){
     ov.querySelector('[data-c="no"]').addEventListener("click", ()=>{ ov.remove(); done(null); });
     ov.querySelector('[data-c="ok"]').addEventListener("click", ()=>{
       const k = base*z, sw = V/k, sx = ((w*k-V)/2 - x)/k, sy = ((h*k-V)/2 - y)/k;
-      const c = document.createElement("canvas"); c.width = c.height = 480;
-      c.getContext("2d").drawImage(img, sx, sy, sw, sw, 0, 0, 480, 480);
+      const c = document.createElement("canvas"); c.width = c.height = size;
+      c.getContext("2d").drawImage(img, sx, sy, sw, sw, 0, 0, size, size);
       ov.remove(); done(c.toDataURL("image/jpeg", .8));
     });
   });
@@ -1566,16 +1581,25 @@ function cropImage(file){
 const PRIVACY_URL = "https://iceyen37-ship-it.github.io/swallowcare/privacy.html";
 function accountSectionHTML(){
   const S = getSession(), me = caregivers()[0];
-  const row = (act, label, val, cls)=> `<button type="button" class="acc-row ${cls||""}" data-acc="${act}"><span>${esc(tr(label))}</span>${val!=null? `<em>${val}</em>` : ""}<i aria-hidden="true">›</i></button>`;
   return `
-  <div class="sec-head"><h2>個人帳號設定</h2></div>
-  <div class="acc-card">
+  <button type="button" class="acc-mini" data-acc="open" aria-label="個人帳號設定">
+    <div class="ph" style="background-image:url('${careAvatar(me)}')"></div>
+    <div class="tx"><div class="nm">${esc(me.name)}<small>${esc(tr("個人帳號設定"))}</small></div>
+      <div class="sb">${S? esc(S.email || tr("尚未設定 Email")) : tr("只存在這支手機")}</div></div>
+    <i aria-hidden="true">›</i>
+  </button>
+  <p class="acc-ver">安心呷 v${APP_VERSION}</p>`;
+}
+function openAccount(){
+  const S = getSession(), me = caregivers()[0];
+  const row = (act, label, val, cls)=> `<button type="button" class="acc-row ${cls||""}" data-acc="${act}"><span>${esc(tr(label))}</span>${val!=null? `<em>${val}</em>` : ""}<i aria-hidden="true">›</i></button>`;
+  openModal("個人帳號設定", `
     <div class="acc-me">
-      <div class="ph" style="background-image:url('${DEFAULT_AVATAR}')"></div>
+      <label class="acc-ph" style="background-image:url('${careAvatar(me)}')" aria-label="${tr("更換我的頭貼")}"><span>📷</span><input type="file" id="acc_photo" accept="image/*" hidden></label>
       <div class="tx"><div class="nm">${esc(me.name)}${me.admin? ADMIN_BADGE : ""}</div>
         <div class="sb">${esc(tr(me.role||""))}${S? `・${esc(S.email || tr("尚未設定 Email"))}` : `・${tr("只存在這支手機")}`}</div></div>
     </div>
-    ${S? [
+    <div class="acc-list">${S? [
       row("edit", "編輯我的資料"),
       row("prefs", "語言與字體大小"),
       row("team", "照護團隊邀請碼", `<b>${esc(S.team)}</b>`),
@@ -1588,20 +1612,30 @@ function accountSectionHTML(){
       row("edit", "編輯我的資料"),
       row("prefs", "語言與字體大小"),
       row("privacy", "隱私權政策")
-    ].join("")}
-  </div>
-  <p class="acc-ver">安心呷 v${APP_VERSION}</p>`;
+    ].join("")}</div>`, layer=>{
+    wireAccount(layer);
+    layer.querySelector("#acc_photo").addEventListener("change", async e=>{
+      const file = e.target.files && e.target.files[0]; e.target.value = ""; if(!file) return;
+      const out = await cropImage(file, 240); if(!out) return;
+      const S2 = getSession(), cur = S2? (profileOf(S2.account)||{}) : (rawGet(MY_PROF_KEY, null)||{});
+      const data = {...cur, role: cur.role || myRole(), photo: out}; delete data.id;
+      saveProfile(S2? S2.account : "", data);
+      layer.querySelector(".acc-ph").style.backgroundImage = `url('${out}')`;
+      render(); toast("已更換頭貼");
+    });
+  });
 }
-function wireAccount(){
-  document.querySelectorAll("[data-acc]").forEach(b=> b.addEventListener("click", async ()=>{
+function wireAccount(root){
+  (root||document).querySelectorAll("[data-acc]").forEach(b=> b.addEventListener("click", async ()=>{
     const S = getSession(), a = b.dataset.acc;
-    if(a==="edit") openCareEdit("me");
+    if(a==="open") openAccount();
+    else if(a==="edit") openCareEdit("me");
     else if(a==="prefs") openPrefs();
     else if(a==="team") shareInvite();
     else if(a==="join") openJoinTeam();
     else if(a==="privacy") window.open(PRIVACY_URL, "_blank");
     else if(a==="delete") location.href = "mailto:iceyen37@gmail.com?subject=" + encodeURIComponent("安心呷 刪除帳號申請") + "&body=" + encodeURIComponent(`${tr("帳號")}：${S? S.account : ""}\n${tr("名字")}：${currentUser()}\n`);
-    else if(a==="login"){ state.tab = "login"; render(); }
+    else if(a==="login"){ closePrefs(); state.tab = "login"; render(); }
     else if(a==="logout"){
       const n = pendingCount();
       if(n && !b.dataset.confirm){ b.dataset.confirm = "1"; b.querySelector("span").textContent = tr(`還有 ${n} 筆紀錄沒同步，再按一次仍要登出`); return; }
@@ -1653,7 +1687,7 @@ function careSub(c){
   return tr(lastActivity(c.name));
 }
 function careRowHTML(c){
-  return `<button type="button" class="md-row md-rowbtn" data-careview="${esc(c.id)}"><div class="ph" style="background-image:url('${DEFAULT_AVATAR}')"></div>
+  return `<button type="button" class="md-row md-rowbtn" data-careview="${esc(c.id)}"><div class="ph" style="background-image:url('${careAvatar(c)}')"></div>
     <div class="tx"><div class="nm">${esc(c.name)}${c.me? `<small class="me-tag">（我）</small>`:""}${c.admin? ADMIN_BADGE : ""}</div><div class="sb"><span>${esc(c.role)}</span>・<span>${careSub(c)}</span></div></div>
     <span class="chev" aria-hidden="true">›</span></button>`;
 }
@@ -1689,6 +1723,7 @@ function openCareView(id){
   ].filter(r=>r[1]);
   const canEditLocal = !c.me && !c.member;
   openModal(c.name, `
+    <div class="cv-ph" style="background-image:url('${careAvatar(c)}')"></div>
     ${c.admin? `<p class="md-note">${ADMIN_BADGE}　建立這個照護團隊的人，可以移出成員</p>` : ""}
     <dl class="md-dl">${rows.map(([k,v])=>`<dt>${esc(tr(k))}</dt><dd>${k==="聯絡電話"? `<a href="tel:${esc(String(v).replace(/[^\d+#,]/g,""))}">${esc(v)}</a>` : esc(tr(v))}</dd>`).join("")}</dl>
     <div class="md-err" id="cv_err" role="alert"></div>
@@ -1769,6 +1804,8 @@ function openCareEdit(id){
   const S0 = getSession();
   openModal(title, `
   <form id="ceForm" novalidate>
+    <div class="md-photo-pick"><div class="ph" id="ce_ph" style="background-image:url('${careAvatar(cur)}')"></div>
+      <label>${isMe? "更換我的頭貼" : "更換頭貼"}<input type="file" id="ce_photo" accept="image/*" hidden></label></div>
     <label class="md-field"><span>名字</span><input id="ce_name" type="text" maxlength="20" placeholder="例：阿妮" value="${esc(cur? cur.name : "")}"></label>
     ${identityFieldsHTML(cur, "ce")}
     ${isMe && S0? `<label class="md-field"><span>Email</span><input id="ce_email" type="email" maxlength="100" placeholder="例：name@gmail.com" autocomplete="email" inputmode="email" value="${esc(S0.email||"")}" ${S0.google? "readonly":""}></label>${S0.google? `<p class="md-fine">Email 是您登入用的 Google 帳號，無法在這裡修改。</p>`:""}` : ""}
@@ -1778,13 +1815,19 @@ function openCareEdit(id){
     ${isMe? `<button type="button" class="md-btn danger" id="ce_logout">登出</button>` : ""}
   </form>`, layer=>{
     const f = layer.querySelector("#ceForm");
+    let photo = cur && cur.photo || "";
+    layer.querySelector("#ce_photo").addEventListener("change", async e=>{
+      const file = e.target.files && e.target.files[0]; e.target.value = ""; if(!file) return;
+      const out = await cropImage(file, 240); if(!out) return;
+      photo = out; layer.querySelector("#ce_ph").style.backgroundImage = `url('${photo}')`;
+    });
     wireIdentity(layer, "ce");
     const doSave = ()=>{
       const fail = m=>{ layer.querySelector("#ce_err").textContent = tr(m); return false; };
       const name = f.ce_name.value.trim();
       if(!name) return fail("請輸入名字");
       const idn = readIdentity(layer, "ce"); if(idn.error) return fail(idn.error);
-      const role = idn.role, prof = pickProf(idn);
+      const role = idn.role, prof = {...pickProf(idn), ...(photo? {photo} : {})};
       const others = loadCare();
       if(isMe){
         const old = currentUser(); const S = getSession();
@@ -2325,7 +2368,7 @@ function renderHome(){
   </div>`;
 }
 
-const HOME_STRIP_TPL = () => `<div class="home-strip"><button class="home-btn" id="goHome" aria-label="回主頁"><svg viewBox="0 0 20 20"><path d="M3 9.5L10 3.5l7 6V17h-4.5v-4.5h-5V17H3z"/></svg></button>${PREF_BTN}</div>`;
+const HOME_STRIP_TPL = () => `<div class="home-strip"><button class="home-btn" id="goHome" aria-label="回主頁"><svg viewBox="0 0 20 20"><path d="M3 9.5L10 3.5l7 6V17h-4.5v-4.5h-5V17H3z"/></svg></button>${PREF_BTN}<button type="button" class="me-btn" data-acc="open" aria-label="個人帳號設定" style="background-image:url('${careAvatar(caregivers()[0])}')"></button></div>`;
 
 /* ---------------- 質地卡 ---------------- */
 const IMG_LOGO = "data:image/png;base64,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";
@@ -4065,7 +4108,7 @@ function renderElder(){
   <div class="sec-sub">共 ${caregivers().length} 位照顧者協作中${getSession()? `<span class="sync-st">・<span>${syncStatusText()}</span></span>` : ""}</div>
   <div class="care-card">
     ${careGroupsHTML(caregivers(), c=>`<button type="button" class="care-item" data-act="careView" data-id="${esc(c.id)}">
-      <div class="ph" style="background-image:url('${DEFAULT_AVATAR}')"></div>
+      <div class="ph" style="background-image:url('${careAvatar(c)}')"></div>
       <div class="tx"><div class="nm">${esc(c.name)}<span class="role">${esc(c.role)}</span>${c.admin? ADMIN_BADGE : ""}</div><div class="upd">${careSub(c)}</div></div>
       <span class="more" aria-hidden="true">${IC.more}</span>
     </button>`)}
@@ -4148,7 +4191,7 @@ function wireEvents(){
     drawer._setOpen = setOpen;
   }
 
-  if(state.tab==="elder") wireAccount();
+  wireAccount(document.getElementById("screen"));
   // 紀錄冊：切換月份
   document.querySelectorAll("[data-mshift]").forEach(b=> b.addEventListener("click", ()=>{ state.mealSelDate = shiftMonth(state.mealSelDate, +b.dataset.mshift); render(); }));
   // 主頁
