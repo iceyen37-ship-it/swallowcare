@@ -208,6 +208,33 @@
   .drawer.closed .drawer-body{opacity:0;pointer-events:none;}
   .dsel{cursor:pointer;background:none;border:none;padding:0;font-family:inherit;position:relative;}
   .dsel input{position:absolute;inset:0;opacity:0;pointer-events:none;}
+  .month-pill .mp-nav{width:26px;height:26px;border-radius:50%;border:none;background:#f3f3f3;font-size:1.1rem;line-height:1;cursor:pointer;padding:0 0 2px;color:#111;}
+  .month-pill .mp-lb{min-width:4.8em;text-align:center;}
+  .meal-top{gap:0;}
+  .meal-top .avatar-ring{flex:none;}
+  .mo-btn{display:inline-flex;align-items:center;gap:6px;height:34px;border-radius:14px;border:none;background:#111;color:#fff600;font-family:inherit;font-size:.85rem;font-weight:800;padding:0 12px;white-space:nowrap;margin-left:8px;flex:none;cursor:pointer;}
+  .meal-top .grow{flex:1;}
+  .dsel .dsel-arrow{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:#fff;margin-left:-12px;}
+  .mo-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 14px;}
+  .mo-stats div{background:#f7f2ec;border-radius:16px;padding:10px 8px;text-align:center;}
+  .mo-stats b{display:block;font-size:1.5rem;font-weight:900;font-family:var(--num);}
+  .mo-stats span{font-size:.72rem;color:#777;font-weight:700;}
+  .mo-sec{font-size:.85rem;font-weight:900;margin:14px 0 8px;}
+  .mo-bar{display:flex;align-items:center;gap:10px;font-size:.85rem;margin:6px 0;}
+  .mo-bar > span:first-child{width:6.5em;flex:none;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .mo-bar i{display:block;height:12px;border-radius:6px;background:var(--orange);min-width:4px;}
+  .mo-bar em{font-style:normal;color:#888;font-size:.8rem;}
+  .mo-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;}
+  .mo-cal .h{font-size:.7rem;text-align:center;color:#999;font-weight:800;}
+  .mo-cal button{aspect-ratio:1;border:none;border-radius:10px;background:#f2f2f2;font-family:var(--num);font-size:.9rem;font-weight:800;color:#bbb;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1;padding:0;}
+  .mo-cal button small{font-size:.6rem;font-weight:700;}
+  .mo-cal button.l1{background:#FFE3CC;color:#8a4a17;} .mo-cal button.l2{background:#FFB27A;color:#5e2c06;} .mo-cal button.l3{background:#ED6C01;color:#fff;}
+  .mo-cal button.today{outline:2px solid #111;}
+  .dp-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:0 0 12px;}
+  .dp-cal .h{font-size:.75rem;text-align:center;color:#999;font-weight:800;padding:4px 0;}
+  .dp-cal button{height:44px;border:none;border-radius:12px;background:none;font-family:var(--num);font-size:1.05rem;font-weight:700;cursor:pointer;position:relative;}
+  .dp-cal button.out{color:#ccc;} .dp-cal button.has::after{content:"";position:absolute;bottom:5px;left:50%;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--orange);}
+  .dp-cal button.sel{background:#111;color:#fff600;} .dp-cal button.today:not(.sel){outline:2px solid #fff600;background:#fffbd0;}
   .entry.empty-entry{display:flex;width:calc(100% - 87px);font-family:inherit;justify-content:center;color:#9a9a9a;font-size:.85rem;padding:16px;border:1.5px dashed #e0d84a;background:rgba(255,255,255,.6);cursor:pointer;}
   .sheet{background:var(--grey-bg);margin:26px 11px 0;border-radius:40px 40px 0 0;padding:28px 32px 28px;min-height:330px;}
   .sheet-head{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
@@ -244,6 +271,11 @@
   .vs-hint{text-align:center;font-size:.75rem;color:#999;margin:-4px 0 0;}
   .vs-hint::before{content:"↑ ";}
   .f-field.combo{padding-right:0;}
+  .pick-list{display:flex;flex-direction:column;gap:8px;}
+  .pick-opt{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:52px;border:1.5px solid #eee;border-radius:16px;background:#fff;padding:0 16px;font-family:inherit;font-size:1rem;font-weight:800;color:#222;cursor:pointer;text-align:left;}
+  .pick-opt small{font-size:.78rem;color:#999;font-weight:600;}
+  .pick-opt.on{border-color:var(--orange);background:#FFF1E6;color:#D65A00;}
+  .combo-val{flex:1;text-align:right;font-size:.9rem;color:#222;padding:0 4px;}
   .combo-btn{display:flex;align-items:center;gap:2px;background:#FFF1E6;border:none;border-radius:14px;height:28px;padding:0 0 0 10px;margin-right:4px;font-family:inherit;font-size:.82rem;font-weight:700;color:#D65A00;cursor:pointer;flex-shrink:0;}
   .combo-btn .ph{color:#e0a27a;font-weight:500;}
   .combo-btn.bare{background:none;padding:0 0 0 4px;}
@@ -304,20 +336,20 @@
 
   /* ---- 飲食冊 ---- */
   .meal-top{display:flex;justify-content:space-between;align-items:center;padding:44px 30px 0 35px;}
-  .month-pill{display:inline-flex;align-items:center;gap:12px;background:#fff;border-radius:12px;height:24px;padding:0 14px 0 12px;font-size:.72rem;letter-spacing:.5px;color:#111;}
+  .month-pill{display:inline-flex;align-items:center;gap:10px;background:#fff;border-radius:14px;height:34px;padding:0 6px 0 12px;font-size:.95rem;font-weight:800;letter-spacing:.5px;color:#111;}
   .month-pill svg{width:18px;height:18px;stroke:#111;fill:none;stroke-width:1.4;}
   .avatar-ring{padding:0;cursor:pointer;width:42px;height:42px;border-radius:50%;border:2px solid #222;background:#fff center/cover;flex-shrink:0;}
   .cal-panel{background:#fffb83;margin:2px 11px 0;border-radius:24px;padding:12px 16px 10px;box-shadow:0 4px 8px rgba(0,0,0,.12);}
   .calendar{display:grid;grid-template-columns:repeat(7,1fr);row-gap:6px;}
-  .cal-h{text-align:center;font-size:.75rem;color:#111;padding:4px 0 4px;}
-  .cal-d{height:22px;display:flex;align-items:center;justify-content:center;font-size:.75rem;cursor:pointer;border:none;background:transparent;color:#111;padding:0;font-family:var(--num);}
-  .cal-d span{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+  .cal-h{text-align:center;font-size:.85rem;font-weight:800;color:#111;padding:4px 0 4px;}
+  .cal-d{height:34px;display:flex;align-items:center;justify-content:center;font-size:1.05rem;font-weight:700;cursor:pointer;border:none;background:transparent;color:#111;padding:0;font-family:var(--num);}
+  .cal-d span{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
   .cal-d.has span{background:#fff;}
   .cal-d.sel span{background:#111;color:#fff600;font-weight:800;}
   .cal-d.out{color:#c9c9c9;}
   .today-title{font-size:1.5rem;font-weight:900;color:#000;margin:20px 30px 0 44px;}
   .today-row{display:flex;align-items:flex-start;gap:14px;margin:12px 43px 0 44px;}
-  .today-date{border-left:6px solid #000;padding-left:12px;font-size:1.5rem;font-weight:900;line-height:1.08;font-family:var(--num);color:#000;}
+  .today-date{border-left:6px solid #000;padding-left:12px;font-size:2rem;font-weight:900;line-height:1.08;font-family:var(--num);color:#000;}
   .today-sum{flex:1;min-width:0;font-size:.85rem;color:#222;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-top:8px;text-align:right;}
   .entry{display:flex;align-items:center;background:#fff;border-radius:16px;margin:12px 43px 0 44px;padding:9px 12px 9px 18px;gap:12px;}
   .entry .tx{flex:1;min-width:0;}
@@ -935,7 +967,7 @@ function caregivers(){
 }
 function lastActivity(name){
   const evs = [
-    ...loadMeals().filter(m=>m.who===name).map(m=>({d:m.date, t:m.time||"", k:({food:"餐食",drink:"飲水",med:"藥物"})[m.cat]||"餐食"})),
+    ...loadMeals().filter(m=>m.who===name).map(m=>({d:m.date, t:m.time||"", k:catName(m.cat)})),
     ...loadVisits().filter(v=>v.recorder===name).map(v=>({d:v.date, t:v.time||"", k:"看診"}))
   ].sort((a,b)=> (b.d+b.t).localeCompare(a.d+a.t));
   if(!evs.length) return "尚無更新紀錄";
@@ -1034,6 +1066,7 @@ const I18N = {"en":{"你安心餵":"You feed with care,","我安心呷":"I eat w
 Object.entries({"使用 Google 帳號登入": ["Sign in with Google", "Masuk dengan Google", "Mag-sign in gamit ang Google"], "第一次登入會請您填寫名字，並輸入家人給的照護團隊邀請碼。": ["The first time you sign in, we'll ask for your name and the care team invite code from your family.", "Saat pertama kali masuk, Anda akan diminta mengisi nama dan kode undangan tim perawatan dari keluarga.", "Sa unang pag-sign in, hihingin namin ang iyong pangalan at ang invite code ng care team mula sa pamilya."], "Google 登入尚未設定完成，請稍後再試": ["Google sign-in is not set up yet. Please try again later.", "Masuk dengan Google belum siap. Silakan coba lagi nanti.", "Hindi pa handa ang Google sign-in. Subukan muli mamaya."], "請更新安心呷 App 到最新版本": ["Please update the app to the latest version", "Silakan perbarui aplikasi ke versi terbaru", "Paki-update ang app sa pinakabagong bersyon"], "這支手機還沒有 Google 帳號，請先到手機「設定」加入 Google 帳號": ["This phone has no Google account. Add one in the phone's Settings first.", "Ponsel ini belum punya akun Google. Tambahkan dulu di Pengaturan ponsel.", "Walang Google account ang phone na ito. Magdagdag muna sa Settings ng phone."], "Google 登入沒有成功，請再試一次": ["Google sign-in didn't work. Please try again.", "Gagal masuk dengan Google. Silakan coba lagi.", "Hindi nagtagumpay ang Google sign-in. Subukan muli."], "無法連線到 Google，請確認網路後再試": ["Can't reach Google. Check your connection and try again.", "Tidak bisa terhubung ke Google. Periksa koneksi lalu coba lagi.", "Hindi maabot ang Google. Suriin ang koneksyon at subukan muli."], "完成註冊": ["Finish sign-up", "Selesaikan pendaftaran", "Tapusin ang pag-sign up"], "完成註冊並登入": ["Finish and sign in", "Selesai dan masuk", "Tapusin at mag-sign in"], "以前用帳號密碼註冊過？連結舊帳號": ["Had an account with a password? Link it", "Pernah daftar dengan kata sandi? Hubungkan akun lama", "May dating account na may password? I-link ito"], "這個 Gmail 以前註冊過帳號，請輸入舊密碼完成連結": ["This Gmail already has an account. Enter its old password to link it.", "Gmail ini sudah punya akun. Masukkan kata sandi lama untuk menghubungkan.", "May account na ang Gmail na ito. Ilagay ang lumang password para i-link."], "連結舊帳號": ["Link old account", "Hubungkan akun lama", "I-link ang lumang account"], "輸入以前的帳號和密碼，確認是您本人後，舊帳號的紀錄和照護團隊都會保留，之後改用這個 Google 帳號登入。": ["Enter your old account and password. Once we confirm it's you, your records and care team are kept and you'll sign in with this Google account from now on.", "Masukkan akun dan kata sandi lama. Setelah dipastikan itu Anda, catatan dan tim perawatan tetap tersimpan, dan selanjutnya Anda masuk dengan akun Google ini.", "Ilagay ang dating account at password. Kapag nakumpirma, mananatili ang mga tala at care team, at gagamitin mo na ang Google account na ito sa pag-sign in."], "舊帳號": ["Old account", "Akun lama", "Lumang account"], "舊密碼": ["Old password", "Kata sandi lama", "Lumang password"], "連結並登入": ["Link and sign in", "Hubungkan dan masuk", "I-link at mag-sign in"], "忘記舊密碼的話，請來信 iceyen37@gmail.com，我們會協助您轉移紀錄。": ["Forgot the old password? Email iceyen37@gmail.com and we'll help move your records.", "Lupa kata sandi lama? Kirim email ke iceyen37@gmail.com, kami akan bantu memindahkan catatan Anda.", "Nakalimutan ang lumang password? Mag-email sa iceyen37@gmail.com at tutulungan ka naming ilipat ang mga tala."], "我沒有舊帳號，直接註冊": ["I don't have an old account — sign up", "Saya tidak punya akun lama, daftar saja", "Wala akong lumang account — mag-sign up"], "Email 是您登入用的 Google 帳號，無法在這裡修改。": ["This email is your Google sign-in account and can't be changed here.", "Email ini adalah akun Google untuk masuk dan tidak bisa diubah di sini.", "Ito ang Google account na ginagamit mo sa pag-sign in at hindi mababago dito."], "Google 登入已逾時，請重新登入": ["Google sign-in timed out. Please sign in again.", "Sesi Google habis. Silakan masuk lagi.", "Nag-time out ang Google sign-in. Mag-sign in muli."], "這個舊帳號已經連結其他 Google 帳號": ["This old account is already linked to another Google account", "Akun lama ini sudah terhubung ke akun Google lain", "Naka-link na ang lumang account na ito sa ibang Google account"], "請使用 Google 帳號登入": ["Please sign in with Google", "Silakan masuk dengan Google", "Mag-sign in gamit ang Google"], "登入中…": ["Signing in…", "Sedang masuk…", "Nagsa-sign in…"]}).forEach(([k,v])=>{ if(I18N.en[k]===undefined){ I18N.en[k]=v[0]; I18N.id[k]=v[1]; I18N.fil[k]=v[2]; } });  // Google 登入
 Object.entries({"主要管理者": ["Main admin", "Admin utama", "Pangunahing admin"], "家屬／照顧者": ["Family / caregiver", "Keluarga / pengasuh", "Pamilya / tagapag-alaga"], "醫療人員": ["Healthcare professional", "Tenaga kesehatan", "Propesyonal sa kalusugan"], "還沒有家屬或照顧者": ["No family members or caregivers yet", "Belum ada keluarga atau pengasuh", "Wala pang pamilya o tagapag-alaga"], "還沒有醫療人員，可以邀請營養師、語言治療師加入": ["No healthcare professionals yet — invite a dietitian or speech therapist", "Belum ada tenaga kesehatan — undang ahli gizi atau terapis wicara", "Wala pang propesyonal — imbitahin ang dietitian o speech therapist"], "把邀請連結傳給家人、看護或醫療人員，他們註冊後就能和你一起記錄、看到同一份資料。": ["Send the invite link to family, caregivers or healthcare professionals. Once they sign up, you'll share the same records.", "Kirim tautan undangan ke keluarga, pengasuh, atau tenaga kesehatan. Setelah mendaftar, kalian berbagi catatan yang sama.", "Ipadala ang invite link sa pamilya, tagapag-alaga o propesyonal. Pag nag-sign up sila, iisa na ang inyong mga tala."], "您是這個照護團隊的主要管理者，可以移出成員或把管理者交給別人。": ["You are this care team's main admin. You can remove members or hand the admin role to someone else.", "Anda admin utama tim ini. Anda bisa mengeluarkan anggota atau menyerahkan peran admin.", "Ikaw ang pangunahing admin. Maaari kang mag-alis ng miyembro o ipasa ang pagiging admin."], "主要管理者可以移出成員；如需移出某位成員，請聯絡主要管理者。": ["Only the main admin can remove members. Contact them if someone should be removed.", "Hanya admin utama yang bisa mengeluarkan anggota. Hubungi admin bila perlu.", "Ang pangunahing admin lang ang makakapag-alis ng miyembro. Kontakin sila kung kailangan."], "身分": ["Role", "Peran", "Tungkulin"], "專業": ["Profession", "Profesi", "Propesyon"], "服務醫院／機構": ["Hospital / organization", "Rumah sakit / lembaga", "Ospital / organisasyon"], "科別／單位": ["Department", "Departemen", "Departamento"], "主治醫師": ["Attending physician", "Dokter penanggung jawab", "Attending na doktor"], "聯絡電話": ["Phone", "Telepon", "Telepono"], "最近更新": ["Last update", "Pembaruan terakhir", "Huling update"], "建立這個照護團隊的人，可以移出成員": ["Created this care team and can remove members", "Pembuat tim perawatan ini, bisa mengeluarkan anggota", "Gumawa ng care team na ito at maaaring mag-alis ng miyembro"], "編輯": ["Edit", "Ubah", "I-edit"], "移除": ["Remove", "Hapus", "Alisin"], "移出照護團隊": ["Remove from care team", "Keluarkan dari tim", "Alisin sa care team"], "只有主要管理者可以移出成員。": ["Only the main admin can remove members.", "Hanya admin utama yang bisa mengeluarkan anggota.", "Ang pangunahing admin lang ang makakapag-alis ng miyembro."], "返回照顧者名單": ["Back to caregivers", "Kembali ke daftar pengasuh", "Bumalik sa listahan"], "確定移除？再按一次": ["Remove? Tap again", "Hapus? Ketuk lagi", "Alisin? Pindutin muli"], "交出後您就不能再移出成員，再按一次確認": ["You won't be able to remove members after this. Tap again to confirm.", "Setelah ini Anda tidak bisa mengeluarkan anggota. Ketuk lagi untuk konfirmasi.", "Hindi ka na makakapag-alis ng miyembro pagkatapos. Pindutin muli para kumpirmahin."], "自行填入…": ["Type your own…", "Isi sendiri…", "Sariling sagot…"], "請填寫關係": ["Your relationship", "Hubungan Anda", "Inyong relasyon"], "例：鄰居、乾女兒": ["e.g. neighbor, goddaughter", "contoh: tetangga, anak angkat", "hal.: kapitbahay, inaanak"], "請填寫專業": ["Your profession", "Profesi Anda", "Inyong propesyon"], "例：職能治療師、護理師": ["e.g. occupational therapist, nurse", "contoh: terapis okupasi, perawat", "hal.: occupational therapist, nars"], "例：臺北醫學大學附設醫院": ["e.g. Taipei Medical University Hospital", "contoh: Taipei Medical University Hospital", "hal.: Taipei Medical University Hospital"], "科別／單位（選填）": ["Department (optional)", "Departemen (opsional)", "Departamento (opsyonal)"], "例：營養室、復健科": ["e.g. Nutrition, Rehabilitation", "contoh: Gizi, Rehabilitasi", "hal.: Nutrition, Rehabilitation"], "主治醫師（選填）": ["Attending physician (optional)", "Dokter penanggung jawab (opsional)", "Attending na doktor (opsyonal)"], "例：王大明 醫師": ["e.g. Dr. Wang", "contoh: dr. Wang", "hal.: Dr. Wang"], "聯絡電話（選填，團隊成員看得到）": ["Phone (optional, visible to your team)", "Telepon (opsional, terlihat oleh tim)", "Telepono (opsyonal, makikita ng team)"], "例：02-2737-2181 分機 1234": ["e.g. 02-2737-2181 ext. 1234", "contoh: 02-2737-2181 ext. 1234", "hal.: 02-2737-2181 ext. 1234"], "請填寫您的專業": ["Please enter your profession", "Silakan isi profesi Anda", "Ilagay ang iyong propesyon"], "請填寫與長輩的關係": ["Please enter your relationship to the elder", "Silakan isi hubungan dengan lansia", "Ilagay ang relasyon mo sa nakatatanda"], "請填寫服務的醫院或機構": ["Please enter your hospital or organization", "Silakan isi rumah sakit atau lembaga", "Ilagay ang ospital o organisasyon"], "營養師": ["Dietitian", "Ahli gizi", "Dietitian"], "語言治療師": ["Speech therapist", "Terapis wicara", "Speech therapist"], "復健科醫師": ["Rehabilitation physician", "Dokter rehabilitasi", "Rehabilitation na doktor"], "我對長輩的稱呼（選填）": ["What I call the elder (optional)", "Panggilan saya untuk lansia (opsional)", "Tawag ko sa nakatatanda (opsyonal)"], "例：奶奶、王先生、陳女士": ["e.g. Grandma, Mr. Wang, Ms. Chen", "contoh: Nenek, Pak Wang, Bu Chen", "hal.: Lola, G. Wang, Gng. Chen"], "稱呼只有您自己看得到，每位照顧者可以用自己習慣的叫法。": ["Only you see this. Each caregiver can use their own name for the elder.", "Hanya Anda yang melihat ini. Setiap pengasuh bisa memakai panggilannya sendiri.", "Ikaw lang ang nakakakita nito. Bawat tagapag-alaga ay may sariling tawag."], "生日（選填）": ["Birthday (optional)", "Tanggal lahir (opsional)", "Kaarawan (opsyonal)"], "請輸入長輩的年齡": ["Please enter the elder's age", "Silakan isi usia lansia", "Ilagay ang edad ng nakatatanda"], "請輸入正確的生日": ["Please enter a valid birthday", "Silakan isi tanggal lahir yang benar", "Ilagay ang tamang kaarawan"], "年齡和生日對不起來，請再確認一次": ["Age and birthday don't match. Please check again.", "Usia dan tanggal lahir tidak cocok. Periksa lagi.", "Hindi tugma ang edad at kaarawan. Paki-check muli."], "調整照片": ["Adjust photo", "Sesuaikan foto", "Ayusin ang larawan"], "拖曳照片移動位置，用下方滑桿或兩指放大縮小": ["Drag to move. Use the slider or pinch to zoom.", "Seret untuk menggeser. Pakai penggeser atau cubit untuk zoom.", "I-drag para ilipat. Gamitin ang slider o pinch para mag-zoom."], "縮放": ["Zoom", "Zoom", "Zoom"], "取消": ["Cancel", "Batal", "Kanselahin"], "使用這張": ["Use photo", "Pakai foto ini", "Gamitin ito"], "先生": ["Mr.", "Bapak", "Ginoo"], "女士": ["Ms.", "Ibu", "Ginang"], "伯伯": ["Uncle", "Paman", "Tito"], "阿姨": ["Auntie", "Bibi", "Tita"], "下載本週照片": ["Download this week", "Unduh minggu ini", "I-download ngayong linggo"], "下載一週的照片與紀錄": ["Download a week of photos and records", "Unduh foto dan catatan seminggu", "I-download ang larawan at tala ng isang linggo"], "下載一週的飲食照片": ["Download a week of meal photos", "Unduh foto makan seminggu", "I-download ang larawan ng pagkain sa isang linggo"], "上一週": ["Previous week", "Minggu sebelumnya", "Nakaraang linggo"], "下一週": ["Next week", "Minggu berikutnya", "Susunod na linggo"], "沒有紀錄": ["No records", "Tidak ada catatan", "Walang tala"], "下載週報圖（一張圖片）": ["Download weekly summary (one image)", "Unduh ringkasan mingguan (satu gambar)", "I-download ang lingguhang buod (isang larawan)"], "下載所有照片（壓縮檔）": ["Download all photos (ZIP)", "Unduh semua foto (ZIP)", "I-download lahat ng larawan (ZIP)"], "週報圖適合用 LINE 傳給家人或醫療人員；壓縮檔裡是每張原始照片，檔名就是日期、時間、餐點和記錄者，另附一份紀錄清單。": ["The summary image is easy to send by LINE. The ZIP has every original photo, named by date, time, meal and recorder, plus a record list.", "Gambar ringkasan mudah dikirim lewat LINE. ZIP berisi semua foto asli, dinamai tanggal, jam, makanan dan pencatat, plus daftar catatan.", "Madaling ipadala sa LINE ang buod. Nasa ZIP ang bawat larawan, may pangalang petsa, oras, pagkain at nagtala, at listahan ng mga tala."], "製作中…": ["Preparing…", "Menyiapkan…", "Inihahanda…"], "下載沒有成功，請確認網路後再試一次": ["Download failed. Check your connection and try again.", "Unduhan gagal. Periksa koneksi lalu coba lagi.", "Hindi na-download. Suriin ang koneksyon at subukan muli."], "的一週飲食紀錄": ["'s weekly meal record", "- catatan makan mingguan", "- lingguhang tala ng pagkain"], "這天沒有紀錄": ["No records this day", "Tidak ada catatan hari ini", "Walang tala sa araw na ito"], "照片無法載入": ["Photo unavailable", "Foto tidak tersedia", "Hindi ma-load ang larawan"], "沒有照片": ["No photo", "Tanpa foto", "Walang larawan"], "記錄者": ["Recorded by", "Dicatat oleh", "Itinala ni"], "製表日期": ["Created", "Dibuat", "Ginawa"], "（照片無法下載）": ["(photo unavailable)", "(foto tidak tersedia)", "(hindi ma-download)"], "已存到手機的「下載」資料夾": ["Saved to the phone's Downloads folder", "Disimpan ke folder Unduhan", "Na-save sa Downloads folder"], "請選擇要存放或分享的位置": ["Choose where to save or share", "Pilih tempat menyimpan atau berbagi", "Piliin kung saan ise-save o ibabahagi"], "存檔沒有成功，請再試一次": ["Couldn't save. Please try again.", "Gagal menyimpan. Coba lagi.", "Hindi na-save. Subukan muli."], "已開始下載": ["Download started", "Unduhan dimulai", "Nagsimula ang pag-download"], "只有主要管理者可以這樣做": ["Only the main admin can do this", "Hanya admin utama yang bisa", "Ang pangunahing admin lang ang makakagawa nito"], "您已被移出這個照護團隊": ["You've been removed from this care team", "Anda telah dikeluarkan dari tim ini", "Inalis ka na sa care team na ito"], "這位成員已經不在照護團隊裡": ["This member is no longer in the care team", "Anggota ini sudah tidak di tim", "Wala na sa care team ang miyembrong ito"], "不能移出自己": ["You can't remove yourself", "Tidak bisa mengeluarkan diri sendiri", "Hindi mo maaaring alisin ang sarili"], "日": ["Sun", "Min", "Lin"], "一": ["Mon", "Sen", "Lun"], "二": ["Tue", "Sel", "Mar"], "三": ["Wed", "Rab", "Miy"], "四": ["Thu", "Kam", "Huw"], "五": ["Fri", "Jum", "Biy"], "六": ["Sat", "Sab", "Sab"]}).forEach(([k,v])=>{ if(I18N.en[k]===undefined){ I18N.en[k]=v[0]; I18N.id[k]=v[1]; I18N.fil[k]=v[2]; } });  // 照顧者分類、長輩資料、週報
 Object.entries({"地點": ["Place", "Tempat", "Lugar"], "醫療人員": ["Healthcare professional", "Tenaga kesehatan", "Propesyonal sa kalusugan"], "名稱，例：福華診所": ["Name, e.g. Fuhua Clinic", "Nama, mis. Klinik Fuhua", "Pangalan, hal. Fuhua Clinic"], "類型": ["Type", "Jenis", "Uri"], "類別": ["Type", "Jenis", "Uri"], "姓名": ["Name", "Nama", "Pangalan"], "選擇或輸入": ["Choose or type", "Pilih atau ketik", "Pumili o mag-type"], "地點類型": ["Place type", "Jenis tempat", "Uri ng lugar"], "診所": ["Clinic", "Klinik", "Klinika"], "醫院": ["Hospital", "Rumah sakit", "Ospital"], "最近去過": ["Recent", "Terakhir dikunjungi", "Kamakailan"], "其他（自行輸入）": ["Other (type your own)", "Lainnya (ketik sendiri)", "Iba pa (sariling sagot)"], "照護團隊的醫療人員": ["Care team professionals", "Tenaga kesehatan tim", "Mga propesyonal ng team"], "醫師": ["Doctor", "Dokter", "Doktor"], "治療師": ["Therapist", "Terapis", "Therapist"], "照顧者": ["Caregivers", "Pengasuh", "Mga tagapag-alaga"], "請輸入地點類型": ["Enter place type", "Ketik jenis tempat", "Ilagay ang uri ng lugar"], "請輸入醫療人員類別": ["Enter professional type", "Ketik jenis tenaga kesehatan", "Ilagay ang uri ng propesyonal"], "例：衛生所、長照中心": ["e.g. health center, long-term care center", "mis. puskesmas, pusat perawatan lansia", "hal. health center, long-term care"], "例：護理師、藥師": ["e.g. nurse, pharmacist", "mis. perawat, apoteker", "hal. nars, parmasyutiko"], "確定": ["OK", "OK", "OK"], "看診內容": ["Visit notes", "Catatan kunjungan", "Tala ng pagbisita"], "返回": ["Back", "Kembali", "Bumalik"], "完成": ["Done", "Selesai", "Tapos"], "醫囑": ["Doctor's orders", "Instruksi dokter", "Bilin ng doktor"], "建議質地等級": ["Suggested texture level", "Level tekstur yang disarankan", "Iminungkahing antas ng tekstura"], "用藥": ["Medication", "Obat", "Gamot"], "復健／練習": ["Rehab / exercises", "Rehabilitasi / latihan", "Rehab / ehersisyo"], "複診時間": ["Next appointment", "Jadwal kontrol", "Susunod na appointment"], "記錄這次看診的醫囑、建議的質地等級、用藥和複診時間…": ["Write down orders, suggested texture level, medication and next appointment…", "Catat instruksi, level tekstur, obat dan jadwal kontrol…", "Isulat ang bilin, antas ng tekstura, gamot at susunod na appointment…"], "請選擇看診日期": ["Please choose the visit date", "Pilih tanggal kunjungan", "Piliin ang petsa"], "請選擇或輸入紀錄者": ["Please choose or type who recorded this", "Pilih atau ketik pencatat", "Piliin o i-type kung sino ang nagtala"], "請至少填寫地點、醫療人員或看診內容": ["Fill in at least the place, professional or notes", "Isi minimal tempat, tenaga kesehatan, atau catatan", "Punan man lang ang lugar, propesyonal o tala"], "醫囑、建議等級、複診時間": ["Orders, texture level, next visit", "Instruksi, level, jadwal kontrol", "Bilin, antas, susunod na pagbisita"], "尚無看診紀錄。新增第一筆後，看診的醫囑會顯示在這裡，越上面越新。": ["No visits yet. After you add one, doctor's orders appear here, newest on top.", "Belum ada kunjungan. Setelah ditambah, instruksi muncul di sini, terbaru di atas.", "Wala pang pagbisita. Pag nagdagdag, lalabas dito ang bilin, pinakabago sa itaas."]}).forEach(([k,v])=>{ if(I18N.en[k]===undefined){ I18N.en[k]=v[0]; I18N.id[k]=v[1]; I18N.fil[k]=v[2]; } });  // 安心錄
+Object.entries({"本月總覽": ["Monthly overview", "Ringkasan bulan", "Buod ng buwan"], "上個月": ["Previous month", "Bulan lalu", "Nakaraang buwan"], "下個月": ["Next month", "Bulan depan", "Susunod na buwan"], "點心": ["Snack", "Camilan", "Meryenda"], "營養補充品": ["Supplement", "Suplemen", "Supplement"], "增稠飲品": ["Thickened drink", "Minuman kental", "Pinalapot na inumin"], "自己加的": ["Added by you", "Ditambahkan", "Idinagdag mo"], "選擇類別": ["Choose category", "Pilih kategori", "Pumili ng kategorya"], "選擇照顧者": ["Choose caregiver", "Pilih pengasuh", "Pumili ng tagapag-alaga"], "例：水果、流質飲食": ["e.g. fruit, liquid diet", "mis. buah, makanan cair", "hal. prutas, liquid diet"], "例：外籍看護 Siti": ["e.g. caregiver Siti", "mis. pengasuh Siti", "hal. caregiver Siti"], "請輸入類別": ["Enter category", "Ketik kategori", "Ilagay ang kategorya"], "選擇日期": ["Choose date", "Pilih tanggal", "Pumili ng petsa"], "回到今天": ["Back to today", "Kembali ke hari ini", "Bumalik sa ngayon"], "有橘色小點的日子已經有紀錄。": ["Days with an orange dot already have records.", "Hari dengan titik oranye sudah ada catatan.", "May tala na ang mga araw na may orange na tuldok."], "換日期": ["Change date", "Ganti tanggal", "Palitan ang petsa"], "有記錄的天數": ["Days recorded", "Hari tercatat", "Mga araw na may tala"], "總紀錄筆數": ["Total records", "Total catatan", "Kabuuang tala"], "照片": ["Photos", "Foto", "Mga larawan"], "每天的紀錄": ["Records per day", "Catatan per hari", "Tala bawat araw"], "類別": ["Category", "Kategori", "Kategorya"], "誰記錄的": ["Recorded by", "Dicatat oleh", "Itinala ni"], "還沒有記錄的日子": ["Days without records", "Hari tanpa catatan", "Mga araw na walang tala"], "這個月還沒有飲食紀錄。": ["No meal records this month yet.", "Belum ada catatan makan bulan ini.", "Wala pang tala ng pagkain ngayong buwan."], "下載這個月的週報與照片": ["Download this month's weekly reports and photos", "Unduh laporan mingguan dan foto bulan ini", "I-download ang lingguhang ulat at larawan ngayong buwan"]}).forEach(([k,v])=>{ if(I18N.en[k]===undefined){ I18N.en[k]=v[0]; I18N.id[k]=v[1]; I18N.fil[k]=v[2]; } });  // 飲食冊
 Object.entries({"Email": ["Email", "Email", "Email"], "例：name@gmail.com": ["e.g. name@gmail.com", "contoh: name@gmail.com", "hal.: name@gmail.com"], "同意研究團隊以 Email 邀請我參與研究（選填）": ["I agree the research team may invite me to studies by email (optional)", "Saya setuju tim peneliti mengundang saya ikut penelitian lewat email (opsional)", "Pumapayag akong imbitahan ng research team sa pag-aaral sa email (opsyonal)"], "Email 只用於聯絡您與協助找回帳號，不會公開或提供給第三方。": ["Your email is only used to contact you and help recover your account. It is never made public or shared.", "Email hanya dipakai untuk menghubungi Anda dan memulihkan akun, tidak dipublikasikan atau dibagikan.", "Gagamitin lang ang email para makontak ka at mabawi ang account; hindi ito ipapakita o ibabahagi."], "請輸入正確的 Email": ["Please enter a valid email", "Masukkan email yang benar", "Ilagay ang tamang email"], "Email 格式不正確": ["Invalid email format", "Format email tidak benar", "Mali ang format ng email"], "補填 Email": ["Add your email", "Tambahkan email", "Idagdag ang email"], "請留下您的 Email，帳號有問題時方便聯絡您，也能協助找回帳號。": ["Please add your email so we can reach you about your account and help you recover it.", "Tambahkan email Anda agar kami bisa menghubungi Anda soal akun dan membantu memulihkannya.", "Idagdag ang iyong email para makontak ka namin tungkol sa account at matulungan kang mabawi ito."], "稍後再填": ["Later", "Nanti saja", "Mamaya na"], "已儲存 Email": ["Email saved", "Email tersimpan", "Na-save ang email"]}).forEach(([k,v])=>{ I18N.en[k]=v[0]; I18N.id[k]=v[1]; I18N.fil[k]=v[2]; });  // Email 欄位
 /* ================= 多語言（中文／English／Bahasa Indonesia／Filipino）與字體大小 ================= */
 const LANGS = [
@@ -1641,7 +1674,7 @@ function openCareEdit(id){
 function openAllMeals(){
   const meals = loadMeals().sort((a,b)=> (b.date+(b.time||"")).localeCompare(a.date+(a.time||"")));
   const days = [...new Set(meals.map(m=>m.date))];
-  const CAT = {food:"餐食", drink:"飲水", med:"藥物"};
+  const CAT = MEAL_CAT;
   openModal(`${elderName()}的餐飲紀錄`, (days.length? `<button type="button" class="md-btn ghost" id="am_dl" style="margin:0 0 14px">下載一週的照片與紀錄</button>` : "") + (days.length? days.map(d=>{
     const [y,mo,da] = d.split("-").map(Number);
     return `<div class="md-day"><span>${mo}月${da}日</span><button type="button" data-goday="${d}">查看這天</button></div>` +
@@ -1657,7 +1690,7 @@ function openAllMeals(){
 
 /* ---------- 下載一週的飲食照片（週報圖＋壓縮檔） ---------- */
 const IC_DL = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-const MEAL_CAT = {food:"餐食", drink:"飲水", med:"藥物"};
+const MEAL_CAT = new Proxy({}, {get:(_,c)=> catName(c)});
 const WEEKDAY = ["日","一","二","三","四","五","六"];
 function weekOf(offset){
   const t = new Date(); t.setHours(0,0,0,0);
@@ -3482,7 +3515,10 @@ function creditsFooter(){
 }
 
 /* ---------------- 飲食冊（每日飲食紀錄） ---------------- */
-function catIcon(c){ return c==="drink" ? "🥛" : (c==="med" ? "💊" : "🍚"); }
+// 飲食類別：內建的用代號，自行輸入的存成「x:文字」
+const MEAL_CATS = [["food","餐食"],["drink","飲水"],["snack","點心"],["supp","營養補充品"],["thick","增稠飲品"],["med","藥物"]];
+function catName(c){ if(c && String(c).startsWith("x:")) return String(c).slice(2); const f = MEAL_CATS.find(x=>x[0]===c); return f? f[1] : "餐食"; }
+function catIcon(c){ return ({drink:"🥛", med:"💊", snack:"🍪", supp:"🥤", thick:"🥣"})[c] || "🍚"; }
 function renderMeal(){
   const allMeals = loadMeals();
   const meals = allMeals.filter(m=>m.date===state.mealSelDate).sort((a,b)=>a.time.localeCompare(b.time));
@@ -3491,7 +3527,9 @@ function renderMeal(){
   const ampm = t=>{ const [h,m]=t.split(":").map(Number); return `${String(h%12||12).padStart(2,"0")}:${String(m).padStart(2,"0")} ${h<12?"AM":"PM"}`; };
   return `
   <div class="meal-top">
-    <span class="month-pill">${IC.calPill}${MONTHS_EN[d.getMonth()]}</span>
+    <span class="month-pill">${IC.calPill}<button type="button" class="mp-nav" data-mshift="-1" aria-label="上個月">‹</button><span class="mp-lb">${d.getFullYear()!==new Date().getFullYear()? d.getFullYear()+" " : ""}${MONTHS_EN[d.getMonth()]}</span><button type="button" class="mp-nav" data-mshift="1" aria-label="下個月">›</button></span>
+    <button type="button" class="mo-btn" data-act="monthOverview">本月總覽</button>
+    <span class="grow"></span>
     <button class="avatar-ring" data-tabgo="elder" style="background-image:url('${elderPhoto()}')" aria-label="長輩卡"></button>
   </div>
   <div class="cal-panel">${renderMiniCalendar(d, allMeals)}</div>
@@ -3519,7 +3557,7 @@ function renderMealDrawer(){
   <div class="drawer ${state.mealSheetOpen? "" : "closed"}" id="mealDrawer">
     <button class="drawer-grip" id="drawerGrip" type="button" aria-label="${state.mealSheetOpen? "收起" : "展開"}新增紀錄" aria-expanded="${state.mealSheetOpen}"><span></span></button>
     <div class="sheet-head" id="drawerHead">
-      <label class="dsel" id="mealDatePick">${d.getMonth()+1}月${d.getDate()}日<i></i><input type="date" id="m_date" value="${state.mealSelDate}" aria-label="選擇日期"></label>
+      <button type="button" class="dsel" id="mealDatePick" aria-label="換日期">${d.getMonth()+1}月${d.getDate()}日<span class="dsel-arrow"><i></i></span></button>
       <div class="seg" id="mealSeg"><span class="on" style="cursor:default">記錄</span></div>
       <label class="pill-btn cam-btn ${state.mealPhoto?"has":""}" id="mealCam" aria-label="拍照記錄" ${state.mealPhoto? `style="background-image:url('${state.mealPhoto}')"` : ""}>${state.mealPhoto? "" : IC.cam}<input type="file" id="m_photo" accept="image/*" capture="environment" hidden></label>
       ${state.mealPhoto? `<button class="cam-x" type="button" id="mealCamX" aria-label="移除照片">×</button>` : ""}
@@ -3527,12 +3565,9 @@ function renderMealDrawer(){
     <div class="drawer-body">
       <form id="mealForm">
         <div class="f-field"><label for="m_name">名稱</label>${caret}<input type="text" id="m_name" placeholder="輸入菜色" required></div>
-        <div class="f-field"><label for="m_cat">類別</label>${caret}
-          <select id="m_cat"><option value="food">餐食</option><option value="drink">飲水</option><option value="med">藥物</option></select>
-          ${tri}${IC.dine()}
-        </div>
+        <div class="f-field combo clickable" id="mf_cat"><label>類別</label>${caret}<input type="hidden" id="m_cat" value="food"><span class="combo-val" id="m_cat_lb">餐食</span><button type="button" class="combo-btn bare" data-mcombo="cat" aria-label="選擇類別">${tri}</button></div>
         <div class="f-field"><label for="m_note">備註</label>${caret}<input type="text" id="m_note" placeholder="選填"></div>
-        <div class="f-field clickable"><label for="m_who">照顧者</label>${caret}<select id="m_who" class="sel-right" required><option value="" disabled selected hidden>選擇照顧者</option>${who.map(n=>`<option value="${n}">${n}</option>`).join("")}</select>${tri}</div>
+        <div class="f-field combo"><label for="m_who">照顧者</label>${caret}<input type="text" id="m_who" placeholder="選擇或輸入" value="${esc(currentUser())}" autocomplete="off"><button type="button" class="combo-btn bare" data-mcombo="who" aria-label="選擇照顧者">${tri}</button></div>
         <button type="submit" class="btn-primary">儲存紀錄</button>
       </form>
     </div>
@@ -3555,6 +3590,92 @@ function renderMiniCalendar(selectedDate, allMeals){
     html += `<button class="${cls}" data-date="${ds}" aria-label="${dt.getMonth()+1}月${dt.getDate()}日"><span>${dt.getDate()}</span></button>`;
   }
   return html + `</div>`;
+}
+
+/* ---------- 飲食冊：類別／照顧者選單、換日期、本月總覽 ---------- */
+function setMealCat(c){ const i = document.getElementById("m_cat"), lb = document.getElementById("m_cat_lb"); if(!i) return; i.value = c||"food"; lb.textContent = tr(catName(i.value)); }
+let _mealKeep = null;
+function keepMealForm(){ const g = id=>document.getElementById(id); if(!g("mealForm")) return; _mealKeep = {name:g("m_name").value, cat:g("m_cat").value, note:g("m_note").value, who:g("m_who").value}; }
+function restoreMealForm(){ const g = id=>document.getElementById(id); if(!_mealKeep || !g("mealForm")) return; g("m_name").value = _mealKeep.name; setMealCat(_mealKeep.cat); g("m_note").value = _mealKeep.note; g("m_who").value = _mealKeep.who; _mealKeep = null; }
+function openMealCombo(btn){
+  if(!btn) return;
+  const kind = btn.dataset.mcombo, cur = kind==="cat" ? document.getElementById("m_cat").value : document.getElementById("m_who").value;
+  const used = [...new Set(loadMeals().map(m=>m.cat).filter(c=>String(c).startsWith("x:")))];
+  const opts = kind==="cat"
+    ? [...MEAL_CATS.map(([v,l])=>({label:l, v})), ...used.map(v=>({label:catName(v), v, sub:"自己加的"}))]
+    : caregivers().map(c=>({label:c.name, sub:c.role, v:c.name}));
+  const pick = v=>{ if(kind==="cat") setMealCat(v); else document.getElementById("m_who").value = v; closePrefs(); };
+  openModal(kind==="cat"? "選擇類別" : "選擇照顧者", `
+    <div class="pick-list">${opts.map((o,i)=>`<button type="button" class="pick-opt ${o.v===cur?"on":""}" data-i="${i}"><span>${esc(tr(o.label))}</span>${o.sub? `<small>${esc(tr(o.sub))}</small>` : ""}</button>`).join("")}</div>
+    <div class="md-field" style="margin-top:12px"><span>其他（自行輸入）</span>
+      <div class="cm-other" style="padding:0"><input type="text" id="pk_other" maxlength="${kind==="cat"?10:20}" placeholder="${esc(tr(kind==="cat"? "例：水果、流質飲食" : "例：外籍看護 Siti"))}"><button type="button" id="pk_ok">${esc(tr("確定"))}</button></div></div>`, layer=>{
+    layer.querySelectorAll(".pick-opt").forEach(b=>b.addEventListener("click", ()=> pick(opts[+b.dataset.i].v)));
+    const inp = layer.querySelector("#pk_other");
+    const ok = ()=>{ const v = inp.value.trim(); if(!v){ inp.focus(); return; }
+      if(kind==="cat"){ const f = MEAL_CATS.find(x=>x[1]===v); pick(f? f[0] : "x:"+v); } else pick(v); };
+    layer.querySelector("#pk_ok").addEventListener("click", ok);
+    inp.addEventListener("keydown", e=>{ if(e.key==="Enter"){ e.preventDefault(); ok(); } });
+  });
+}
+function shiftMonth(ds, n){
+  const [y,m,d] = ds.split("-").map(Number), t = new Date(y, m-1+n, 1);
+  const last = new Date(t.getFullYear(), t.getMonth()+1, 0).getDate();
+  return fmt(new Date(t.getFullYear(), t.getMonth(), Math.min(d, last)));
+}
+function monthGrid(ym){
+  const [y,m] = ym.split("-").map(Number), first = new Date(y, m-1, 1), lead = (first.getDay()+6)%7;
+  const start = new Date(y, m-1, 1-lead), n = Math.ceil((lead + new Date(y, m, 0).getDate())/7)*7;
+  return Array.from({length:n}, (_,i)=>{ const d = new Date(start); d.setDate(start.getDate()+i); return d; });
+}
+const WK_H = ["一","二","三","四","五","六","日"];
+/* 換日期：App 內建的日曆（iPhone、Android 都一樣好按） */
+function openDatePicker(cur, onPick, ym){
+  ym = ym || cur.slice(0,7);
+  const [y,m] = ym.split("-").map(Number), has = new Set(loadMeals().map(x=>x.date)), today = fmt(new Date());
+  openModal("選擇日期", `
+    <div class="wk-nav"><button type="button" data-dpm="-1" aria-label="上個月">‹</button><div><b>${y} 年 ${m} 月</b></div><button type="button" data-dpm="1" aria-label="下個月">›</button></div>
+    <div class="dp-cal">${WK_H.map(h=>`<div class="h">${tr(h)}</div>`).join("")}${monthGrid(ym).map(d=>{ const ds = fmt(d);
+      return `<button type="button" data-dp="${ds}" class="${d.getMonth()!==m-1?"out":""} ${has.has(ds)?"has":""} ${ds===cur?"sel":""} ${ds===today?"today":""}" aria-label="${d.getMonth()+1}月${d.getDate()}日">${d.getDate()}</button>`; }).join("")}</div>
+    <button type="button" class="md-btn ghost" data-dp="${today}">回到今天</button>
+    <p class="md-fine">有橘色小點的日子已經有紀錄。</p>`, layer=>{
+    layer.querySelectorAll("[data-dpm]").forEach(b=>b.addEventListener("click", ()=> openDatePicker(cur, onPick, shiftMonth(ym+"-01", +b.dataset.dpm).slice(0,7))));
+    layer.querySelectorAll("[data-dp]").forEach(b=>b.addEventListener("click", ()=>{ closePrefs(); onPick(b.dataset.dp); }));
+  });
+}
+/* 本月總覽 */
+function openMonthOverview(ym){
+  const [y,m] = ym.split("-").map(Number), today = fmt(new Date());
+  const meals = loadMeals().filter(x=>x.date.startsWith(ym));
+  const daysIn = new Date(y, m, 0).getDate();
+  const passed = ym < today.slice(0,7) ? daysIn : (ym===today.slice(0,7) ? +today.slice(8) : 0);
+  const recDays = new Set(meals.map(x=>x.date));
+  const perDay = {}; meals.forEach(x=> perDay[x.date] = (perDay[x.date]||0)+1);
+  const count = (arr, key)=>{ const o = {}; arr.forEach(x=>{ const k = key(x); o[k] = (o[k]||0)+1; }); return Object.entries(o).sort((a,b)=>b[1]-a[1]); };
+  const cats = count(meals, x=>catName(x.cat)), whos = count(meals, x=>x.who||"—");
+  const bars = list=>{ const max = Math.max(1, ...list.map(x=>x[1])); return list.map(([k,v])=>`<div class="mo-bar"><span>${esc(tr(k))}</span><i style="width:${Math.round(v/max*60)}%"></i><em>${v}</em></div>`).join(""); };
+  const missing = []; for(let i=1;i<=passed;i++){ const ds = `${ym}-${String(i).padStart(2,"0")}`; if(!recDays.has(ds)) missing.push(i); }
+  openModal("本月總覽", `
+    <div class="wk-nav"><button type="button" data-mo="-1" aria-label="上個月">‹</button><div><b>${y} 年 ${m} 月</b><span>${esc(elderName())}</span></div><button type="button" data-mo="1" aria-label="下個月" ${ym>=today.slice(0,7)?"disabled":""}>›</button></div>
+    <div class="mo-stats">
+      <div><b>${recDays.size}<small style="font-size:.8rem;color:#999">/${passed||daysIn}</small></b><span>有記錄的天數</span></div>
+      <div><b>${meals.length}</b><span>總紀錄筆數</span></div>
+      <div><b>${meals.filter(x=>x.img).length}</b><span>照片</span></div>
+    </div>
+    ${meals.length? `<div class="mo-sec">每天的紀錄</div>
+    <div class="mo-cal">${WK_H.map(h=>`<div class="h">${tr(h)}</div>`).join("")}${monthGrid(ym).map(d=>{ const ds = fmt(d), n = perDay[ds]||0, inM = d.getMonth()===m-1;
+      return inM? `<button type="button" data-goday="${ds}" class="${n? (n>=5?"l3":n>=3?"l2":"l1") : ""} ${ds===today?"today":""}" aria-label="${m}月${d.getDate()}日 ${n} 筆">${d.getDate()}${n? `<small>${n}</small>` : ""}</button>` : `<span></span>`; }).join("")}</div>
+    <div class="mo-sec">類別</div>${bars(cats)}
+    <div class="mo-sec">誰記錄的</div>${bars(whos)}
+    ${missing.length? `<div class="mo-sec">還沒有記錄的日子</div><p class="md-note">${missing.map(d=>`${m}/${d}`).join("、")}</p>` : ""}` : `<p class="md-note">這個月還沒有飲食紀錄。</p>`}
+    <button type="button" class="md-btn ghost" id="mo_dl" ${meals.length?"":"disabled"}>下載這個月的週報與照片</button>`, layer=>{
+    layer.querySelectorAll("[data-mo]").forEach(b=>b.addEventListener("click", ()=> openMonthOverview(shiftMonth(ym+"-01", +b.dataset.mo).slice(0,7))));
+    layer.querySelectorAll("[data-goday]").forEach(b=>b.addEventListener("click", ()=>{ closePrefs(); state.tab = "meal"; state.mealSelDate = b.dataset.goday; render(); }));
+    layer.querySelector("#mo_dl").addEventListener("click", ()=>{
+      const t = new Date(); t.setHours(0,0,0,0); const mon = new Date(t); mon.setDate(t.getDate()-((t.getDay()+6)%7));
+      const first = new Date(y, m-1, 1); const fm = new Date(first); fm.setDate(first.getDate()-((first.getDay()+6)%7));
+      openWeekExport(Math.round((fm - mon)/(7*864e5)));
+    });
+  });
 }
 
 /* ---------------- 安心錄（看診紀錄） ---------------- */
@@ -3802,17 +3923,17 @@ function wireEvents(){
       drawer._dragged=false; startDrag(e.clientY);
     });
     // 點日期：開啟日曆換日
-    const mDate = document.getElementById("m_date");
-    document.getElementById("mealDatePick").addEventListener("click", e=>{ e.preventDefault(); try{ mDate.showPicker(); }catch(err){ mDate.focus(); } });
-    mDate.addEventListener("change", ()=>{ if(mDate.value){ state.mealSelDate = mDate.value; render(); } });
-    // 照顧者欄任何地方都開啟選單
-    const wEl = document.getElementById("m_who");
-    wEl.closest(".f-field").addEventListener("click", e=>{ if(e.target!==wEl){ wEl.focus(); try{ wEl.showPicker(); }catch(err){} } });
+    document.getElementById("mealDatePick").addEventListener("click", e=>{ e.preventDefault(); keepMealForm(); openDatePicker(state.mealSelDate, ds=>{ state.mealSelDate = ds; state.mealSheetOpen = true; render(); restoreMealForm(); }); });
+    // 類別、照顧者：箭頭打開選單，也可以自行輸入
+    document.querySelectorAll("#mealForm [data-mcombo]").forEach(b=> b.addEventListener("click", e=>{ e.stopPropagation(); openMealCombo(b); }));
+    document.getElementById("mf_cat").addEventListener("click", e=>{ if(!e.target.closest(".combo-menu")) openMealCombo(document.querySelector('[data-mcombo="cat"]')); });
     // 空白提示卡：展開抽屜並聚焦名稱
     document.getElementById("emptyAddMeal")?.addEventListener("click", ()=>{ setOpen(true); setTimeout(()=>document.getElementById("m_name").focus(), 250); });
     drawer._setOpen = setOpen;
   }
 
+  // 飲食冊：切換月份
+  document.querySelectorAll("[data-mshift]").forEach(b=> b.addEventListener("click", ()=>{ state.mealSelDate = shiftMonth(state.mealSelDate, +b.dataset.mshift); render(); }));
   // 主頁
   document.getElementById("goHome")?.addEventListener("click", ()=>{ state.tab="home"; state.textureView="list"; render(); });
   // 首頁：日期卡／日曆 → 飲食冊該日
@@ -3844,6 +3965,7 @@ function wireEvents(){
     careEdit: b=>openCareEdit(b.dataset.id),
     careView: b=>openCareView(b.dataset.id),
     weekExport: ()=>openWeekExport(0),
+    monthOverview: ()=>openMonthOverview(state.mealSelDate.slice(0,7)),
     careAdd: ()=>openCareEdit(null),
     allMeals: openAllMeals
   };
@@ -3862,7 +3984,7 @@ function wireEvents(){
       const keep = {name: document.getElementById("m_name").value, cat: document.getElementById("m_cat").value, note: document.getElementById("m_note").value, who: document.getElementById("m_who").value};
       try{ state.mealPhoto = await shrinkPhoto(f); }catch(e){ toast("無法讀取這張照片"); return; }
       state.mealSheetOpen = true; render();
-      document.getElementById("m_name").value = keep.name; document.getElementById("m_cat").value = keep.cat;
+      document.getElementById("m_name").value = keep.name; setMealCat(keep.cat);
       document.getElementById("m_note").value = keep.note; if(keep.who) document.getElementById("m_who").value = keep.who;
       toast("已加入照片");
     });
