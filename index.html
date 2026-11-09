@@ -3567,7 +3567,6 @@ function renderMeal(){
       <div class="what">${m.name}${m.note? "・"+m.note : ""}</div>
     </div>
     <div class="thumb" ${m.img? `style="background-image:url('${m.img}')"` : ""}>${m.img? "" : catIcon(m.cat)}</div>
-    ${IC.dine("var(--olive)")}
   </div>`).join("") : `<button class="entry empty-entry" id="emptyAddMeal">＋ 這天還沒有飲食紀錄，點這裡新增</button>`}
   ${bodyListHTML(state.mealSelDate)}`;
 }
