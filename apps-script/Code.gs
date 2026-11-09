@@ -1,5 +1,5 @@
 /**
- * 安心呷｜雲端後台（Google 登入＋照護團隊資料同步）  2026/11/09 版
+ * 安心呷｜雲端後台（Google 登入＋照護團隊資料同步）  2026/11/10 版
  *
  * 使用方式：在 Apps Script 編輯器裡「全選 → 刪除」原本的程式碼，整份貼上這個檔案。
  * 部署：「部署 → 管理部署作業 → 編輯（鉛筆）→ 版本：新版本 → 部署」，網址不會變。
@@ -170,6 +170,23 @@ var API = {
     if (file.getName().indexOf(s.team + '-') !== 0) throw new Error('bad_image');
     var b = file.getBlob();
     return { ok: true, dataUrl: 'data:' + b.getContentType() + ';base64,' + Utilities.base64Encode(b.getBytes()) };
+  },
+
+  // 輸入邀請碼加入其他照護團隊（原本團隊的紀錄留在原團隊）
+  joinTeam: function (d) {
+    var s = check_(d.token);
+    var team = String(d.team || '').trim().toUpperCase();
+    if (!/^[A-Z0-9]{6}$/.test(team)) throw new Error('team_not_found');
+    return withLock_(function () {
+      if (!findTeam_(team)) throw new Error('team_not_found');
+      if (team === s.team) throw new Error('same_team');
+      var a = findAccount_(s.acc);
+      if (!a) throw new Error('account_not_found');
+      sheet_('帳號').getRange(a.row, 5).setValue(team);
+      var r = session_(a.acc, a.name, a.role, team);
+      r.email = a.email; r.google = !!a.sub;
+      return r;
+    });
   },
 
   // 主要管理者：移出成員
