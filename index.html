@@ -400,6 +400,16 @@
   .care-group small{margin-left:6px;color:#bbb;font-weight:700;}
   .care-none{font-size:.78rem;color:#999;padding:10px 0 12px;border-bottom:1px solid #ececec;}
   button.care-item{background:none;border:none;border-bottom:1px solid #ececec;width:100%;font-family:inherit;text-align:left;cursor:pointer;}
+  .a2hs{position:absolute;left:12px;right:12px;bottom:112px;z-index:85;display:flex;align-items:center;gap:10px;background:#fff;border-radius:20px;padding:10px 10px 10px 14px;box-shadow:0 8px 28px rgba(0,0,0,.18);animation:npIn .25s ease-out;}
+  .a2hs-ic{font-size:1.5rem;}
+  .a2hs-tx{flex:1;min-width:0;display:flex;flex-direction:column;}
+  .a2hs-tx b{font-size:.92rem;} .a2hs-tx span{font-size:.75rem;color:#888;}
+  .a2hs-go{border:none;background:var(--orange);color:#fff;font-family:inherit;font-weight:800;font-size:.85rem;border-radius:999px;padding:8px 14px;cursor:pointer;flex:none;}
+  .a2hs-x{border:none;background:none;font-size:1.3rem;color:#bbb;cursor:pointer;padding:0 4px;}
+  .a2hs-steps{list-style:none;padding:0;margin:0 0 14px;display:flex;flex-direction:column;gap:10px;}
+  .a2hs-steps li{display:flex;align-items:center;gap:12px;background:#f7f2ec;border-radius:16px;padding:12px 14px;font-size:.95rem;line-height:1.6;}
+  .a2hs-steps li svg{vertical-align:-5px;margin-left:2px;}
+  .a2hs-steps .n{width:28px;height:28px;border-radius:50%;background:var(--orange);color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center;flex:none;}
   .acc-card{background:#fff;border-radius:28px;margin:10px 20px 0;padding:8px 18px 6px;}
   .acc-me{display:flex;align-items:center;gap:12px;padding:12px 0 14px;border-bottom:1px solid #f0f0f0;}
   .acc-me .ph{width:48px;height:48px;border-radius:50%;background:#eee center/cover;flex:none;}
@@ -908,13 +918,13 @@ function logout(silent){
 }
 function inviteLink(){ const S = getSession(); return S? `${APP_URL}&team=${S.team}` : APP_URL; }
 setInterval(()=>{ if(document.visibilityState==="visible"){ syncNow(); if(_pendingRender) safeRender(); } }, 30000);
-document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState==="visible") syncNow(); });
+document.addEventListener("visibilitychange", ()=>{ syncNow(); });   // 離開畫面時也立刻同步，避免資料只留在手機上
 window.addEventListener("online", ()=> syncNow());
 const CLOUD_ERR = {
   account_taken:"這個帳號已經有人註冊了", account_not_found:"查無此帳號，請先註冊", wrong_password:"密碼不正確",
   team_not_found:"找不到這個照護團隊邀請碼", verify_failed:"名字或團隊邀請碼不正確", busy:"伺服器忙碌中，請稍後再試", bad_email:"Email 格式不正確",
   google_failed:"Google 登入已逾時，請重新登入", already_linked:"這個舊帳號已經連結其他 Google 帳號", google_only:"請使用 Google 帳號登入",
-  not_admin:"只有主要管理者可以這樣做", removed:"您已被移出這個照護團隊", not_in_team:"這位成員已經不在照護團隊裡", cannot_remove_self:"不能移出自己"
+  same_team:"你已經在這個照護團隊了", not_admin:"只有主要管理者可以這樣做", removed:"您已被移出這個照護團隊", not_in_team:"這位成員已經不在照護團隊裡", cannot_remove_self:"不能移出自己"
 };
 function cloudErr(e){ return CLOUD_ERR[e] || "無法連線，請確認網路後再試"; }
 
@@ -1115,6 +1125,7 @@ Object.entries({"飲食": ["Food", "Makan", "Pagkain"], "身體": ["Body", "Tubu
 Object.entries({"＋ 這天還沒有身體紀錄，點這裡新增": ["+ No body records this day. Tap to add", "+ Belum ada catatan tubuh hari ini. Ketuk untuk menambah", "+ Wala pang tala ng katawan ngayong araw. Pindutin para magdagdag"]}).forEach(([k,v])=>{ if(I18N.en[k]===undefined){ I18N.en[k]=v[0]; I18N.id[k]=v[1]; I18N.fil[k]=v[2]; } });
 Object.entries({"適合的質地（IDDSI）": ["Suitable texture (IDDSI)", "Tekstur yang sesuai (IDDSI)", "Angkop na tekstura (IDDSI)"], "🍚 吃的食物（固體）": ["🍚 Food (solids)", "🍚 Makanan (padat)", "🍚 Pagkain (solido)"], "🥛 喝的液體（流質）": ["🥛 Drinks (liquids)", "🥛 Minuman (cair)", "🥛 Inumin (likido)"], "請依語言治療師或醫師的評估選擇；不確定可以先不設定。": ["Choose based on the speech therapist's or doctor's assessment. Leave unset if unsure.", "Pilih sesuai penilaian terapis wicara atau dokter. Kosongkan jika ragu.", "Pumili ayon sa pagsusuri ng speech therapist o doktor. Iwanang blangko kung di sigurado."], "Level 4 高度稠": ["Level 4 Extremely thick", "Level 4 Sangat kental", "Level 4 Napakalapot"], "Level 3 中度稠": ["Level 3 Moderately thick", "Level 3 Cukup kental", "Level 3 Katamtamang lapot"], "高度稠": ["Extremely thick", "Sangat kental", "Napakalapot"], "中度稠": ["Moderately thick", "Cukup kental", "Katamtamang lapot"], "吃": ["Eat", "Makan", "Kain"], "喝": ["Drink", "Minum", "Inom"], "可以喝": ["Can drink", "Boleh minum", "Puwedeng inumin"]}).forEach(([k,v])=>{ if(I18N.en[k]===undefined){ I18N.en[k]=v[0]; I18N.id[k]=v[1]; I18N.fil[k]=v[2]; } });
 Object.entries({"個人帳號設定": ["Account settings", "Pengaturan akun", "Mga setting ng account"], "編輯我的資料": ["Edit my profile", "Ubah profil saya", "I-edit ang aking profile"], "研究團隊 Email 邀請": ["Research invitations by email", "Undangan riset lewat email", "Imbitasyon sa research sa email"], "語言與字體大小": ["Language & text size", "Bahasa & ukuran teks", "Wika at laki ng teksto"], "照護團隊邀請碼": ["Care team invite code", "Kode undangan tim", "Invite code ng care team"], "隱私權政策": ["Privacy policy", "Kebijakan privasi", "Patakaran sa privacy"], "申請刪除帳號": ["Request account deletion", "Minta hapus akun", "Humiling na burahin ang account"], "登出": ["Sign out", "Keluar", "Mag-sign out"], "登入，和家人一起記錄": ["Sign in to record with family", "Masuk untuk mencatat bersama keluarga", "Mag-sign in para magtala kasama ang pamilya"], "尚未設定 Email": ["No email yet", "Belum ada email", "Wala pang email"], "只存在這支手機": ["Saved on this phone only", "Hanya tersimpan di ponsel ini", "Sa phone na ito lang naka-save"], "已同意研究團隊以 Email 邀請": ["You'll receive research invitations by email", "Anda akan menerima undangan riset lewat email", "Makakatanggap ka ng imbitasyon sa email"], "已取消研究邀請": ["Research invitations turned off", "Undangan riset dimatikan", "Pinatay ang imbitasyon sa research"], "沒有連上網路，請稍後再試": ["No connection. Please try again later.", "Tidak ada koneksi. Coba lagi nanti.", "Walang koneksyon. Subukan mamaya."]}).forEach(([k,v])=>{ if(I18N.en[k]===undefined){ I18N.en[k]=v[0]; I18N.id[k]=v[1]; I18N.fil[k]=v[2]; } });
+Object.entries({"輸入邀請碼加入照護團隊": ["Join a care team with a code", "Gabung tim dengan kode", "Sumali sa care team gamit ang code"], "加入照護團隊": ["Join a care team", "Gabung tim perawatan", "Sumali sa care team"], "輸入家人或其他照顧者給你的 6 碼邀請碼，加入後就會看到那個團隊長輩的資料和紀錄。": ["Enter the 6-character code from family or another caregiver to see that team's elder and records.", "Masukkan kode 6 karakter dari keluarga atau pengasuh lain untuk melihat data lansia dan catatan tim itu.", "Ilagay ang 6-character code mula sa pamilya o ibang tagapag-alaga para makita ang datos at tala ng team na iyon."], "目前的照護團隊": ["Current care team", "Tim saat ini", "Kasalukuyang team"], "請先記下這組碼": ["Note this code first", "Catat kode ini dulu", "Itala muna ang code na ito"], "新的照護團隊邀請碼": ["New care team code", "Kode tim baru", "Bagong code ng team"], "一次只能在一個照護團隊。原本團隊的紀錄會留在原本的團隊，不會刪除；之後想回去，輸入上面那組舊的邀請碼就可以。": ["You can be in one care team at a time. Records stay with your current team and aren't deleted; to go back, enter the old code above.", "Anda hanya bisa di satu tim. Catatan tetap di tim lama dan tidak dihapus; untuk kembali, masukkan kode lama di atas.", "Isang team lang sa isang pagkakataon. Mananatili ang mga tala sa dating team; para bumalik, ilagay ang lumang code sa itaas."], "加入": ["Join", "Gabung", "Sumali"], "你已經在這個照護團隊了": ["You're already in this care team", "Anda sudah di tim ini", "Nasa team na ito ka na"], "還有紀錄沒同步到雲端，請連上網路後再試一次": ["Some records haven't synced yet. Connect to the internet and try again.", "Ada catatan yang belum tersinkron. Sambungkan internet lalu coba lagi.", "May mga talang hindi pa naka-sync. Kumonekta sa internet at subukan muli."], "已加入新的照護團隊": ["Joined the new care team", "Bergabung dengan tim baru", "Nakasali sa bagong team"], "把安心呷加到主畫面": ["Add Ansimjia to your Home Screen", "Tambahkan ke Layar Utama", "Idagdag sa Home Screen"], "紀錄才不會被 Safari 自動清掉": ["So Safari won't clear your records", "Agar Safari tidak menghapus catatan", "Para hindi burahin ng Safari ang mga tala"], "怎麼做": ["How", "Caranya", "Paano"], "加到主畫面": ["Add to Home Screen", "Tambah ke Layar Utama", "Idagdag sa Home Screen"], "我加好了": ["Done", "Sudah", "Tapos na"], "之後再說": ["Later", "Nanti", "Mamaya"], "加到主畫面後，Safari 就不會在 7 天沒打開時清掉紀錄。從主畫面第一次打開時，請再用 Google 登入一次，雲端的紀錄會自動回來。": ["Once on your Home Screen, Safari won't clear records after 7 days unused. The first time you open it from the Home Screen, sign in with Google again and your cloud records come back.", "Setelah di Layar Utama, Safari tidak akan menghapus catatan setelah 7 hari. Saat pertama dibuka dari Layar Utama, masuk lagi dengan Google dan catatan cloud akan kembali.", "Kapag nasa Home Screen na, hindi buburahin ng Safari ang tala pagkalipas ng 7 araw. Sa unang bukas mula sa Home Screen, mag-sign in muli sa Google at babalik ang mga tala."]}).forEach(([k,v])=>{ if(I18N.en[k]===undefined){ I18N.en[k]=v[0]; I18N.id[k]=v[1]; I18N.fil[k]=v[2]; } });
 Object.entries({"Email": ["Email", "Email", "Email"], "例：name@gmail.com": ["e.g. name@gmail.com", "contoh: name@gmail.com", "hal.: name@gmail.com"], "同意研究團隊以 Email 邀請我參與研究（選填）": ["I agree the research team may invite me to studies by email (optional)", "Saya setuju tim peneliti mengundang saya ikut penelitian lewat email (opsional)", "Pumapayag akong imbitahan ng research team sa pag-aaral sa email (opsyonal)"], "Email 只用於聯絡您與協助找回帳號，不會公開或提供給第三方。": ["Your email is only used to contact you and help recover your account. It is never made public or shared.", "Email hanya dipakai untuk menghubungi Anda dan memulihkan akun, tidak dipublikasikan atau dibagikan.", "Gagamitin lang ang email para makontak ka at mabawi ang account; hindi ito ipapakita o ibabahagi."], "請輸入正確的 Email": ["Please enter a valid email", "Masukkan email yang benar", "Ilagay ang tamang email"], "Email 格式不正確": ["Invalid email format", "Format email tidak benar", "Mali ang format ng email"], "補填 Email": ["Add your email", "Tambahkan email", "Idagdag ang email"], "請留下您的 Email，帳號有問題時方便聯絡您，也能協助找回帳號。": ["Please add your email so we can reach you about your account and help you recover it.", "Tambahkan email Anda agar kami bisa menghubungi Anda soal akun dan membantu memulihkannya.", "Idagdag ang iyong email para makontak ka namin tungkol sa account at matulungan kang mabawi ito."], "稍後再填": ["Later", "Nanti saja", "Mamaya na"], "已儲存 Email": ["Email saved", "Email tersimpan", "Na-save ang email"]}).forEach(([k,v])=>{ I18N.en[k]=v[0]; I18N.id[k]=v[1]; I18N.fil[k]=v[2]; });  // Email 欄位
 /* ================= 多語言（中文／English／Bahasa Indonesia／Filipino）與字體大小 ================= */
 const LANGS = [
@@ -1361,7 +1372,8 @@ function setupGoogleLogin(){
   if(IN_APP || !GOOGLE_CLIENT_ID) return;
   loadGsi().then(()=>{
     const wrap = document.getElementById("gWrap"); if(!wrap) return;
-    google.accounts.id.initialize({client_id: GOOGLE_CLIENT_ID, callback: r=> onGoogleToken(r.credential), auto_select:false, cancel_on_tap_outside:true});
+    google.accounts.id.initialize({client_id: GOOGLE_CLIENT_ID, callback: r=> onGoogleToken(r.credential), auto_select:false, cancel_on_tap_outside:true, use_fedcm_for_prompt:true});
+    try{ google.accounts.id.prompt(); }catch(e){}   // 手機資料被清掉時，一點就能用原本的 Google 帳號登入、拿回紀錄
     const box = document.createElement("div");
     wrap.innerHTML = ""; wrap.appendChild(box);
     google.accounts.id.renderButton(box, {type:"standard", theme:"outline", size:"large", shape:"pill", text:"continue_with", logo_alignment:"center",
@@ -1567,6 +1579,7 @@ function accountSectionHTML(){
       row("edit", "編輯我的資料"),
       row("prefs", "語言與字體大小"),
       row("team", "照護團隊邀請碼", `<b>${esc(S.team)}</b>`),
+      row("join", "輸入邀請碼加入照護團隊"),
       row("privacy", "隱私權政策"),
       row("delete", "申請刪除帳號"),
       row("logout", "登出", null, "danger")
@@ -1585,6 +1598,7 @@ function wireAccount(){
     if(a==="edit") openCareEdit("me");
     else if(a==="prefs") openPrefs();
     else if(a==="team") shareInvite();
+    else if(a==="join") openJoinTeam();
     else if(a==="privacy") window.open(PRIVACY_URL, "_blank");
     else if(a==="delete") location.href = "mailto:iceyen37@gmail.com?subject=" + encodeURIComponent("安心呷 刪除帳號申請") + "&body=" + encodeURIComponent(`${tr("帳號")}：${S? S.account : ""}\n${tr("名字")}：${currentUser()}\n`);
     else if(a==="login"){ state.tab = "login"; render(); }
@@ -1601,6 +1615,35 @@ function wireAccount(){
       const changed = (j.email||"")!==(S2.email||"");
       S2.email = j.email||S2.email; rawSet(SESSION_KEY, S2); if(changed && state.tab==="elder") render(); }).catch(()=>{});
   }
+}
+
+/* 輸入邀請碼加入其他照護團隊 */
+function openJoinTeam(){
+  const S = getSession(); if(!S) return;
+  openModal("加入照護團隊", `
+    <p class="md-note">輸入家人或其他照顧者給你的 6 碼邀請碼，加入後就會看到那個團隊長輩的資料和紀錄。</p>
+    <div class="team-code"><div><small>目前的照護團隊</small><b>${esc(S.team)}</b></div><span>請先記下這組碼</span></div>
+    <form id="jtForm" novalidate>
+      <label class="md-field"><span>新的照護團隊邀請碼</span><input id="jt_code" type="text" maxlength="6" autocapitalize="characters" autocomplete="off" placeholder="例：AB12CD" style="text-transform:uppercase;letter-spacing:.2em"></label>
+      <p class="md-fine">一次只能在一個照護團隊。原本團隊的紀錄會留在原本的團隊，不會刪除；之後想回去，輸入上面那組舊的邀請碼就可以。</p>
+      <div class="md-err" id="jt_err" role="alert"></div>
+      <button type="submit" class="md-btn">加入</button>
+    </form>`, layer=>{
+    const f = layer.querySelector("#jtForm"), err = m=>{ layer.querySelector("#jt_err").textContent = tr(m); };
+    f.addEventListener("submit", async e=>{
+      e.preventDefault();
+      const code = f.jt_code.value.trim().toUpperCase();
+      if(!/^[A-Z0-9]{6}$/.test(code)) return err("照護團隊邀請碼是 6 個英文或數字");
+      if(code===S.team) return err("你已經在這個照護團隊了");
+      const btn = f.querySelector(".md-btn"); btn.disabled = true; btn.textContent = tr("處理中…");
+      await syncNow();
+      if(pendingCount()){ btn.disabled = false; btn.textContent = tr("加入"); return err("還有紀錄沒同步到雲端，請連上網路後再試一次"); }
+      let j; try{ j = await api("joinTeam", {token:S.token, team:code}); }catch(er){ j = {ok:false}; }
+      btn.disabled = false; btn.textContent = tr("加入");
+      if(!j.ok) return err(cloudErr(j.error));
+      startSession(j); closePrefs(); state.tab = "elder"; render(); toast("已加入新的照護團隊");
+    });
+  });
 }
 
 /* ---------- 照顧者 ---------- */
@@ -4405,6 +4448,35 @@ document.getElementById("fab").addEventListener("click", ()=>{
   else { state.tab="meal"; state.textureView="list"; state.mealSelDate=fmt(new Date()); state.mealSheetOpen=true; render(); setTimeout(()=>document.getElementById("m_name")?.focus(), 300); }
 });
 
+/* iPhone Safari：沒加到主畫面時，Safari 可能在 7 天沒開啟後清掉網站資料 → 提醒加到主畫面 */
+const A2HS_KEY = "ansimjia_a2hs";
+function maybeAskHomeScreen(){
+  if(state.tab==="splash" || state.tab==="onboard"){ setTimeout(maybeAskHomeScreen, 3000); return; }
+  const v = rawGet(A2HS_KEY, 0);
+  if(v===-1 || (v && Date.now()-v < 3*864e5)) return;     // 已加入，或 3 天內按過「之後再說」
+  const d = document.createElement("div"); d.className = "a2hs";
+  d.innerHTML = `<div class="a2hs-ic">📲</div><div class="a2hs-tx"><b>${tr("把安心呷加到主畫面")}</b><span>${tr("紀錄才不會被 Safari 自動清掉")}</span></div><button type="button" class="a2hs-go">${tr("怎麼做")}</button><button type="button" class="a2hs-x" aria-label="${tr("關閉")}">×</button>`;
+  d.querySelector(".a2hs-x").onclick = ()=>{ rawSet(A2HS_KEY, Date.now()); d.remove(); };
+  d.querySelector(".a2hs-go").onclick = ()=>{ d.remove(); openHomeScreenGuide(); };
+  (document.getElementById("prefLayer")?.parentElement || document.body).appendChild(d);
+}
+function openHomeScreenGuide(){
+  const share = `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#0A84FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M8 7l4-4 4 4"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg>`;
+  const plus = `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#222" stroke-width="2"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><path d="M12 8v8M8 12h8"/></svg>`;
+  openModal("加到主畫面", `
+    <ol class="a2hs-steps">
+      <li><span class="n">1</span><div>點 Safari 下方（或上方）的<b>分享</b> ${share}</div></li>
+      <li><span class="n">2</span><div>往下滑，點<b>加入主畫面</b> ${plus}</div></li>
+      <li><span class="n">3</span><div>右上角按<b>加入</b>，之後都從主畫面的<b>安心呷</b>圖示打開</div></li>
+    </ol>
+    <p class="md-note">加到主畫面後，Safari 就不會在 7 天沒打開時清掉紀錄。從主畫面第一次打開時，請再用 Google 登入一次，雲端的紀錄會自動回來。</p>
+    <button type="button" class="md-btn" id="a2_done">我加好了</button>
+    <button type="button" class="md-btn ghost" id="a2_later">之後再說</button>`, layer=>{
+    layer.querySelector("#a2_done").onclick = ()=>{ rawSet(A2HS_KEY, -1); closePrefs(); };
+    layer.querySelector("#a2_later").onclick = ()=>{ rawSet(A2HS_KEY, Date.now()); closePrefs(); };
+  });
+}
+
 /* 資料保存：LINE 內建瀏覽器關閉後會清掉網站資料，改用手機預設瀏覽器開啟 */
 function isIOSBrowser(){
   const ua = navigator.userAgent, ios = /iPhone|iPad|iPod/.test(ua) || (navigator.platform==="MacIntel" && navigator.maxTouchPoints>1);
@@ -4438,6 +4510,7 @@ function start(){
   if(!storageWorks()) showStoreWarn("這個瀏覽器目前無法保存資料（可能是無痕模式），關掉後紀錄會消失。請改用一般模式開啟。");
   else if(inLineApp()) showStoreWarn("在 LINE 裡開啟時，關掉後紀錄會消失。請點右上角「⋯」→「在預設瀏覽器中開啟」。");
   try{ navigator.storage && navigator.storage.persist && navigator.storage.persist(); }catch(e){}
+  if(isIOSBrowser()) setTimeout(maybeAskHomeScreen, 4000);
   // 啟動頁 → 新手導覽（首次）→ 首頁
   state.tab = "splash";
   render();
