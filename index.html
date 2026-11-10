@@ -59,13 +59,22 @@
       padding-top: env(safe-area-inset-top, 0px);
       padding-bottom: calc(116px + env(safe-area-inset-bottom, 0px));
     }
+    .phone { position: fixed !important; inset: 0 !important; width: auto !important; height: auto !important; }
     .tabbar {
+      height: calc(104px + env(safe-area-inset-bottom, 0px));
       padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
     }
+    .tab-bump { bottom: calc(48px + env(safe-area-inset-bottom, 0px)); }
+    .fab { bottom: calc(61px + env(safe-area-inset-bottom, 0px)); }
+    .screen[data-page=onboard], .screen[data-page=splash], .screen[data-page=login] { padding-top: 0; }
+    .onboard-card { flex-basis: calc(283px + env(safe-area-inset-bottom, 0px)); }
+    .onboard-dots { bottom: calc(40px + env(safe-area-inset-bottom, 0px)); }
+    .onboard-next { bottom: calc(30px + env(safe-area-inset-bottom, 0px)); }
+    .onboard-skip, .onboard-wrap .pref-btn { top: calc(env(safe-area-inset-top, 0px) + 14px); }
     .home-strip { padding-top: 16px; }
     .home-hero { padding-top: 22px; }
     .drawer { padding-bottom: calc(120px + env(safe-area-inset-bottom, 0px)); max-height: 72dvh; }
-    .drawer.closed { transform: translateY(calc(100% - 104px - 78px - env(safe-area-inset-bottom, 0px))); }
+    .drawer.closed { transform: translateY(calc(100% - 104px - 90px - env(safe-area-inset-bottom, 0px))); }
   }
 
   body.is-android-app {
@@ -199,10 +208,11 @@
   .sheet-layer{position:absolute;left:11px;right:11px;bottom:0;z-index:18;pointer-events:none;}
   .sheet-layer:empty{display:none;}
   .drawer{pointer-events:auto;background:var(--grey-bg);border-radius:40px 40px 0 0;box-shadow:0 -6px 18px rgba(0,0,0,.10);padding:8px 26px calc(104px + 16px);max-height:calc(844px - 300px);display:flex;flex-direction:column;transition:transform .32s cubic-bezier(.2,.8,.2,1);will-change:transform;}
-  .drawer.closed{transform:translateY(calc(100% - 104px - 78px));}
+  .drawer.closed{transform:translateY(calc(100% - 104px - 90px));}
   .drawer.dragging{transition:none;}
-  .drawer-grip{display:flex;justify-content:center;padding:6px 0 10px;cursor:grab;touch-action:none;background:none;border:none;width:100%;}
-  .drawer-grip span{width:44px;height:5px;border-radius:3px;background:#cfcfcf;}
+  .drawer-grip{display:flex;justify-content:center;padding:2px 0 6px;cursor:grab;touch-action:none;background:none;border:none;width:100%;}
+  .drawer-grip svg{width:34px;height:20px;fill:none;stroke:#8a8a8a;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s;}
+  .drawer:not(.closed) .drawer-grip svg{transform:rotate(180deg);}
   .drawer .sheet-head{margin-bottom:14px;touch-action:none;}
   .drawer-body{overflow-y:auto;min-height:0;transition:opacity .2s;}
   .drawer.closed .drawer-body{opacity:0;pointer-events:none;}
@@ -242,6 +252,10 @@
   .pill-btn svg{width:18px;height:18px;stroke:#222;fill:none;stroke-width:1.4;}
   .sheet-head .pill-btn:last-child{margin-left:auto;}
   .sheet-head .cam-btn{margin-left:auto;position:relative;background:#fff center/cover no-repeat;}
+  .sheet-head .cam-btn{width:48px;height:36px;border-radius:12px;flex:none;}
+  .sheet-head .cam-btn svg{width:26px;height:26px;stroke-width:1.6;}
+  .sheet-head .dsel,#mealSeg span{white-space:nowrap;}
+  .drawer .sheet-head{gap:8px;}
   .sheet-head .cam-btn.has{width:44px;height:32px;border-radius:10px;box-shadow:0 0 0 2px #ED6C01;}
   .cam-x{margin-left:-14px;align-self:flex-start;width:20px;height:20px;border-radius:50%;border:none;background:#222;color:#fff;font-size:.8rem;line-height:20px;padding:0;cursor:pointer;transform:translateY(-6px);}
   .f-field{position:relative;background:#fff;border:1px solid var(--orange);border-radius:18px;height:36px;padding:0 6px 0 22px;margin-bottom:13px;display:flex;align-items:center;gap:6px;}
@@ -352,10 +366,21 @@
   .today-date{border-left:6px solid #000;padding-left:12px;font-size:2rem;font-weight:900;line-height:1.08;font-family:var(--num);color:#000;}
   .today-sum{flex:1;min-width:0;font-size:.85rem;color:#222;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-top:8px;text-align:right;}
   .entry{display:flex;align-items:center;background:#fff;border-radius:16px;margin:12px 43px 0 44px;padding:9px 12px 9px 18px;gap:12px;}
+  .swipe-hint{margin:6px 43px 0 44px;font-size:.72rem;color:#8a7f2a;}
+  .swipe-row{position:relative;margin:12px 43px 0 44px;border-radius:16px;overflow:hidden;}
+  .swipe-row .entry{margin:0;position:relative;z-index:1;touch-action:pan-y;cursor:pointer;}
+  .swipe-acts{position:absolute;top:0;right:0;bottom:0;display:flex;}
+  .swipe-acts button{width:74px;border:none;color:#fff;font-family:inherit;font-size:.88rem;font-weight:800;cursor:pointer;}
+  .swipe-acts .sa-edit{background:#2F80ED;}
+  .swipe-acts .sa-del{background:#E5484D;}
+  .cat-tag{display:inline-block;margin-left:6px;font-size:.68rem;font-weight:700;color:#8a7f2a;background:#FFF7C7;border-radius:6px;padding:0 6px;}
+  .edit-bar{display:flex;align-items:center;justify-content:space-between;background:#FFF1E6;border-radius:14px;padding:8px 12px;margin:0 0 12px;font-size:.85rem;font-weight:700;color:#B4632A;}
+  .edit-bar button{border:none;background:#fff;border-radius:999px;padding:4px 12px;font-family:inherit;font-weight:700;color:#555;cursor:pointer;}
+  button.body-chip{border:none;font-family:inherit;text-align:left;cursor:pointer;}
   .entry .tx{flex:1;min-width:0;}
   .entry .when{font-size:.85rem;color:#111;}
   .entry .when b{margin-left:14px;font-weight:800;}
-  .entry .what{font-size:.8rem;color:var(--olive);margin-top:2px;}
+  .entry .what{font-size:.82rem;color:#5E5600;font-weight:600;margin-top:2px;}
   .entry .thumb{width:46px;height:32px;border-radius:6px;background:#f2f2f2 center/cover;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1rem;}
   .entry .ico{width:24px;height:24px;stroke:var(--olive);flex-shrink:0;}
   .seg{display:flex;background:#fff;border-radius:12px;padding:2px;font-size:.72rem;margin-left:auto;}
@@ -400,6 +425,11 @@
   .care-group small{margin-left:6px;color:#bbb;font-weight:700;}
   .care-none{font-size:.78rem;color:#999;padding:10px 0 12px;border-bottom:1px solid #ececec;}
   button.care-item{background:none;border:none;border-bottom:1px solid #ececec;width:100%;font-family:inherit;text-align:left;cursor:pointer;}
+  .upd-bar{position:absolute;left:12px;right:12px;top:calc(env(safe-area-inset-top,0px) + 10px);z-index:96;display:flex;align-items:center;gap:10px;background:#171717;color:#fff;border-radius:18px;padding:10px 10px 10px 16px;box-shadow:0 8px 28px rgba(0,0,0,.25);animation:npIn .25s ease-out;}
+  .upd-tx{flex:1;min-width:0;display:flex;flex-direction:column;}
+  .upd-tx b{font-size:.92rem;color:#fff600;} .upd-tx span{font-size:.75rem;color:#ddd;}
+  .upd-go{border:none;background:var(--orange);color:#fff;font-family:inherit;font-weight:800;font-size:.85rem;border-radius:999px;padding:8px 14px;cursor:pointer;flex:none;}
+  .upd-x{border:none;background:none;font-size:1.3rem;color:#888;cursor:pointer;padding:0 4px;}
   .a2hs{position:absolute;left:12px;right:12px;bottom:112px;z-index:85;display:flex;align-items:center;gap:10px;background:#fff;border-radius:20px;padding:10px 10px 10px 14px;box-shadow:0 8px 28px rgba(0,0,0,.18);animation:npIn .25s ease-out;}
   .a2hs-ic{font-size:1.5rem;}
   .a2hs-tx{flex:1;min-width:0;display:flex;flex-direction:column;}
@@ -492,6 +522,8 @@
   .tile.empty .plus{font-size:3rem;font-weight:200;color:#D9C65A;line-height:1;margin-top:-18px;}
   .tile.empty .lb{color:#8C7F2A;text-shadow:none;}
   .tile.empty.today{background:#FFEE8A;}
+  .tile .rec-n{position:absolute;left:10px;right:10px;top:44%;transform:translateY(-50%);text-align:center;font-size:.78rem;font-weight:700;color:#6B5F14;line-height:1.3;overflow:hidden;max-height:4em;}
+  .tile .rec-n b{display:block;font-size:1.6rem;font-family:var(--num);color:#ED6C01;}
   .strip.photos{padding-left:24px;margin-top:14px;gap:5px;}
   .strip.photos .tile{flex:0 0 152px;height:206px;cursor:default;}
   .strip.photos .tile:first-child{border-radius:30px 0 0 30px;}
@@ -726,7 +758,7 @@
   .date-chip{height:auto;min-height:110px;padding:8px 4px;}
   .log-row .tx{white-space:normal;line-height:1.3;padding:4px 0;}
   body[data-font=l] .tab{font-size:.68rem;}
-  body[data-lang=fil] .tab,body[data-lang=id] .tab{font-size:.68rem;}
+  body[data-lang=fil] .tab,body[data-lang=id] .tab,body[data-lang=vi] .tab{font-size:.68rem;}
 </style></head><body>
 
 <!-- 📱 手機模擬外框 -->
@@ -968,7 +1000,9 @@ function ageFromBirthday(b){
   const t = new Date(); let a = t.getFullYear()-y; if(t.getMonth()+1<m || (t.getMonth()+1===m && t.getDate()<d)) a--; return a;
 }
 function elderAge(){ return ageFromBirthday(ELDER.birthday) ?? ELDER.age; }
-function elderPhoto(){ return ELDER.photo || DEFAULT_AVATAR; }
+// iPhone Safari 常擋 drive.google.com 縮圖（需要第三方 cookie），改用 Google 圖片網址顯示
+function imgUrl(u){ if(!u) return u; const m = String(u).match(/^https:\/\/drive\.google\.com\/thumbnail\?id=([\w-]+)/); return m? `https://lh3.googleusercontent.com/d/${m[1]}=w800` : u; }
+function elderPhoto(){ return imgUrl(ELDER.photo) || DEFAULT_AVATAR; }
 function currentUser(){ try{ return localStorage.getItem(USER_KEY)||""; }catch(e){ return ""; } }
 function esc(v){ return String(v==null?"":v).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]); }
 const ELDER_TITLES = ["爺爺","奶奶","外公","外婆","爸爸","媽媽","先生","女士","伯伯","阿姨","長輩"];
@@ -1016,7 +1050,7 @@ function saveProfile(acc, data){
   if(rawSet(CARE_KEY, full)) trackDiff("care", old, full);
 }
 const PROF_FIELDS = ["kind","hospital","dept","doctor","phone","photo"];
-function careAvatar(c){ return (c && c.photo) || DEFAULT_AVATAR; }
+function careAvatar(c){ return (c && imgUrl(c.photo)) || DEFAULT_AVATAR; }
 function pickProf(p){ const o = {}; if(p) PROF_FIELDS.forEach(k=>{ if(p[k]) o[k] = p[k]; }); return o; }
 function careKind(c){ return c.kind || (MED_ROLES.includes(c.role) && c.role!=="其他" ? "medical" : "family"); }
 function teamMembers(){ return getSession()? rawGet(MEMBERS_KEY, []) : []; }
@@ -1140,37 +1174,42 @@ Object.entries({"適合的質地（IDDSI）": ["Suitable texture (IDDSI)", "Teks
 Object.entries({"個人帳號設定": ["Account settings", "Pengaturan akun", "Mga setting ng account"], "編輯我的資料": ["Edit my profile", "Ubah profil saya", "I-edit ang aking profile"], "研究團隊 Email 邀請": ["Research invitations by email", "Undangan riset lewat email", "Imbitasyon sa research sa email"], "語言與字體大小": ["Language & text size", "Bahasa & ukuran teks", "Wika at laki ng teksto"], "照護團隊邀請碼": ["Care team invite code", "Kode undangan tim", "Invite code ng care team"], "隱私權政策": ["Privacy policy", "Kebijakan privasi", "Patakaran sa privacy"], "申請刪除帳號": ["Request account deletion", "Minta hapus akun", "Humiling na burahin ang account"], "登出": ["Sign out", "Keluar", "Mag-sign out"], "登入，和家人一起記錄": ["Sign in to record with family", "Masuk untuk mencatat bersama keluarga", "Mag-sign in para magtala kasama ang pamilya"], "尚未設定 Email": ["No email yet", "Belum ada email", "Wala pang email"], "只存在這支手機": ["Saved on this phone only", "Hanya tersimpan di ponsel ini", "Sa phone na ito lang naka-save"], "已同意研究團隊以 Email 邀請": ["You'll receive research invitations by email", "Anda akan menerima undangan riset lewat email", "Makakatanggap ka ng imbitasyon sa email"], "已取消研究邀請": ["Research invitations turned off", "Undangan riset dimatikan", "Pinatay ang imbitasyon sa research"], "沒有連上網路，請稍後再試": ["No connection. Please try again later.", "Tidak ada koneksi. Coba lagi nanti.", "Walang koneksyon. Subukan mamaya."]}).forEach(([k,v])=>{ if(I18N.en[k]===undefined){ I18N.en[k]=v[0]; I18N.id[k]=v[1]; I18N.fil[k]=v[2]; } });
 Object.entries({"輸入邀請碼加入照護團隊": ["Join a care team with a code", "Gabung tim dengan kode", "Sumali sa care team gamit ang code"], "加入照護團隊": ["Join a care team", "Gabung tim perawatan", "Sumali sa care team"], "輸入家人或其他照顧者給你的 6 碼邀請碼，加入後就會看到那個團隊長輩的資料和紀錄。": ["Enter the 6-character code from family or another caregiver to see that team's elder and records.", "Masukkan kode 6 karakter dari keluarga atau pengasuh lain untuk melihat data lansia dan catatan tim itu.", "Ilagay ang 6-character code mula sa pamilya o ibang tagapag-alaga para makita ang datos at tala ng team na iyon."], "目前的照護團隊": ["Current care team", "Tim saat ini", "Kasalukuyang team"], "請先記下這組碼": ["Note this code first", "Catat kode ini dulu", "Itala muna ang code na ito"], "新的照護團隊邀請碼": ["New care team code", "Kode tim baru", "Bagong code ng team"], "一次只能在一個照護團隊。原本團隊的紀錄會留在原本的團隊，不會刪除；之後想回去，輸入上面那組舊的邀請碼就可以。": ["You can be in one care team at a time. Records stay with your current team and aren't deleted; to go back, enter the old code above.", "Anda hanya bisa di satu tim. Catatan tetap di tim lama dan tidak dihapus; untuk kembali, masukkan kode lama di atas.", "Isang team lang sa isang pagkakataon. Mananatili ang mga tala sa dating team; para bumalik, ilagay ang lumang code sa itaas."], "加入": ["Join", "Gabung", "Sumali"], "你已經在這個照護團隊了": ["You're already in this care team", "Anda sudah di tim ini", "Nasa team na ito ka na"], "還有紀錄沒同步到雲端，請連上網路後再試一次": ["Some records haven't synced yet. Connect to the internet and try again.", "Ada catatan yang belum tersinkron. Sambungkan internet lalu coba lagi.", "May mga talang hindi pa naka-sync. Kumonekta sa internet at subukan muli."], "已加入新的照護團隊": ["Joined the new care team", "Bergabung dengan tim baru", "Nakasali sa bagong team"], "把安心呷加到主畫面": ["Add Ansimjia to your Home Screen", "Tambahkan ke Layar Utama", "Idagdag sa Home Screen"], "紀錄才不會被 Safari 自動清掉": ["So Safari won't clear your records", "Agar Safari tidak menghapus catatan", "Para hindi burahin ng Safari ang mga tala"], "怎麼做": ["How", "Caranya", "Paano"], "加到主畫面": ["Add to Home Screen", "Tambah ke Layar Utama", "Idagdag sa Home Screen"], "我加好了": ["Done", "Sudah", "Tapos na"], "之後再說": ["Later", "Nanti", "Mamaya"], "加到主畫面後，Safari 就不會在 7 天沒打開時清掉紀錄。從主畫面第一次打開時，請再用 Google 登入一次，雲端的紀錄會自動回來。": ["Once on your Home Screen, Safari won't clear records after 7 days unused. The first time you open it from the Home Screen, sign in with Google again and your cloud records come back.", "Setelah di Layar Utama, Safari tidak akan menghapus catatan setelah 7 hari. Saat pertama dibuka dari Layar Utama, masuk lagi dengan Google dan catatan cloud akan kembali.", "Kapag nasa Home Screen na, hindi buburahin ng Safari ang tala pagkalipas ng 7 araw. Sa unang bukas mula sa Home Screen, mag-sign in muli sa Google at babalik ang mga tala."]}).forEach(([k,v])=>{ if(I18N.en[k]===undefined){ I18N.en[k]=v[0]; I18N.id[k]=v[1]; I18N.fil[k]=v[2]; } });
 Object.entries({"更換我的頭貼": ["Change my photo", "Ganti foto saya", "Palitan ang aking larawan"], "更換頭貼": ["Change photo", "Ganti foto", "Palitan ang larawan"], "已更換頭貼": ["Photo updated", "Foto diperbarui", "Napalitan ang larawan"]}).forEach(([k,v])=>{ if(I18N.en[k]===undefined){ I18N.en[k]=v[0]; I18N.id[k]=v[1]; I18N.fil[k]=v[2]; } });
+Object.entries({"往左滑可以編輯或刪除": ["Swipe left to edit or delete", "Geser ke kiri untuk ubah atau hapus", "I-swipe pakaliwa para i-edit o burahin"], "確定刪除": ["Delete?", "Hapus?", "Burahin?"], "已刪除紀錄": ["Record deleted", "Catatan dihapus", "Nabura ang tala"], "已更新紀錄": ["Record updated", "Catatan diperbarui", "Na-update ang tala"], "✏️ 正在編輯一筆紀錄": ["✏️ Editing a record", "✏️ Mengubah catatan", "✏️ Ine-edit ang isang tala"], "取消編輯": ["Cancel", "Batal", "Kanselahin"], "更新紀錄": ["Update", "Perbarui", "I-update"], "確定刪除？再按一次": ["Delete? Tap again", "Hapus? Ketuk lagi", "Burahin? Pindutin muli"], "對照顧對象的稱呼（選填）": ["What I call the person I care for (optional)", "Panggilan saya untuk yang dirawat (opsional)", "Tawag ko sa inaalagaan (opsyonal)"], "安心呷有新版本": ["New version available", "Versi baru tersedia", "May bagong bersyon"], "請到 Google Play 更新，才能使用最新功能": ["Update on Google Play to get the latest features", "Perbarui di Google Play untuk fitur terbaru", "Mag-update sa Google Play para sa pinakabagong features"], "重新整理就能使用最新版本": ["Reload to use the latest version", "Muat ulang untuk versi terbaru", "I-reload para sa pinakabagong bersyon"], "去更新": ["Update", "Perbarui", "I-update"], "立即更新": ["Update now", "Perbarui sekarang", "I-update ngayon"]}).forEach(([k,v])=>{ if(I18N.en[k]===undefined){ I18N.en[k]=v[0]; I18N.id[k]=v[1]; I18N.fil[k]=v[2]; } });
 Object.entries({"Email": ["Email", "Email", "Email"], "例：name@gmail.com": ["e.g. name@gmail.com", "contoh: name@gmail.com", "hal.: name@gmail.com"], "同意研究團隊以 Email 邀請我參與研究（選填）": ["I agree the research team may invite me to studies by email (optional)", "Saya setuju tim peneliti mengundang saya ikut penelitian lewat email (opsional)", "Pumapayag akong imbitahan ng research team sa pag-aaral sa email (opsyonal)"], "Email 只用於聯絡您與協助找回帳號，不會公開或提供給第三方。": ["Your email is only used to contact you and help recover your account. It is never made public or shared.", "Email hanya dipakai untuk menghubungi Anda dan memulihkan akun, tidak dipublikasikan atau dibagikan.", "Gagamitin lang ang email para makontak ka at mabawi ang account; hindi ito ipapakita o ibabahagi."], "請輸入正確的 Email": ["Please enter a valid email", "Masukkan email yang benar", "Ilagay ang tamang email"], "Email 格式不正確": ["Invalid email format", "Format email tidak benar", "Mali ang format ng email"], "補填 Email": ["Add your email", "Tambahkan email", "Idagdag ang email"], "請留下您的 Email，帳號有問題時方便聯絡您，也能協助找回帳號。": ["Please add your email so we can reach you about your account and help you recover it.", "Tambahkan email Anda agar kami bisa menghubungi Anda soal akun dan membantu memulihkannya.", "Idagdag ang iyong email para makontak ka namin tungkol sa account at matulungan kang mabawi ito."], "稍後再填": ["Later", "Nanti saja", "Mamaya na"], "已儲存 Email": ["Email saved", "Email tersimpan", "Na-save ang email"]}).forEach(([k,v])=>{ I18N.en[k]=v[0]; I18N.id[k]=v[1]; I18N.fil[k]=v[2]; });  // Email 欄位
-/* ================= 多語言（中文／English／Bahasa Indonesia／Filipino）與字體大小 ================= */
+/* ================= 多語言（中文／English／Bahasa Indonesia／Filipino／Tiếng Việt）與字體大小 ================= */
 const LANGS = [
   {code:"zh",  label:"繁體中文"},
   {code:"en",  label:"English"},
   {code:"id",  label:"Bahasa Indonesia"},
-  {code:"fil", label:"Filipino"}
+  {code:"fil", label:"Filipino"},
+  {code:"vi", label:"Tiếng Việt"}
 ];
 const FONT_SIZES = { s:15, m:16, l:18.5 };
 const PREF_KEY = "ansimjia_prefs";
 const PREFS = (()=>{ try{ return Object.assign({lang:"zh", font:"m"}, JSON.parse(localStorage.getItem(PREF_KEY)||"{}")); }catch(e){ return {lang:"zh", font:"m"}; } })();
 function savePrefs(){ try{ localStorage.setItem(PREF_KEY, JSON.stringify(PREFS)); }catch(e){} }
 
+I18N.vi = {"你安心餵": "Bạn chăm sóc tận tâm,", "我安心呷": "tôi ăn uống an tâm", "輔助咀嚼吞嚥困難照顧者質地判斷與紀錄": "Giúp người chăm sóc người cao tuổi khó nhai, khó nuốt kiểm tra kết cấu thức ăn và ghi chép", "質地卡": "Kết cấu", "飲食冊": "Bữa ăn", "紀錄冊": "Nhật ký", "安心錄": "Khám bệnh", "長輩卡": "Người cao tuổi", "安心呷": "Ansimjia", "新增紀錄": "Thêm ghi chép", "略過": "Bỏ qua", "溫暖陪伴": "Đồng hành", "安心陪伴，不再單打獨鬥": "Bạn không còn chăm sóc một mình nữa", "下一頁": "Tiếp", "語言與字體": "Ngôn ngữ & cỡ chữ", "專業分級": "Phân cấp chuyên môn", "專業依據影片，不再憑感覺": "Video rõ ràng, không cần đoán", "紀錄無憂": "Ghi chép dễ dàng", "紀錄不遺忘，回顧看得見": "Không quên điều gì, xem lại dễ dàng", "開始紀錄": "Bắt đầu", "邀請您加入": "Mời bạn tham gia", "咀嚼吞嚥照護團隊！": "nhóm chăm sóc nhai nuốt của chúng tôi!", "照顧長輩的每一餐，都是我們最深的牽掛與愛。": "Mỗi bữa ăn cho người cao tuổi đều chứa đựng sự quan tâm và yêu thương sâu sắc nhất.", "誠摯邀請您一同使用": "Trân trọng mời bạn cùng sử dụng", "【安心呷】": "【Ansimjia】", "，共同記錄每日餐食質地、觀看專業 IDDSI 分級示範影片、掌握門診醫囑叮嚀，陪伴爺爺奶奶安心進食每一天！": "để cùng ghi lại kết cấu bữa ăn hằng ngày, xem video hướng dẫn phân cấp IDDSI, nắm rõ lời dặn của bác sĩ, giúp ông bà ăn uống an toàn mỗi ngày!", "加入協作成員：": "Tham gia làm thành viên:", "登入・加入照護團隊": "Đăng nhập & tham gia nhóm", "忘記密碼？": "Quên mật khẩu?", "還沒有帳號？": "Chưa có tài khoản?", "註冊": "Đăng ký", "或使用以下方式登入": "hoặc đăng nhập bằng", "使用 Google 帳號登入": "Đăng nhập bằng Google", "帳號": "Tài khoản", "密碼": "Mật khẩu", "顯示密碼": "Hiện mật khẩu", "忘記密碼": "Quên mật khẩu", "註冊帳號": "Đăng ký", "請輸入帳號和密碼": "Vui lòng nhập tài khoản và mật khẩu", "請輸入帳號": "Vui lòng nhập tài khoản", "請輸入密碼": "Vui lòng nhập mật khẩu", "語言": "Ngôn ngữ", "字體大小": "Cỡ chữ", "小": "Nhỏ", "中": "Vừa", "大": "Lớn", "完成": "Xong", "餐食紀錄": "Ghi bữa ăn", "診斷回顧": "Lịch sử khám", "尚未設定": "chưa thiết lập", "尚無餐食紀錄": "Chưa có bữa ăn", "尚無飲水紀錄": "Chưa có đồ uống", "尚無藥物紀錄": "Chưa có thuốc", "還沒有任何紀錄。": "Chưa có ghi chép nào.", "查看飲食冊": "Mở nhật ký", "長輩頭像": "Ảnh người cao tuổi", "以下": "trở xuống", "回診日": "Ngày tái khám", "主頁": "Trang chủ", "回主頁": "Về trang chủ", "記錄": "Ghi", "新增": "Thêm", "名稱": "Tên", "類別": "Loại", "餐食": "Bữa ăn", "飲水": "Đồ uống", "藥物": "Thuốc", "備註": "Ghi chú", "照顧者": "Người chăm sóc", "儲存紀錄": "Lưu", "收起新增紀錄": "Thu gọn biểu mẫu", "展開新增紀錄": "Mở biểu mẫu", "選擇日期": "Chọn ngày", "拍照": "Chụp ảnh", "拍照記錄": "Ghi bằng ảnh", "輸入菜色": "Nhập món ăn", "選填": "Không bắt buộc", "選擇照顧者": "Chọn người chăm sóc", "尚無紀錄": "Chưa có ghi chép", "＋ 這天還沒有飲食紀錄，點這裡新增": "＋ Ngày này chưa có bữa ăn. Chạm để thêm", "上次看診": "Lần khám trước", "看診紀錄": "Ghi chép khám bệnh", "新增看診紀錄": "Thêm lần khám", "日期": "Ngày", "診所": "Phòng khám", "醫師": "Bác sĩ", "紀錄者": "Người ghi", "看診內容": "Ghi chú", "儲存看診紀錄": "Lưu lần khám", "歷史看診紀錄": "Các lần khám trước", "更多": "Thêm", "更多選項": "Tùy chọn khác", "語音輸入": "Nhập bằng giọng nói", "輸入地點": "Nhập địa điểm", "醫師名稱": "Tên bác sĩ", "醫囑、建議等級、複診時間": "Lời dặn, cấp độ, lần tái khám", "尚無看診紀錄。新增第一筆後，最近一次看診的醫囑會顯示在這裡。": "Chưa có lần khám nào. Sau khi thêm, lời dặn mới nhất của bác sĩ sẽ hiện ở đây.", "＋ 新增": "＋ Thêm", "還沒有看診紀錄": "Chưa có lần khám", "爺爺/奶奶": "Ông/Bà", "X歲": "X tuổi", "適合吃...": "Ăn được...", "尚無更新紀錄": "Chưa có cập nhật", "新增照顧者": "Thêm người chăm sóc", "編輯": "Sửa", "編輯長輩資料": "Sửa hồ sơ người cao tuổi", "管理照顧者": "Quản lý người chăm sóc", "照顧者選項": "Tùy chọn người chăm sóc", "邀請照顧者": "Mời người chăm sóc", "查看全部紀錄": "Xem tất cả ghi chép", "在下方表單新增一筆看診紀錄": "Thêm lần khám bằng biểu mẫu bên dưới", "已使用 Google 帳號登入": "Đã đăng nhập bằng Google", "已儲存看診紀錄": "Đã lưu lần khám", "已儲存飲食紀錄": "Đã lưu bữa ăn", "此區塊示範用，之後可接回完整內容／影片": "Phần minh họa. Nội dung và video đầy đủ sẽ sớm có.", "返回": "Quay lại", "範例：果漿、燒仙草（滴管測試、叉子滴落測試）": "Ví dụ: trái cây xay nhuyễn, thạch sương sáo nóng (thử chảy qua ống tiêm, thử nhỏ giọt qua nĩa)", "影片示範": "Video minh họa", "Level 6 示範料理": "Món ăn Level 6", "Level 6、Level 5 示範料理": "Món ăn Level 6 & Level 5", "Level 7 示範料理": "Món ăn Level 7", "查看《長壽好好吃》完整食譜書": "Xem toàn bộ sách công thức \"Ăn ngon sống lâu\"", "開啟 Google 雲端硬碟": "Mở Google Drive", "移除照片": "Xóa ảnh", "已加入照片": "Đã thêm ảnh", "無法讀取這張照片": "Không đọc được ảnh này", "手機空間不足，已儲存紀錄但未附照片": "Bộ nhớ điện thoại đầy. Đã lưu ghi chép nhưng không kèm ảnh.", "稀薄": "Lỏng", "輕微稠": "Hơi sệt", "稍微稠": "Sệt nhẹ", "流質": "Dạng lỏng xay", "糊狀": "Dạng nghiền nhuyễn", "例：82": "VD: 82", "例：王小明": "VD: Nguyễn Minh", "例：阿妮": "VD: An", "例：陳寶珠": "VD: Bà Trần", "儲存": "Lưu", "兩次輸入的密碼不一樣": "Mật khẩu không khớp", "再按一次確定刪除": "Chạm lần nữa để xóa", "再輸入一次密碼": "Nhập lại mật khẩu", "再輸入一次新密碼": "Nhập lại mật khẩu mới", "分享全部看診紀錄": "Chia sẻ tất cả lần khám", "分享這筆看診紀錄": "Chia sẻ lần khám này", "分享邀請連結": "Chia sẻ liên kết mời", "刪除這筆看診紀錄": "Xóa lần khám này", "叉子壓力檢測：食物應可用叉子輕鬆壓碎": "Thử ấn nĩa: thức ăn phải dễ nghiền bằng nĩa", "叉子壓力測試": "Thử ấn nĩa", "叉子壓力測試、叉子質地測試": "Thử ấn nĩa, thử kết cấu bằng nĩa", "叉子滴落測試：食物應可通過測試不滴落": "Thử nhỏ giọt qua nĩa: thức ăn phải bám trên nĩa, không nhỏ giọt", "叉子質地測試": "Thử kết cấu bằng nĩa", "同時分享邀請連結": "Thêm và chia sẻ liên kết mời", "名字": "Tên", "名字和註冊時填寫的不一樣": "Tên không khớp với tên đã dùng khi đăng ký", "地瓜粥": "Cháo khoai lang", "外公": "Ông ngoại", "外婆": "Bà ngoại", "奶奶": "Bà", "爺爺": "Ông", "爸爸": "Bố", "媽媽": "Mẹ", "長輩": "Người cao tuổi", "子女": "Con", "孫子女": "Cháu", "配偶": "Vợ/chồng", "看護": "Người chăm sóc thuê", "親友": "Người thân/bạn bè", "其他": "Khác", "完整示範": "Bản minh họa đầy đủ", "密碼不正確": "Sai mật khẩu", "密碼已重設，請用新密碼登入": "Đã đặt lại mật khẩu. Hãy đăng nhập bằng mật khẩu mới.", "密碼至少需要 6 個字元": "Mật khẩu phải có ít nhất 6 ký tự", "密碼（至少 6 個字元）": "Mật khẩu (ít nhất 6 ký tự)", "新密碼（至少 6 個字元）": "Mật khẩu mới (ít nhất 6 ký tự)", "工具包並未提供針筒，需自行至藥局購買10毫升針筒。": "Bộ dụng cụ không kèm ống tiêm. Hãy mua ống tiêm 10 ml ở nhà thuốc.", "已儲存": "Đã lưu", "已儲存長輩資料": "Đã lưu hồ sơ người cao tuổi", "已刪除看診紀錄": "Đã xóa lần khám", "已新增照顧者": "Đã thêm người chăm sóc", "已登出": "Đã đăng xuất", "已移除照顧者": "Đã xóa người chăm sóc", "已複製，可貼到 LINE 或簡訊分享": "Đã sao chép. Dán vào LINE hoặc tin nhắn để chia sẻ.", "帳號資料會儲存在這支手機上，註冊後即可登入並加入照護團隊。": "Tài khoản được lưu trên điện thoại này. Sau khi đăng ký, bạn có thể đăng nhập và tham gia nhóm chăm sóc.", "年齡": "Tuổi", "您的名字（顯示給其他照顧者）": "Tên của bạn (hiển thị cho người chăm sóc khác)", "手機空間不足，無法註冊": "Bộ nhớ điện thoại đầy. Không thể đăng ký.", "手機空間不足，照片沒有儲存": "Bộ nhớ điện thoại đầy. Ảnh chưa được lưu.", "更換照片": "Đổi ảnh", "果醬": "Mứt", "查無此帳號，請先註冊": "Không tìm thấy tài khoản. Vui lòng đăng ký trước.", "查看這天": "Xem ngày này", "桂格喝的燕麥": "Nước yến mạch", "沒有聽清楚，請再試一次": "Chưa nghe rõ. Vui lòng thử lại.", "測定方式": "Cách thử", "湯匙傾斜測試": "Thử nghiêng thìa", "湯匙傾斜測試、叉子滴落測試": "Thử nghiêng thìa, thử nhỏ giọt qua nĩa", "湯匙傾斜測試、叉子質地測試": "Thử nghiêng thìa, thử kết cấu bằng nĩa", "湯匙傾斜測試（近拍）": "Thử nghiêng thìa (cận cảnh)", "湯匙傾斜測試：食物應能保持形狀不易散開": "Thử nghiêng thìa: thức ăn giữ được hình dạng, không bị rã", "無法分享，請手動複製": "Không chia sẻ được. Vui lòng sao chép thủ công.", "瓜仔肉罐頭": "Thịt hộp dưa cải", "登出": "Đăng xuất", "看診": "lần khám", "看診紀錄選項": "Tùy chọn lần khám", "確定移除？": "Xóa?", "移除": "Xóa", "稱謂": "Tiêu đề", "範例：優酪乳、酪梨牛奶": "Ví dụ: sữa chua uống, sữa bơ", "範例：桂格喝的燕麥、果菜汁加增稠劑": "Ví dụ: nước yến mạch, nước rau có chất làm đặc", "編輯我的資料": "Sửa hồ sơ của tôi", "編輯照顧者": "Sửa người chăm sóc", "與長輩的關係": "Quan hệ với người cao tuổi", "英文、數字或 Email": "Chữ, số hoặc email", "蒟蒻": "Thạch konjac", "蒸地瓜": "Khoai lang hấp", "註冊並登入": "Đăng ký & đăng nhập", "註冊時填寫的名字": "Tên dùng khi đăng ký", "請允許使用麥克風": "Vui lòng cho phép dùng micro", "請輸入名字": "Vui lòng nhập tên", "請輸入帳號和註冊時填寫的名字，確認身分後就能設定新密碼。": "Nhập tài khoản và tên đã dùng khi đăng ký để đặt mật khẩu mới.", "請輸入您的名字": "Vui lòng nhập tên của bạn", "請輸入正確的年齡": "Vui lòng nhập tuổi hợp lệ", "請開始說話…": "Hãy bắt đầu nói…", "這個帳號已經有人註冊了": "Tài khoản này đã có người dùng", "這台裝置不支援語音辨識，請使用鍵盤上的麥克風輸入": "Ở đây không hỗ trợ nhận dạng giọng nói. Hãy dùng micro trên bàn phím.", "這支手機上沒有這個帳號": "Tài khoản này không có trên điện thoại này", "適合吃的質地（IDDSI）": "Kết cấu phù hợp (IDDSI)", "還沒有看診紀錄。": "Chưa có lần khám nào.", "重設密碼": "Đặt lại mật khẩu", "針筒測試": "Thử chảy qua ống tiêm", "針筒測試、叉子滴落測試": "Thử chảy qua ống tiêm, thử nhỏ giọt qua nĩa", "針筒測試方式": "Cách thử bằng ống tiêm", "長輩的名字": "Tên người cao tuổi", "關閉": "Đóng", "鮮奶酪": "Pudding sữa", "（我）": "(tôi)", "＋ 新增照顧者": "＋ Thêm người chăm sóc", "香蕉": "Chuối", "燒仙草": "Thạch sương sáo nóng", "這個瀏覽器目前無法保存資料（可能是無痕模式），關掉後紀錄會消失。請改用一般模式開啟。": "Trình duyệt này hiện không lưu được dữ liệu (có thể đang ở chế độ ẩn danh). Ghi chép sẽ mất khi đóng. Hãy mở ở chế độ thường.", "在 LINE 裡開啟時，關掉後紀錄會消失。請點右上角「⋯」→「在預設瀏覽器中開啟」。": "Khi mở trong LINE, ghi chép sẽ mất sau khi đóng. Chạm \"⋯\" ở góc trên bên phải → \"Mở bằng trình duyệt mặc định\".", "伺服器忙碌中，請稍後再試": "Máy chủ đang bận. Vui lòng thử lại sau.", "同步中…": "Đang đồng bộ…", "名字或團隊邀請碼不正確": "Tên hoặc mã mời nhóm không đúng", "團隊成員": "Thành viên nhóm", "家人給的 6 碼，沒有就留空": "Mã 6 ký tự từ người nhà; bỏ trống nếu không có", "找不到這個照護團隊邀請碼": "Không tìm thấy mã mời nhóm này", "把邀請連結傳給家人或看護，他們註冊後就能和你一起記錄、看到同一份資料。": "Gửi liên kết mời cho người nhà hoặc người chăm sóc. Sau khi đăng ký, mọi người sẽ cùng ghi và xem chung một ghi chép.", "無法連線，請確認網路後再試": "Không kết nối được. Hãy kiểm tra mạng và thử lại.", "照護團隊邀請碼": "Mã mời nhóm", "照護團隊邀請碼是 6 個英文或數字": "Mã mời nhóm gồm 6 chữ hoặc số", "照護團隊邀請碼（選填）": "Mã mời nhóm (không bắt buộc)", "登入中…": "Đang đăng nhập…", "登入已過期，請重新登入": "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.", "處理中…": "Đang xử lý…", "請輸入名字和照護團隊邀請碼": "Vui lòng nhập tên và mã mời nhóm", "請輸入帳號、註冊時填寫的名字和照護團隊邀請碼（可以問家人，或在「管理照顧者」查看），確認身分後就能設定新密碼。": "Nhập tài khoản, tên đã đăng ký và mã mời nhóm (hỏi người nhà hoặc xem \"Quản lý người chăm sóc\") để đặt mật khẩu mới.", "輸入家人給的照護團隊邀請碼，就能看到同一位長輩的紀錄；沒有邀請碼會建立新的照護團隊。": "Nhập mã mời nhóm từ người nhà để xem ghi chép của cùng một người cao tuổi. Không có mã sẽ tạo nhóm chăm sóc mới.", "這支手機的資料尚未連到雲端": "Dữ liệu trên điện thoại này chưa kết nối với đám mây", "iPhone 小提醒": "Mẹo cho iPhone", "點 Safari 下方的「分享」": "Chạm \"Chia sẻ\" ở cuối Safari", "→「加入主畫面」，安心呷就會像 App 一樣出現在桌面。": "→ \"Thêm vào MH chính\", Ansimjia sẽ xuất hiện trên màn hình chính như một ứng dụng.", "臺北醫學大學營養學院 保健營養學系｜高齡營養研究中心 出品": "Thực hiện bởi Đại học Y Đài Bắc, Khoa Dinh dưỡng và Khoa học Sức khỏe | Trung tâm Nghiên cứu Dinh dưỡng Người cao tuổi", "臺北醫學大學營養學院保健營養學系｜高齡營養研究中心 出品": "Thực hiện bởi Đại học Y Đài Bắc, Khoa Dinh dưỡng và Khoa học Sức khỏe | Trung tâm Nghiên cứu Dinh dưỡng Người cao tuổi", "IDDSI 質地測定下示範": "Minh họa kiểm tra kết cấu IDDSI", "觀看影片，學習居家質地檢測方法": "Xem video để học cách kiểm tra kết cấu thức ăn tại nhà", "咀嚼困難飲食之示範料理": "Bữa ăn mẫu cho người khó nhai", "不同質地料理查詢": "Xem bữa ăn theo kết cấu", "《長壽好好吃》20道易咀嚼、易吞嚥的示範食譜": "\"Ăn ngon sống lâu\": 20 công thức dễ nhai, dễ nuốt", "透過兼顧身體健康、心理滿足以及情感交流三個面向，讓長輩在獨立自主且良好生活品質的狀態下實現最適化": "Chăm lo sức khỏe thể chất, sự hài lòng về cảm xúc và sự gắn kết, để người cao tuổi sống tự lập với chất lượng cuộc sống tốt", "湯品": "Canh, súp", "蛋類": "Trứng", "沙拉類": "Salad", "肉類": "Thịt", "主食類": "Cơm & mì", "魚類": "Cá", "甜點類": "Tráng miệng", "果汁類": "Nước ép", "IDDSI 食物質地測定工具包": "Bộ dụng cụ kiểm tra kết cấu thức ăn IDDSI", "兼具專業衛教與居家自主測定，輕巧便攜的食物質地檢測工具": "Bộ dụng cụ nhỏ gọn để kiểm tra kết cấu thức ăn tại nhà, có hướng dẫn chuyên môn", "教學觀看": "Xem hướng dẫn", "食物原狀、容易咀嚼": "Bình thường, dễ nhai", "軟質及一口量": "Mềm & cắt miếng nhỏ", "細碎及軟濕": "Băm nhỏ & ẩm", "質地測定示範": "Minh họa kiểm tra kết cấu", "工具包並未提供針筒，需自行至藥局購買10毫升針筒": "Bộ dụng cụ không kèm ống tiêm. Vui lòng mua ống tiêm 10 ml ở nhà thuốc.", "步驟教學": "Từng bước", "範例：優酪乳、桂格喝的燕麥": "Ví dụ: sữa chua uống, yến mạch uống liền", "優酪乳": "Sữa chua uống", "喝的貴格燕麥": "Yến mạch uống liền", "範例：酪梨牛奶、果菜汁加增稠劑": "Ví dụ: sữa bơ, nước ép trái cây và rau có chất làm đặc", "酪梨牛奶": "Sữa bơ", "果菜汁加增稠劑": "Nước ép có chất làm đặc", "策畫 / 監製－楊素卿": "Lên kế hoạch / giám sát: 楊素卿", "食譜設計－邱碗淳、陳雅琳": "Thiết kế công thức: 邱碗淳, 陳雅琳", "食譜示範－邱碗淳、陳雅琳、彭湘琦、傅律綺、曾郁潔、張芷菱、劉德俊": "Thực hiện món mẫu: 邱碗淳, 陳雅琳, 彭湘琦, 傅律綺, 曾郁潔, 張芷菱, 劉德俊", "策畫執行－彭湘琦": "Chủ trì dự án: 彭湘琦", "攝影 / 影片製作－盧永睿": "Ảnh / video: 盧永睿", "果漿": "Trái cây xay nhuyễn", "📹 影片示範（先預留格子）": "📹 Video minh họa (sắp có)", "滴管測試、叉子滴落測試": "Thử bằng ống nhỏ giọt, thử nhỏ giọt qua nĩa", "第一次登入會請您填寫名字，並輸入家人給的照護團隊邀請碼。": "Lần đầu đăng nhập, bạn sẽ được hỏi tên và mã mời nhóm chăm sóc từ người nhà.", "Google 登入尚未設定完成，請稍後再試": "Đăng nhập Google chưa được thiết lập. Vui lòng thử lại sau.", "請更新安心呷 App 到最新版本": "Vui lòng cập nhật ứng dụng lên phiên bản mới nhất", "這支手機還沒有 Google 帳號，請先到手機「設定」加入 Google 帳號": "Điện thoại này chưa có tài khoản Google. Hãy thêm trong Cài đặt của điện thoại trước.", "Google 登入沒有成功，請再試一次": "Đăng nhập Google không thành công. Vui lòng thử lại.", "無法連線到 Google，請確認網路後再試": "Không kết nối được với Google. Hãy kiểm tra mạng và thử lại.", "完成註冊": "Hoàn tất đăng ký", "完成註冊並登入": "Hoàn tất và đăng nhập", "以前用帳號密碼註冊過？連結舊帳號": "Đã từng có tài khoản dùng mật khẩu? Liên kết tài khoản", "這個 Gmail 以前註冊過帳號，請輸入舊密碼完成連結": "Gmail này đã có tài khoản. Nhập mật khẩu cũ để liên kết.", "連結舊帳號": "Liên kết tài khoản cũ", "輸入以前的帳號和密碼，確認是您本人後，舊帳號的紀錄和照護團隊都會保留，之後改用這個 Google 帳號登入。": "Nhập tài khoản và mật khẩu cũ. Sau khi xác nhận là bạn, ghi chép và nhóm chăm sóc sẽ được giữ nguyên, từ nay bạn đăng nhập bằng tài khoản Google này.", "舊帳號": "Tài khoản cũ", "舊密碼": "Mật khẩu cũ", "連結並登入": "Liên kết và đăng nhập", "忘記舊密碼的話，請來信 iceyen37@gmail.com，我們會協助您轉移紀錄。": "Quên mật khẩu cũ? Gửi email đến iceyen37@gmail.com, chúng tôi sẽ giúp chuyển ghi chép của bạn.", "我沒有舊帳號，直接註冊": "Tôi không có tài khoản cũ — đăng ký", "Email 是您登入用的 Google 帳號，無法在這裡修改。": "Email này là tài khoản Google dùng để đăng nhập, không thể đổi ở đây.", "Google 登入已逾時，請重新登入": "Đăng nhập Google đã hết thời gian. Vui lòng đăng nhập lại.", "這個舊帳號已經連結其他 Google 帳號": "Tài khoản cũ này đã liên kết với một tài khoản Google khác", "請使用 Google 帳號登入": "Vui lòng đăng nhập bằng Google", "主要管理者": "Quản trị chính", "家屬／照顧者": "Gia đình / người chăm sóc", "醫療人員": "Nhân viên y tế", "還沒有家屬或照顧者": "Chưa có người nhà hoặc người chăm sóc", "還沒有醫療人員，可以邀請營養師、語言治療師加入": "Chưa có nhân viên y tế — hãy mời chuyên gia dinh dưỡng hoặc chuyên viên âm ngữ trị liệu", "把邀請連結傳給家人、看護或醫療人員，他們註冊後就能和你一起記錄、看到同一份資料。": "Gửi liên kết mời cho người nhà, người chăm sóc hoặc nhân viên y tế. Sau khi họ đăng ký, mọi người sẽ dùng chung ghi chép.", "您是這個照護團隊的主要管理者，可以移出成員或把管理者交給別人。": "Bạn là quản trị chính của nhóm chăm sóc này. Bạn có thể xóa thành viên hoặc chuyển quyền quản trị cho người khác.", "主要管理者可以移出成員；如需移出某位成員，請聯絡主要管理者。": "Chỉ quản trị chính mới xóa được thành viên. Hãy liên hệ họ nếu cần xóa ai đó.", "身分": "Vai trò", "專業": "Chuyên môn", "服務醫院／機構": "Bệnh viện / cơ sở", "科別／單位": "Khoa / bộ phận", "主治醫師": "Bác sĩ điều trị", "聯絡電話": "Điện thoại", "最近更新": "Cập nhật gần nhất", "建立這個照護團隊的人，可以移出成員": "Người tạo nhóm chăm sóc, có thể xóa thành viên", "移出照護團隊": "Xóa khỏi nhóm chăm sóc", "只有主要管理者可以移出成員。": "Chỉ quản trị chính mới xóa được thành viên.", "返回照顧者名單": "Quay lại danh sách người chăm sóc", "確定移除？再按一次": "Xóa? Chạm lần nữa", "交出後您就不能再移出成員，再按一次確認": "Sau khi chuyển, bạn sẽ không thể xóa thành viên nữa. Chạm lần nữa để xác nhận.", "自行填入…": "Tự nhập…", "請填寫關係": "Quan hệ của bạn", "例：鄰居、乾女兒": "VD: hàng xóm, con nuôi", "請填寫專業": "Chuyên môn của bạn", "例：職能治療師、護理師": "VD: chuyên viên hoạt động trị liệu, điều dưỡng", "例：臺北醫學大學附設醫院": "VD: Bệnh viện Đại học Y Đài Bắc", "科別／單位（選填）": "Khoa / bộ phận (không bắt buộc)", "例：營養室、復健科": "VD: Dinh dưỡng, Phục hồi chức năng", "主治醫師（選填）": "Bác sĩ điều trị (không bắt buộc)", "例：王大明 醫師": "VD: Bác sĩ Vương", "聯絡電話（選填，團隊成員看得到）": "Điện thoại (không bắt buộc, thành viên nhóm có thể xem)", "例：02-2737-2181 分機 1234": "VD: 02-2737-2181 máy lẻ 1234", "請填寫您的專業": "Vui lòng nhập chuyên môn của bạn", "請填寫與長輩的關係": "Vui lòng nhập quan hệ với người cao tuổi", "請填寫服務的醫院或機構": "Vui lòng nhập bệnh viện hoặc cơ sở", "營養師": "Chuyên gia dinh dưỡng", "語言治療師": "Chuyên viên âm ngữ trị liệu", "復健科醫師": "Bác sĩ phục hồi chức năng", "我對長輩的稱呼（選填）": "Cách tôi gọi người cao tuổi (không bắt buộc)", "例：奶奶、王先生、陳女士": "VD: Bà, ông Vương, bà Trần", "稱呼只有您自己看得到，每位照顧者可以用自己習慣的叫法。": "Chỉ bạn thấy được. Mỗi người chăm sóc có thể dùng cách gọi quen thuộc của mình.", "生日（選填）": "Ngày sinh (không bắt buộc)", "請輸入長輩的年齡": "Vui lòng nhập tuổi của người cao tuổi", "請輸入正確的生日": "Vui lòng nhập ngày sinh hợp lệ", "年齡和生日對不起來，請再確認一次": "Tuổi và ngày sinh không khớp. Vui lòng kiểm tra lại.", "調整照片": "Chỉnh ảnh", "拖曳照片移動位置，用下方滑桿或兩指放大縮小": "Kéo để di chuyển. Dùng thanh trượt hoặc hai ngón để phóng to.", "縮放": "Thu phóng", "取消": "Hủy", "使用這張": "Dùng ảnh này", "先生": "Ông", "女士": "Bà", "伯伯": "Bác", "阿姨": "Cô", "下載本週照片": "Tải tuần này", "下載一週的照片與紀錄": "Tải ảnh và ghi chép của một tuần", "下載一週的飲食照片": "Tải ảnh bữa ăn của một tuần", "上一週": "Tuần trước", "下一週": "Tuần sau", "沒有紀錄": "Không có ghi chép", "下載週報圖（一張圖片）": "Tải ảnh tổng hợp tuần (một ảnh)", "下載所有照片（壓縮檔）": "Tải tất cả ảnh (ZIP)", "週報圖適合用 LINE 傳給家人或醫療人員；壓縮檔裡是每張原始照片，檔名就是日期、時間、餐點和記錄者，另附一份紀錄清單。": "Ảnh tổng hợp dễ gửi qua LINE. File ZIP chứa mọi ảnh gốc, đặt tên theo ngày, giờ, món ăn và người ghi, kèm danh sách ghi chép.", "製作中…": "Đang chuẩn bị…", "下載沒有成功，請確認網路後再試一次": "Tải xuống thất bại. Hãy kiểm tra mạng và thử lại.", "的一週飲食紀錄": " - ghi chép ăn uống trong tuần", "這天沒有紀錄": "Ngày này không có ghi chép", "照片無法載入": "Không tải được ảnh", "沒有照片": "Không có ảnh", "記錄者": "Người ghi", "製表日期": "Ngày lập", "（照片無法下載）": "(không tải được ảnh)", "已存到手機的「下載」資料夾": "Đã lưu vào thư mục Tải xuống của điện thoại", "請選擇要存放或分享的位置": "Chọn nơi lưu hoặc chia sẻ", "存檔沒有成功，請再試一次": "Không lưu được. Vui lòng thử lại.", "已開始下載": "Đã bắt đầu tải", "只有主要管理者可以這樣做": "Chỉ quản trị chính mới làm được việc này", "您已被移出這個照護團隊": "Bạn đã bị xóa khỏi nhóm chăm sóc này", "這位成員已經不在照護團隊裡": "Thành viên này không còn trong nhóm chăm sóc", "不能移出自己": "Bạn không thể tự xóa mình", "日": "CN", "一": "T2", "二": "T3", "三": "T4", "四": "T5", "五": "T6", "六": "T7", "地點": "Địa điểm", "名稱，例：福華診所": "Tên, VD: Phòng khám Phúc Hoa", "類型": "Loại", "姓名": "Họ tên", "選擇或輸入": "Chọn hoặc nhập", "地點類型": "Loại địa điểm", "醫院": "Bệnh viện", "最近去過": "Gần đây", "其他（自行輸入）": "Khác (tự nhập)", "照護團隊的醫療人員": "Nhân viên y tế của nhóm", "治療師": "Chuyên viên trị liệu", "請輸入地點類型": "Nhập loại địa điểm", "請輸入醫療人員類別": "Nhập loại nhân viên y tế", "例：衛生所、長照中心": "VD: trạm y tế, trung tâm chăm sóc dài hạn", "例：護理師、藥師": "VD: điều dưỡng, dược sĩ", "確定": "OK", "醫囑": "Lời dặn của bác sĩ", "建議質地等級": "Cấp độ kết cấu đề nghị", "用藥": "Thuốc", "復健／練習": "Phục hồi / bài tập", "複診時間": "Lịch tái khám", "記錄這次看診的醫囑、建議的質地等級、用藥和複診時間…": "Ghi lời dặn, cấp độ kết cấu đề nghị, thuốc và lịch tái khám…", "請選擇看診日期": "Vui lòng chọn ngày khám", "請選擇或輸入紀錄者": "Vui lòng chọn hoặc nhập người ghi", "請至少填寫地點、醫療人員或看診內容": "Hãy điền ít nhất địa điểm, nhân viên y tế hoặc nội dung khám", "尚無看診紀錄。新增第一筆後，看診的醫囑會顯示在這裡，越上面越新。": "Chưa có lần khám nào. Sau khi thêm, lời dặn của bác sĩ sẽ hiện ở đây, mới nhất ở trên cùng.", "本月總覽": "Tổng quan tháng", "上個月": "Tháng trước", "下個月": "Tháng sau", "點心": "Đồ ăn vặt", "營養補充品": "Thực phẩm bổ sung", "增稠飲品": "Đồ uống làm đặc", "自己加的": "Do bạn thêm", "選擇類別": "Chọn loại", "例：水果、流質飲食": "VD: trái cây, chế độ ăn lỏng", "例：外籍看護 Siti": "VD: người chăm sóc Siti", "請輸入類別": "Nhập loại", "回到今天": "Về hôm nay", "有橘色小點的日子已經有紀錄。": "Những ngày có chấm cam đã có ghi chép.", "換日期": "Đổi ngày", "有記錄的天數": "Số ngày có ghi chép", "總紀錄筆數": "Tổng số ghi chép", "照片": "Ảnh", "每天的紀錄": "Ghi chép mỗi ngày", "誰記錄的": "Người ghi", "還沒有記錄的日子": "Những ngày chưa có ghi chép", "這個月還沒有飲食紀錄。": "Tháng này chưa có ghi chép bữa ăn.", "下載這個月的週報與照片": "Tải báo cáo tuần và ảnh của tháng này", "飲食": "Ăn uống", "身體": "Cơ thể", "項目": "Hạng mục", "選擇項目": "Chọn hạng mục", "血壓": "Huyết áp", "體溫": "Nhiệt độ", "心跳": "Nhịp tim", "血氧": "SpO2", "血糖": "Đường huyết", "體重": "Cân nặng", "排便": "Đại tiện", "排尿": "Tiểu tiện", "收縮壓": "Tâm thu", "舒張壓": "Tâm trương", "心跳（選填）": "Nhịp tim (không bắt buộc)", "次/分": "lần/phút", "公斤": "kg", "數值": "Giá trị", "狀況": "Tình trạng", "時間": "Thời gian", "選填，例：飯後量、剛起床": "Không bắt buộc, VD: sau bữa ăn, vừa ngủ dậy", "儲存身體紀錄": "Lưu ghi chép cơ thể", "已儲存身體紀錄": "Đã lưu ghi chép cơ thể", "身體狀況": "Tình trạng cơ thể", "請輸入收縮壓和舒張壓": "Nhập huyết áp tâm thu và tâm trương", "請輸入數值或狀況": "Nhập giá trị hoặc tình trạng", "請選擇或輸入照顧者": "Chọn hoặc nhập người chăm sóc", "例：痰量、水腫、睡眠": "VD: đờm, phù, giấc ngủ", "例：正常、偏硬、腹瀉": "VD: bình thường, cứng, tiêu chảy", "例：次數、顏色": "VD: số lần, màu sắc", "輸入數值或狀況": "Nhập giá trị hoặc tình trạng", "＋ 這天還沒有身體紀錄，點這裡新增": "+ Ngày này chưa có ghi chép cơ thể. Chạm để thêm", "適合的質地（IDDSI）": "Kết cấu phù hợp (IDDSI)", "🍚 吃的食物（固體）": "🍚 Thức ăn (đặc)", "🥛 喝的液體（流質）": "🥛 Đồ uống (lỏng)", "請依語言治療師或醫師的評估選擇；不確定可以先不設定。": "Hãy chọn theo đánh giá của chuyên viên âm ngữ trị liệu hoặc bác sĩ. Nếu chưa chắc, có thể để trống.", "Level 4 高度稠": "Level 4 Đặc sệt", "Level 3 中度稠": "Level 3 Sệt vừa", "高度稠": "Đặc sệt", "中度稠": "Sệt vừa", "吃": "Ăn", "喝": "Uống", "可以喝": "Uống được", "個人帳號設定": "Cài đặt tài khoản", "研究團隊 Email 邀請": "Lời mời nghiên cứu qua email", "語言與字體大小": "Ngôn ngữ & cỡ chữ", "隱私權政策": "Chính sách quyền riêng tư", "申請刪除帳號": "Yêu cầu xóa tài khoản", "登入，和家人一起記錄": "Đăng nhập để ghi chép cùng gia đình", "尚未設定 Email": "Chưa có email", "只存在這支手機": "Chỉ lưu trên điện thoại này", "已同意研究團隊以 Email 邀請": "Bạn sẽ nhận lời mời nghiên cứu qua email", "已取消研究邀請": "Đã tắt lời mời nghiên cứu", "沒有連上網路，請稍後再試": "Không có kết nối. Vui lòng thử lại sau.", "輸入邀請碼加入照護團隊": "Nhập mã mời để tham gia nhóm chăm sóc", "加入照護團隊": "Tham gia nhóm chăm sóc", "輸入家人或其他照顧者給你的 6 碼邀請碼，加入後就會看到那個團隊長輩的資料和紀錄。": "Nhập mã 6 ký tự từ người nhà hoặc người chăm sóc khác để xem thông tin người cao tuổi và ghi chép của nhóm đó.", "目前的照護團隊": "Nhóm chăm sóc hiện tại", "請先記下這組碼": "Hãy ghi lại mã này trước", "新的照護團隊邀請碼": "Mã mời nhóm mới", "一次只能在一個照護團隊。原本團隊的紀錄會留在原本的團隊，不會刪除；之後想回去，輸入上面那組舊的邀請碼就可以。": "Mỗi lúc chỉ ở trong một nhóm chăm sóc. Ghi chép vẫn ở lại nhóm cũ, không bị xóa; muốn quay lại, hãy nhập mã cũ ở trên.", "加入": "Tham gia", "你已經在這個照護團隊了": "Bạn đã ở trong nhóm chăm sóc này rồi", "還有紀錄沒同步到雲端，請連上網路後再試一次": "Một số ghi chép chưa đồng bộ. Hãy kết nối mạng và thử lại.", "已加入新的照護團隊": "Đã tham gia nhóm chăm sóc mới", "把安心呷加到主畫面": "Thêm Ansimjia vào Màn hình chính", "紀錄才不會被 Safari 自動清掉": "Để Safari không xóa ghi chép của bạn", "怎麼做": "Cách làm", "加到主畫面": "Thêm vào Màn hình chính", "我加好了": "Xong", "之後再說": "Để sau", "加到主畫面後，Safari 就不會在 7 天沒打開時清掉紀錄。從主畫面第一次打開時，請再用 Google 登入一次，雲端的紀錄會自動回來。": "Khi đã ở Màn hình chính, Safari sẽ không xóa ghi chép sau 7 ngày không dùng. Lần đầu mở từ Màn hình chính, hãy đăng nhập Google lại, ghi chép trên đám mây sẽ tự động quay về.", "更換我的頭貼": "Đổi ảnh đại diện của tôi", "更換頭貼": "Đổi ảnh đại diện", "已更換頭貼": "Đã đổi ảnh đại diện", "往左滑可以編輯或刪除": "Vuốt sang trái để sửa hoặc xóa", "確定刪除": "Xóa?", "已刪除紀錄": "Đã xóa ghi chép", "已更新紀錄": "Đã cập nhật ghi chép", "✏️ 正在編輯一筆紀錄": "✏️ Đang sửa một ghi chép", "取消編輯": "Hủy", "更新紀錄": "Cập nhật", "確定刪除？再按一次": "Xóa? Chạm lần nữa", "對照顧對象的稱呼（選填）": "Cách gọi người được chăm sóc (không bắt buộc)", "安心呷有新版本": "Đã có phiên bản mới", "請到 Google Play 更新，才能使用最新功能": "Hãy cập nhật trên Google Play để dùng tính năng mới nhất", "重新整理就能使用最新版本": "Tải lại trang để dùng phiên bản mới nhất", "去更新": "Cập nhật", "立即更新": "Cập nhật ngay", "Email": "Email", "例：name@gmail.com": "VD: name@gmail.com", "同意研究團隊以 Email 邀請我參與研究（選填）": "Tôi đồng ý để nhóm nghiên cứu mời tham gia nghiên cứu qua email (không bắt buộc)", "Email 只用於聯絡您與協助找回帳號，不會公開或提供給第三方。": "Email chỉ dùng để liên hệ và giúp khôi phục tài khoản. Không bao giờ công khai hay chia sẻ.", "請輸入正確的 Email": "Vui lòng nhập email hợp lệ", "Email 格式不正確": "Định dạng email không hợp lệ", "補填 Email": "Thêm email", "請留下您的 Email，帳號有問題時方便聯絡您，也能協助找回帳號。": "Hãy thêm email để chúng tôi liên hệ về tài khoản và giúp bạn khôi phục khi cần.", "稍後再填": "Để sau", "已儲存 Email": "Đã lưu email"};  // 越南文（缺的句子會先用英文）
 const MONTHS = {
   en:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
   id:["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"],
-  fil:["Ene","Peb","Mar","Abr","May","Hun","Hul","Ago","Set","Okt","Nob","Dis"]
+  fil:["Ene","Peb","Mar","Abr","May","Hun","Hul","Ago","Set","Okt","Nob","Dis"],
+  vi:["Th1","Th2","Th3","Th4","Th5","Th6","Th7","Th8","Th9","Th10","Th11","Th12"]
 };
-const WEEKDAYS = { en:["Mon","Tue","Wed","Thu","Fri","Sat","Sun"], id:["Sen","Sel","Rab","Kam","Jum","Sab","Min"], fil:["Lun","Mar","Miy","Huw","Biy","Sab","Lin"] };
+const WEEKDAYS = { en:["Mon","Tue","Wed","Thu","Fri","Sat","Sun"], id:["Sen","Sel","Rab","Kam","Jum","Sab","Min"], fil:["Lun","Mar","Miy","Huw","Biy","Sab","Lin"], vi:["T2","T3","T4","T5","T6","T7","CN"] };
 const UNITS = {
   en:{"顆":"pc","盒":"box","支":"stalk","條":"pc","片":"slice","葉":"leaves","瓣":"cloves","個":"pc","隻":"pcs","張":"sheets","小朵":"small floret","朵":"pc","塊":"cubes","匙":"spoon"},
   id:{"顆":"buah","盒":"kotak","支":"batang","條":"batang","片":"lembar","葉":"lembar","瓣":"siung","個":"buah","隻":"ekor","張":"lembar","小朵":"kuntum kecil","朵":"kuntum","塊":"blok","匙":"sendok"},
+  vi:{"顆":"quả","盒":"hộp","支":"cây","條":"cái","片":"lát","葉":"lá","瓣":"tép","個":"cái","隻":"con","張":"tờ","小朵":"bông nhỏ","朵":"bông","塊":"miếng","匙":"thìa"},
   fil:{"顆":"piraso","盒":"kahon","支":"tangkay","條":"piraso","片":"hiwa","葉":"dahon","瓣":"butil","個":"piraso","隻":"piraso","張":"piraso","小朵":"maliit na piraso","朵":"piraso","塊":"piraso","匙":"kutsara"}
 };
-const md = (L,m,d)=> L==="en" ? `${MONTHS.en[m-1]} ${d}` : L==="fil" ? `${MONTHS.fil[m-1]} ${d}` : `${d} ${MONTHS.id[m-1]}`;
-const serv = (L,n)=> ({en:`${n} serving${n>1?"s":""}`, id:`${n} porsi`, fil:`Para sa ${n} tao`})[L];
+const md = (L,m,d)=> L==="vi" ? `${d}/${m}` : L==="en" ? `${MONTHS.en[m-1]} ${d}` : L==="fil" ? `${MONTHS.fil[m-1]} ${d}` : `${d} ${MONTHS.id[m-1]}`;
+const serv = (L,n)=> ({en:`${n} serving${n>1?"s":""}`, id:`${n} porsi`, fil:`Para sa ${n} tao`, vi:`${n} phần`})[L];
 
 // 會變動的句子（日期、人名、數量）
 const I18N_PATTERNS = [
   [/^(\d+)月(\d+)日$/, (L,m)=>md(L,+m[1],+m[2])],
-  [/^(\d+) 年 (\d+) 月 (\d+) 日$/, (L,m)=> L==="id" ? `${m[3]} ${MONTHS.id[m[2]-1]} ${m[1]}` : `${MONTHS[L][m[2]-1]} ${m[3]}, ${m[1]}`],
+  [/^(\d+) 年 (\d+) 月 (\d+) 日$/, (L,m)=> L==="vi" ? `${m[3]}/${m[2]}/${m[1]}` : L==="id" ? `${m[3]} ${MONTHS.id[m[2]-1]} ${m[1]}` : `${MONTHS[L][m[2]-1]} ${m[3]}, ${m[1]}`],
   [/^新增(\d+)月(\d+)日餐飲紀錄$/, (L,m)=>({en:`Add a meal for ${md(L,+m[1],+m[2])}`, id:`Tambah catatan makan ${md(L,+m[1],+m[2])}`, fil:`Magdagdag ng pagkain sa ${md(L,+m[1],+m[2])}`})[L]],
   [/^(\d+)月(\d+)日紀錄$/, (L,m)=>({en:`Records for ${md(L,+m[1],+m[2])}`, id:`Catatan ${md(L,+m[1],+m[2])}`, fil:`Mga tala sa ${md(L,+m[1],+m[2])}`})[L]],
   [/^(\d+)月(\d+)日 至 (?:(\d+)月)?(\d+)日$/, (L,m)=>{ const a=md(L,+m[1],+m[2]), b=m[3]? md(L,+m[3],+m[4]) : (L==="id"? `${m[4]} ${MONTHS.id[m[1]-1]}` : `${m[4]}`); return L==="id" && !m[3] ? `${m[2]}–${b}` : `${a} – ${b}`; }],
@@ -1224,6 +1263,41 @@ const I18N_PATTERNS = [
     }]
 ];
 
+// 越南文：會變動的句子
+const VI_PATTERNS = [
+  [/^新增(\d+)月(\d+)日餐飲紀錄$/, m=>`Thêm bữa ăn ngày ${m[2]}/${m[1]}`],
+  [/^(\d+)月(\d+)日紀錄$/, m=>`Ghi chép ngày ${m[2]}/${m[1]}`],
+  [/^(\d+)月(\d+)日 至 (?:(\d+)月)?(\d+)日$/, m=>`${m[2]}/${m[1]} – ${m[4]}/${m[3]||m[1]}`],
+  [/^第(\d+)週$/, m=>`Tuần ${m[1]}`],
+  [/^(早安|午安|晚安)！(.+)今天吃飯了嗎？$/, m=>({早安:"Chào buổi sáng",午安:"Chào buổi chiều",晚安:"Chào buổi tối"})[m[1]]+`! Hôm nay ${m[2]} đã ăn chưa?`],
+  [/^(.+)的吞嚥照護本$/, m=>`Sổ chăm sóc của ${m[1]}`],
+  [/^(.+)可以吃$/, m=>`${m[1]} ăn được`],
+  [/^(.+)的今天紀錄$/, m=>`Ghi chép hôm nay của ${m[1]}`],
+  [/^(.+)的(\d+)\/(\d+) 紀錄$/, m=>`Ghi chép của ${m[1]} · ${m[3]}/${m[2]}`],
+  [/^飲食 (\d+) 筆$/, m=>`Ăn uống: ${m[1]}`],
+  [/^身體 (\d+) 筆$/, m=>`Cơ thể: ${m[1]}`],
+  [/^(.+)的今天飲食$/, m=>`Bữa ăn hôm nay của ${m[1]}`],
+  [/^(.+)的(\d+)\/(\d+) 飲食$/, m=>`Bữa ăn của ${m[1]} · ${m[3]}/${m[2]}`],
+  [/^(.+)的照顧者$/, m=>`Người chăm sóc của ${m[1]}`],
+  [/^(.+)的餐飲紀錄$/, m=>`Nhật ký ăn uống của ${m[1]}`],
+  [/^共 (\d+) 位照顧者協作中$/, m=>`${m[1]} người chăm sóc đang phối hợp`],
+  [/^紀錄者：(.*)$/, m=>`Người ghi: ${m[1]}`],
+  [/^(\d+) 道食譜$/, m=>`${m[1]} công thức`],
+  [/^(.+)，(\d+) 道食譜$/, m=>`${tr(m[1])}, ${m[2]} công thức`],
+  [/^(\d+)歲$/, m=>`${m[1]} tuổi`],
+  [/^點「＋ 餐食紀錄」開始記錄(.+)的第一餐吧！$/, m=>`Chạm “＋ Ghi bữa ăn” để ghi bữa ăn đầu tiên của ${m[1]}!`],
+  [/^(\d+)月(\d+)日 更新了(.+)紀錄$/, m=>`Đã cập nhật ${tr(m[3]).toLowerCase()} ngày ${m[2]}/${m[1]}`],
+  [/^已加入照護團隊，(.+)！$/, m=>`Bạn đã tham gia nhóm chăm sóc, ${m[1]}!`],
+  [/^(\d+) 筆紀錄等待同步$/, m=>`${m[1]} ghi chép đang chờ đồng bộ`],
+  [/^已同步 (\d+:\d+)$/, m=>`Đã đồng bộ ${m[1]}`],
+  [/^照護團隊邀請碼：(.+)$/, m=>`Mã mời nhóm: ${m[1]}`],
+  [/^還有 (\d+) 筆紀錄沒同步，再按一次仍要登出$/, m=>`Còn ${m[1]} ghi chép chưa đồng bộ. Chạm lần nữa để vẫn đăng xuất`],
+  [/^歡迎回來，(.+)！$/, m=>`Chào mừng trở lại, ${m[1]}!`],
+  [/^(.+)的看診紀錄$/, m=>`Lịch sử khám của ${m[1]}`],
+  [/^(.*) 邀請您加入「安心呷」，一起照顧(.+)的每一餐！$/, m=>`${m[1]} mời bạn tham gia Ansimjia để cùng chăm lo từng bữa ăn của ${m[2]}!`],
+  [/^歡迎加入照護團隊，(.+)！$/, m=>`Chào mừng đến với nhóm chăm sóc, ${m[1]}!`],
+  [/^「(.+)」功能開發中$/, m=>`Tính năng “${tr(m[1])}” sắp có`]
+];
 function tr(s){
   const L = PREFS.lang;
   if(L==="zh" || s==null) return s;
@@ -1231,14 +1305,16 @@ function tr(s){
   if(!key) return s;
   const d = I18N[L];
   if(d && d[key]!==undefined) return d[key];
+  if(L==="vi") for(const [re, fn] of VI_PATTERNS){ const m = key.match(re); if(m) return fn(m); }
   for(const [re, fn] of I18N_PATTERNS){
     const m = key.match(re);
-    if(m){ const out = fn(L, m); if(out!=null) return out; }
+    if(m){ const out = fn(L, m); if(out!=null && !/undefined/.test(out)) return out; }
   }
+  if(L==="vi" && I18N.en[key]!==undefined) return I18N.en[key];   // 還沒有越南文的句子先用英文
   return s;
 }
 // 有 <b> 等標籤的整段 HTML
-function trHTML(html){ const L=PREFS.lang; return (L!=="zh" && I18N[L] && I18N[L][html]!==undefined) ? I18N[L][html] : html; }
+function trHTML(html){ const L=PREFS.lang; if(L==="zh") return html; if(I18N[L] && I18N[L][html]!==undefined) return I18N[L][html]; if(L==="vi" && I18N.en[html]!==undefined) return I18N.en[html]; return html; }
 
 const I18N_ATTRS = ["placeholder","aria-label","alt","title"];
 function translateDOM(root){
@@ -1267,7 +1343,7 @@ function translateDOM(root){
 }
 function applyPrefs(){
   document.documentElement.style.fontSize = FONT_SIZES[PREFS.font] + "px";
-  document.documentElement.lang = ({zh:"zh-Hant", en:"en", id:"id", fil:"fil"})[PREFS.lang];
+  document.documentElement.lang = ({zh:"zh-Hant", en:"en", id:"id", fil:"fil", vi:"vi"})[PREFS.lang];
   document.body.dataset.lang = PREFS.lang;
   document.body.dataset.font = PREFS.font;
 }
@@ -1391,7 +1467,7 @@ function setupGoogleLogin(){
     const box = document.createElement("div");
     wrap.innerHTML = ""; wrap.appendChild(box);
     google.accounts.id.renderButton(box, {type:"standard", theme:"outline", size:"large", shape:"pill", text:"continue_with", logo_alignment:"center",
-      width: Math.min(360, Math.max(220, wrap.clientWidth||300)), locale: ({zh:"zh-TW", en:"en", id:"id", fil:"fil"})[PREFS.lang]||"zh-TW"});
+      width: Math.min(360, Math.max(220, wrap.clientWidth||300)), locale: ({zh:"zh-TW", en:"en", id:"id", fil:"fil", vi:"vi"})[PREFS.lang]||"zh-TW"});
   }).catch(()=>{});                                      // 載入失敗時保留自己的按鈕，點了再提示
 }
 function startGoogleLogin(btn){
@@ -1503,7 +1579,7 @@ function openElderEdit(){
     <div class="md-photo-pick"><div class="ph" id="el_ph" style="background-image:url('${elderPhoto()}')"></div>
       <label>更換照片<input type="file" id="el_photo" accept="image/*" hidden></label></div>
     <label class="md-field"><span>長輩的名字</span><input id="el_name" type="text" maxlength="20" placeholder="例：陳寶珠" value="${esc(ELDER.name)}"></label>
-    <label class="md-field"><span>我對長輩的稱呼（選填）</span><input id="el_title" type="text" maxlength="10" list="el_titles" placeholder="例：奶奶、王先生、陳女士" value="${esc(myTitle())}">
+    <label class="md-field"><span>對照顧對象的稱呼（選填）</span><input id="el_title" type="text" maxlength="10" list="el_titles" placeholder="例：奶奶、王先生、陳女士" value="${esc(myTitle())}">
       <datalist id="el_titles">${ELDER_TITLES.map(x=>`<option value="${x}">`).join("")}</datalist></label>
     <p class="md-fine" style="margin-top:-6px">稱呼只有您自己看得到，每位照顧者可以用自己習慣的叫法。</p>
     <label class="md-field"><span>年齡</span><input id="el_age" type="number" inputmode="numeric" min="1" max="130" placeholder="例：82" value="${elderAge()||""}"></label>
@@ -1902,7 +1978,7 @@ function openWeekExport(offset){
       <button type="button" id="wk_next" aria-label="下一週" ${offset>=0?"disabled":""}>›</button></div>
     <p class="md-note">這一週共 ${W.meals.length} 筆紀錄、${photos} 張照片。下載的檔案會標示每張照片是哪一天、幾點、吃了什麼、由誰記錄，可以直接傳給醫療人員。</p>
     <div class="wk-days">${W.days.map(d=>{ const list = W.meals.filter(m=>m.date===fmt(d));
-      return `<div class="wk-day"><span>${mdLabel(d)}（${tr(WEEKDAY[d.getDay()])}）</span><div>${list.length? list.map(m=> m.img? `<i style="background-image:url('${m.img}')"></i>` : `<i class="nop">${esc((m.name||"").slice(0,2))}</i>`).join("") : `<em>${tr("沒有紀錄")}</em>`}</div></div>`; }).join("")}</div>
+      return `<div class="wk-day"><span>${mdLabel(d)}（${tr(WEEKDAY[d.getDay()])}）</span><div>${list.length? list.map(m=> m.img? `<i style="background-image:url('${imgUrl(m.img)}')"></i>` : `<i class="nop">${esc((m.name||"").slice(0,2))}</i>`).join("") : `<em>${tr("沒有紀錄")}</em>`}</div></div>`; }).join("")}</div>
     <div class="md-err" id="wk_err" role="alert"></div>
     <button type="button" class="md-btn" id="wk_img" ${W.meals.length?"":"disabled"}>下載週報圖（一張圖片）</button>
     <button type="button" class="md-btn ghost" id="wk_zip" ${photos?"":"disabled"}>下載所有照片（壓縮檔）</button>
@@ -1944,7 +2020,7 @@ function safeName(s){ return String(s).replace(/[\\/:*?"<>|\n\r\t]+/g,"").replac
 // 照片可能是手機上的資料或雲端網址；雲端讀不到時請後台代為讀取
 async function photoBlob(src){
   try{ if(String(src).startsWith("data:")) return await (await fetch(src)).blob(); }catch(e){ return null; }
-  try{ const r = await fetch(src, {mode:"cors"}); if(r.ok){ const b = await r.blob(); if(/^image\//.test(b.type)) return b; } }catch(e){}
+  try{ const r = await fetch(imgUrl(src), {mode:"cors"}); if(r.ok){ const b = await r.blob(); if(/^image\//.test(b.type)) return b; } }catch(e){}
   const S = getSession(); if(!S) return null;
   try{ const j = await api("photo", {token:S.token, url:src}); if(j.ok && j.dataUrl) return await (await fetch(j.dataUrl)).blob(); }catch(e){}
   return null;
@@ -2060,7 +2136,7 @@ function startVoice(btn, target){
   if(!SR){ note.focus(); toast("這台裝置不支援語音辨識，請使用鍵盤上的麥克風輸入"); return; }
   if(_rec){ _rec.stop(); return; }
   _rec = new SR();
-  _rec.lang = ({zh:"zh-TW", en:"en-US", id:"id-ID", fil:"fil-PH"})[PREFS.lang] || "zh-TW";
+  _rec.lang = ({zh:"zh-TW", en:"en-US", id:"id-ID", fil:"fil-PH", vi:"vi-VN"})[PREFS.lang] || "zh-TW";
   _rec.interimResults = false;
   _rec.onresult = e=>{ const t = [...e.results].map(x=>x[0].transcript).join(""); note.value = (note.value? note.value+" " : "") + t; };
   _rec.onerror = e=>{ toast(e.error==="not-allowed"? "請允許使用麥克風" : "沒有聽清楚，請再試一次"); };
@@ -2196,14 +2272,14 @@ function renderSplash(){
 /* ---------------- 登入紀錄後台（Google 試算表） ---------------- */
 // 部署 Apps Script 網頁應用程式後，把網址貼在這裡（以 https://script.google.com/macros/s/ 開頭、/exec 結尾）
 const LOGIN_LOG_URL = "https://script.google.com/macros/s/AKfycbwz5Mq10Vbg6aPRjMcn_LjS6VE3hJS3oLftN9RkvZXAaxOau0BUBxhFOpZRZNY2v9To/exec";
-const APP_VERSION = "1.2.0";
+const APP_VERSION = "1.2.1";
 const LOG_QUEUE_KEY = "ansimjia_login_queue";
 function logLogin(account, method){
   const rec = {
     time: new Date().toISOString(),
     account: String(account||"").slice(0,80),
     method,
-    lang: ({zh:"繁體中文", en:"English", id:"Bahasa Indonesia", fil:"Filipino"})[PREFS.lang] || PREFS.lang,
+    lang: ({zh:"繁體中文", en:"English", id:"Bahasa Indonesia", fil:"Filipino", vi:"Tiếng Việt"})[PREFS.lang] || PREFS.lang,
     font: ({s:"小", m:"中", l:"大"})[PREFS.font] || PREFS.font,
     platform: /SwallowCareApp/.test(navigator.userAgent) ? "Android App" : "網頁版",
     version: APP_VERSION,
@@ -3725,7 +3801,6 @@ function renderMeal(){
   return `
   <div class="meal-top">
     <span class="month-pill">${IC.calPill}<button type="button" class="mp-nav" data-mshift="-1" aria-label="上個月">‹</button><span class="mp-lb">${d.getFullYear()!==new Date().getFullYear()? d.getFullYear()+" " : ""}${MONTHS_EN[d.getMonth()]}</span><button type="button" class="mp-nav" data-mshift="1" aria-label="下個月">›</button></span>
-    <button type="button" class="mo-btn" data-act="monthOverview">本月總覽</button>
     <button class="avatar-ring" data-tabgo="elder" style="background-image:url('${elderPhoto()}')" aria-label="長輩卡"></button>
   </div>
   <div class="cal-panel">${renderMiniCalendar(d, allMeals)}</div>
@@ -3737,37 +3812,41 @@ function renderMeal(){
       return meals.length || nb ? `<span>${tr(`飲食 ${meals.length} 筆`)}</span><span>${tr(`身體 ${nb} 筆`)}</span>` : tr("尚無紀錄"); })()}</div>
   </div>
   <div class="body-title">飲食<small>${meals.length? meals.length : ""}</small></div>
-  ${meals.length ? meals.map(m=>`
-  <div class="entry">
-    <div class="tx">
-      <div class="when">${ampm(m.time)}<b>${m.who||"—"}</b></div>
-      <div class="what">${m.name}${m.note? "・"+m.note : ""}</div>
+  ${meals.length ? `<p class="swipe-hint">往左滑可以編輯或刪除</p>` + meals.map(m=>`
+  <div class="swipe-row" data-mid="${esc(m.id)}">
+    <div class="swipe-acts"><button type="button" class="sa-edit" data-medit="${esc(m.id)}">編輯</button><button type="button" class="sa-del" data-mdel="${esc(m.id)}">刪除</button></div>
+    <div class="entry">
+      <div class="tx">
+        <div class="when">${ampm(m.time)}<b>${esc(m.who||"—")}</b></div>
+        <div class="what">${esc(m.name)}${m.note? "・"+esc(m.note) : ""}${m.cat && m.cat!=="food"? `<span class="cat-tag">${esc(tr(catName(m.cat)))}</span>` : ""}</div>
+      </div>
+      <div class="thumb" ${m.img? `style="background-image:url('${imgUrl(m.img)}')"` : ""}>${m.img? "" : catIcon(m.cat)}</div>
     </div>
-    <div class="thumb" ${m.img? `style="background-image:url('${m.img}')"` : ""}>${m.img? "" : catIcon(m.cat)}</div>
   </div>`).join("") : `<button class="entry empty-entry" id="emptyAddMeal">＋ 這天還沒有飲食紀錄，點這裡新增</button>`}
   ${bodyListHTML(state.mealSelDate)}`;
 }
 
-function mealCamHTML(){ return `<label class="pill-btn cam-btn ${state.mealPhoto?"has":""}" id="mealCam" aria-label="拍照記錄" ${state.mealPhoto? `style="background-image:url('${state.mealPhoto}')"` : ""}>${state.mealPhoto? "" : IC.cam}<input type="file" id="m_photo" accept="image/*" capture="environment" hidden></label>
+function mealCamHTML(){ return `<label class="pill-btn cam-btn ${state.mealPhoto?"has":""}" id="mealCam" aria-label="拍照記錄" ${state.mealPhoto? `style="background-image:url('${imgUrl(state.mealPhoto)}')"` : ""}>${state.mealPhoto? "" : IC.cam}<input type="file" id="m_photo" accept="image/*" capture="environment" hidden></label>
       ${state.mealPhoto? `<button class="cam-x" type="button" id="mealCamX" aria-label="移除照片">×</button>` : ""}`; }
 function renderMealDrawer(){
   const d = new Date(state.mealSelDate+"T00:00:00");
   const who = caregivers().map(c=>c.name);
   return `
   <div class="drawer ${state.mealSheetOpen? "" : "closed"}" id="mealDrawer">
-    <button class="drawer-grip" id="drawerGrip" type="button" aria-label="${state.mealSheetOpen? "收起" : "展開"}新增紀錄" aria-expanded="${state.mealSheetOpen}"><span></span></button>
+    <button class="drawer-grip" id="drawerGrip" type="button" aria-label="${state.mealSheetOpen? "收起" : "展開"}新增紀錄" aria-expanded="${state.mealSheetOpen}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button>
     <div class="sheet-head" id="drawerHead">
       <button type="button" class="dsel" id="mealDatePick" aria-label="換日期">${d.getMonth()+1}月${d.getDate()}日<span class="dsel-arrow"><i></i></span></button>
       <div class="seg" id="mealSeg" role="tablist"><span role="tab" data-mmode="food" class="${state.mealMode!=="body"?"on":""}" aria-selected="${state.mealMode!=="body"}">飲食</span><span role="tab" data-mmode="body" class="${state.mealMode==="body"?"on":""}" aria-selected="${state.mealMode==="body"}">身體</span></div>
       ${state.mealMode==="body"? `<span class="cam-spacer"></span>` : mealCamHTML()}
     </div>
     <div class="drawer-body">
+      ${state.mealEdit || state.bodyEdit? `<div class="edit-bar"><span>✏️ 正在編輯一筆紀錄</span><button type="button" id="editCancel">取消編輯</button></div>` : ""}
       ${state.mealMode==="body"? bodyFormHTML() : `<form id="mealForm">
         <div class="f-field"><label for="m_name">名稱</label>${caret}<input type="text" id="m_name" placeholder="輸入菜色" required></div>
         <div class="f-field combo clickable" id="mf_cat"><label>類別</label>${caret}<input type="hidden" id="m_cat" value="food"><span class="combo-val" id="m_cat_lb">餐食</span><button type="button" class="combo-btn bare" data-mcombo="cat" aria-label="選擇類別">${tri}</button></div>
         <div class="f-field"><label for="m_note">備註</label>${caret}<input type="text" id="m_note" placeholder="選填"></div>
         <div class="f-field combo"><label for="m_who">照顧者</label>${caret}<input type="text" id="m_who" placeholder="選擇或輸入" value="${esc(currentUser())}" autocomplete="off"><button type="button" class="combo-btn bare" data-mcombo="who" aria-label="選擇照顧者">${tri}</button></div>
-        <button type="submit" class="btn-primary">儲存紀錄</button>
+        <button type="submit" class="btn-primary">${state.mealEdit? "更新紀錄" : "儲存紀錄"}</button>
       </form>`}
     </div>
   </div>`;
@@ -3789,6 +3868,58 @@ function renderMiniCalendar(selectedDate, allMeals){
     html += `<button class="${cls}" data-date="${ds}" aria-label="${dt.getMonth()+1}月${dt.getDate()}日"><span>${dt.getDate()}</span></button>`;
   }
   return html + `</div>`;
+}
+
+/* ---------- 紀錄冊：往左滑編輯／刪除 ---------- */
+function startMealEdit(id){
+  const m = loadMeals().find(x=>x.id===id); if(!m) return;
+  state.mealEdit = id; state.bodyEdit = null; state.mealMode = "food"; state.mealSelDate = m.date;
+  state.mealPhoto = m.img || null; state.mealSheetOpen = true; render();
+}
+function deleteMeal(id){ saveMeals(loadMeals().filter(x=>x.id!==id)); if(state.mealEdit===id) state.mealEdit = null; render(); toast("已刪除紀錄"); }
+function wireSwipeRows(){
+  const W = 148;
+  document.querySelectorAll(".swipe-row").forEach(row=>{
+    const card = row.querySelector(".entry");
+    let x0 = 0, y0 = 0, dx = 0, base = 0, drag = false, lock = null;
+    const set = (x, anim)=>{ card.style.transition = anim? "transform .2s" : "none"; card.style.transform = `translateX(${x}px)`; };
+    const close = ()=>{ row.classList.remove("open"); set(0, true); };
+    card.addEventListener("touchstart", e=>{ const t = e.touches[0]; x0 = t.clientX; y0 = t.clientY; dx = 0; lock = null; base = row.classList.contains("open")? -W : 0; drag = true; }, {passive:true});
+    card.addEventListener("touchmove", e=>{
+      if(!drag) return; const t = e.touches[0]; const mx = t.clientX - x0, my = t.clientY - y0;
+      if(lock===null && (Math.abs(mx)>8 || Math.abs(my)>8)) lock = Math.abs(mx) > Math.abs(my) ? "x" : "y";
+      if(lock!=="x") return;
+      dx = mx; set(Math.max(-W-20, Math.min(0, base + dx)));
+    }, {passive:true});
+    card.addEventListener("touchend", ()=>{
+      if(!drag) return; drag = false;
+      if(lock!=="x") return;
+      const open = base + dx < -W/2;
+      document.querySelectorAll(".swipe-row.open").forEach(r=>{ if(r!==row){ r.classList.remove("open"); const c = r.querySelector(".entry"); c.style.transition = "transform .2s"; c.style.transform = ""; } });
+      row.classList.toggle("open", open); set(open? -W : 0, true);
+    });
+    // 點一下也能打開（不方便滑動時）
+    card.addEventListener("click", ()=>{ if(lock==="x") return; const open = !row.classList.contains("open");
+      document.querySelectorAll(".swipe-row.open").forEach(r=>{ r.classList.remove("open"); const c = r.querySelector(".entry"); c.style.transition = "transform .2s"; c.style.transform = ""; });
+      row.classList.toggle("open", open); set(open? -W : 0, true); });
+    row.querySelector("[data-medit]").addEventListener("click", ()=> startMealEdit(row.dataset.mid));
+    const del = row.querySelector("[data-mdel]");
+    del.addEventListener("click", ()=>{ if(!del.dataset.confirm){ del.dataset.confirm = "1"; del.textContent = tr("確定刪除"); return; } deleteMeal(row.dataset.mid); });
+  });
+}
+/* 身體紀錄小卡：點一下編輯或刪除 */
+function openBodyActions(id){
+  const o = loadBody().find(x=>x.id===id); if(!o) return;
+  const it = bodyItem(o.cat);
+  openModal(tr(it.l), `
+    <p class="md-note">${esc(o.date)} ${esc(o.time||"")}・${esc(o.who||"—")}<br><b style="font-size:1.3rem">${esc(it.two? `${o.v1}/${o.v2}` : o.v1)} ${esc(tr(it.u||""))}</b>${o.note? "<br>"+esc(o.note) : ""}</p>
+    <button type="button" class="md-btn" id="ba_edit">編輯</button>
+    <button type="button" class="md-btn danger" id="ba_del">刪除</button>`, layer=>{
+    layer.querySelector("#ba_edit").onclick = ()=>{ closePrefs(); state.bodyEdit = id; state.mealEdit = null; state.bodyItem = o.cat; state.mealMode = "body"; state.mealSheetOpen = true; render(); };
+    const d = layer.querySelector("#ba_del");
+    d.onclick = ()=>{ if(!d.dataset.confirm){ d.dataset.confirm = "1"; d.textContent = tr("確定刪除？再按一次"); return; }
+      saveBody(loadBody().filter(x=>x.id!==id)); closePrefs(); render(); toast("已刪除紀錄"); };
+  });
 }
 
 /* ---------- 身體紀錄：血壓、體溫、心跳、血氧、血糖、體重… ---------- */
@@ -3817,7 +3948,7 @@ function bodyFormHTML(){
     <div class="f-field"><label for="b_note">備註</label>${caret}<input type="text" id="b_note" placeholder="選填，例：飯後量、剛起床"></div>
     <div class="f-field combo"><label for="m_who">照顧者</label>${caret}<input type="text" id="m_who" placeholder="選擇或輸入" value="${esc(currentUser())}" autocomplete="off"><button type="button" class="combo-btn bare" data-mcombo="who" aria-label="選擇照顧者">${tri}</button></div>
     <div class="md-err" id="b_err" role="alert"></div>
-    <button type="submit" class="btn-primary">儲存身體紀錄</button>
+    <button type="submit" class="btn-primary">${state.bodyEdit? "更新紀錄" : "儲存身體紀錄"}</button>
   </form>`;
 }
 function openBodyItemPick(){
@@ -3840,7 +3971,7 @@ function bodyListHTML(date){
   const list = loadBody().filter(m=>m.date===date).sort((a,b)=>(a.time||"").localeCompare(b.time||""));
   if(!list.length) return `<div class="body-title">身體狀況</div><button class="entry empty-entry" id="emptyAddBody">＋ 這天還沒有身體紀錄，點這裡新增</button>`;
   return `<div class="body-title">身體狀況<small>${list.length}</small></div><div class="body-list">${list.map(m=>`
-    <div class="body-chip"><span class="bk">${esc(tr(bodyItem(m.cat).l))}</span><b>${esc(bodyItem(m.cat).two? `${m.v1}/${m.v2}` : m.v1)}${bodyItem(m.cat).u? `<small>${esc(tr(bodyItem(m.cat).u))}</small>` : ""}</b>${m.v3? `<span class="bx">${esc(tr("心跳"))} ${esc(m.v3)} ${esc(tr("次/分"))}</span>` : ""}<span class="bm">${esc(m.time||"")}・${esc(m.who||"—")}${m.note? "・"+esc(m.note) : ""}</span></div>`).join("")}</div>`;
+    <button type="button" class="body-chip" data-bodyid="${esc(m.id)}"><span class="bk">${esc(tr(bodyItem(m.cat).l))}</span><b>${esc(bodyItem(m.cat).two? `${m.v1}/${m.v2}` : m.v1)}${bodyItem(m.cat).u? `<small>${esc(tr(bodyItem(m.cat).u))}</small>` : ""}</b>${m.v3? `<span class="bx">${esc(tr("心跳"))} ${esc(m.v3)} ${esc(tr("次/分"))}</span>` : ""}<span class="bm">${esc(m.time||"")}・${esc(m.who||"—")}${m.note? "・"+esc(m.note) : ""}</span></button>`).join("")}</div>`;
 }
 
 /* ---------- 紀錄冊：類別／照顧者選單、換日期、本月總覽 ---------- */
@@ -4121,8 +4252,9 @@ function renderElder(){
   <div class="sec-head"><h2>${elderName()}的餐飲紀錄</h2><button class="more" data-act="allMeals" aria-label="查看全部紀錄">${IC.more}</button></div>
   <div class="sec-sub">第${isoWeek(today)}週<span>${range}</span><button type="button" class="sec-dl" data-act="weekExport">${IC_DL}下載本週照片</button></div>
   <div class="strip photos">
-    ${days.map((d,i)=>{ const ph = loadMeals().filter(m=>m.date===fmt(d) && m.img).pop();
-      return `<button class="tile ${ph?"":"empty"} ${fmt(d)===fmt(today)?"today":""}" data-addmeal="${fmt(d)}" ${ph? `style="background-image:url('${ph.img}')"` : ""} aria-label="新增${d.getMonth()+1}月${d.getDate()}日餐飲紀錄">${ph? `<span class="wash"></span>` : `<span class="plus">＋</span>`}<span class="lb">週${["一","二","三","四","五","六","日"][i]}</span></button>`; }).join("")}
+    ${days.map((d,i)=>{ const dayMeals = loadMeals().filter(m=>m.date===fmt(d)), ph = dayMeals.filter(m=>m.img).pop();
+      const cls = ph? "" : (dayMeals.length? "empty has-rec" : "empty");
+      return `<button class="tile ${cls} ${fmt(d)===fmt(today)?"today":""}" data-addmeal="${fmt(d)}" data-hasrec="${dayMeals.length? 1 : ""}" ${ph? `style="background-image:url('${imgUrl(ph.img)}')"` : ""} aria-label="${d.getMonth()+1}月${d.getDate()}日紀錄">${ph? `<span class="wash"></span>` : (dayMeals.length? `<span class="rec-n"><b>${dayMeals.length}</b>${esc(dayMeals[0].name||"")}</span>` : `<span class="plus">＋</span>`)}<span class="lb">週${["一","二","三","四","五","六","日"][i]}</span></button>`; }).join("")}
   </div>
   ${accountSectionHTML()}`;
 }
@@ -4150,7 +4282,7 @@ function wireEvents(){
     };
     grip.addEventListener("click", e=>{ if(!drawer._dragged) setOpen(!state.mealSheetOpen); drawer._dragged=false; });
     const startDrag = (y0)=>{
-      const closedOffset = drawer.offsetHeight - 104 - 78;
+      const closedOffset = drawer.offsetHeight - (document.getElementById("tabbar")?.offsetHeight || 104) - 90;
       const base = state.mealSheetOpen ? 0 : closedOffset;
       drawer.classList.add("dragging");
       let dy = 0;
@@ -4212,8 +4344,9 @@ function wireEvents(){
   document.querySelectorAll("[data-addmeal]").forEach(b=>{
     b.addEventListener("click", ()=>{
       state.mealSelDate = b.dataset.addmeal; state.tab = "meal"; state.textureView = "list";
+      state.mealSheetOpen = !b.dataset.hasrec;          // 有紀錄就看那天的紀錄；沒有紀錄就直接新增
       render();
-      document.getElementById("m_name")?.focus();
+      if(!b.dataset.hasrec) document.getElementById("m_name")?.focus();
     });
   });
   // 尚未實作的按鈕
@@ -4256,6 +4389,11 @@ function wireEvents(){
   document.getElementById("bf_item")?.addEventListener("click", openBodyItemPick);
   document.querySelectorAll("#bodyForm [data-mcombo]").forEach(b=> b.addEventListener("click", e=>{ e.stopPropagation(); openMealCombo(b); }));
   const bf = document.getElementById("bodyForm");
+  if(bf && state.bodyEdit){ const o = loadBody().find(x=>x.id===state.bodyEdit);
+    if(o){ const g = id=>document.getElementById(id); g("b_v1").value = o.v1||""; if(g("b_v2")) g("b_v2").value = o.v2||""; if(g("b_v3")) g("b_v3").value = o.v3||""; g("b_time").value = o.time||""; g("b_note").value = o.note||""; g("m_who").value = o.who||""; } }
+  document.getElementById("editCancel")?.addEventListener("click", ()=>{ state.mealEdit = null; state.bodyEdit = null; state.mealPhoto = null; render(); });
+  wireSwipeRows();
+  document.querySelectorAll("[data-bodyid]").forEach(b=> b.addEventListener("click", ()=> openBodyActions(b.dataset.bodyid)));
   if(bf){
     bf.addEventListener("submit", e=>{
       e.preventDefault();
@@ -4264,6 +4402,11 @@ function wireEvents(){
       if(!v1 || (it.two && !v2)) return err(it.two? "請輸入收縮壓和舒張壓" : "請輸入數值或狀況");
       if(!g("m_who").value.trim()) return err("請選擇或輸入照顧者");
       const arr = loadBody();
+      if(state.bodyEdit){
+        const i = arr.findIndex(x=>x.id===state.bodyEdit);
+        if(i>=0){ const o = arr[i]; arr[i] = {id:o.id, kind:"body", date:o.date, time: g("b_time").value || o.time, cat: it.k, v1, ...(it.two? {v2} : {}), ...(v3? {v3} : {}), note: g("b_note").value.trim(), who: g("m_who").value.trim(), name: tr(it.l)}; }
+        saveBody(arr); state.bodyEdit = null; state.mealSheetOpen = false; toast("已更新紀錄"); render(); return;
+      }
       arr.push({id: uid(), kind:"body", date: state.mealSelDate, time: g("b_time").value || new Date().toTimeString().slice(0,5), cat: it.k, v1, ...(it.two? {v2} : {}), ...(v3? {v3} : {}),
         note: g("b_note").value.trim(), who: g("m_who").value.trim(), name: tr(it.l)});
       saveBody(arr); toast("已儲存身體紀錄"); render();
@@ -4272,8 +4415,19 @@ function wireEvents(){
   // Meal record form
   const mf = document.getElementById("mealForm");
   if(mf){
+    if(state.mealEdit){ const m = loadMeals().find(x=>x.id===state.mealEdit);
+      if(m){ document.getElementById("m_name").value = m.name||""; setMealCat(m.cat||"food"); document.getElementById("m_note").value = m.note||""; document.getElementById("m_who").value = m.who||""; } }
     mf.addEventListener("submit", e=>{
       e.preventDefault();
+      if(state.mealEdit){
+        const arr = loadMeals(), i = arr.findIndex(x=>x.id===state.mealEdit);
+        if(i>=0){
+          const m = {...arr[i], who: document.getElementById("m_who").value, name: document.getElementById("m_name").value.trim(), cat: document.getElementById("m_cat").value, note: document.getElementById("m_note").value.trim()};
+          if(state.mealPhoto) m.img = state.mealPhoto; else delete m.img;
+          arr[i] = m; saveMeals(arr); toast("已更新紀錄");
+        }
+        state.mealEdit = null; state.mealPhoto = null; state.mealSheetOpen = false; render(); return;
+      }
       const arr = loadMeals();
       arr.push({
         id: uid(),
@@ -4491,6 +4645,30 @@ document.getElementById("fab").addEventListener("click", ()=>{
   else { state.tab="meal"; state.textureView="list"; state.mealSelDate=fmt(new Date()); state.mealSheetOpen=true; render(); setTimeout(()=>document.getElementById("m_name")?.focus(), 300); }
 });
 
+/* ---------- 有新版本時提醒更新 ----------
+   swallowcare/version.json：{"web":"網頁版版本","android":"Play 商店上的 App 版本"}，每次上線新版就改這個檔 */
+const VERSION_URL = "https://iceyen37-ship-it.github.io/swallowcare/version.json";
+const PLAY_URL = "https://play.google.com/store/apps/details?id=com.ansimjia.swallowcare";
+function verNewer(a, b){ const x = String(a||"").split(".").map(Number), y = String(b||"").split(".").map(Number); for(let i=0;i<3;i++){ if((x[i]||0)!==(y[i]||0)) return (x[i]||0) > (y[i]||0); } return false; }
+let _updShown = false;
+async function checkForUpdate(){
+  if(_updShown || !getSession()) return;                 // 只提醒已登入的使用者
+  let v; try{ v = await (await fetch(VERSION_URL + "?t=" + Date.now(), {cache:"no-store"})).json(); }catch(e){ return; }
+  const latest = IN_APP ? v.android : v.web;
+  if(!verNewer(latest, APP_VERSION)) return;
+  _updShown = true;
+  const d = document.createElement("div"); d.className = "upd-bar"; d.setAttribute("role","alert");
+  d.innerHTML = `<div class="upd-tx"><b>${tr("安心呷有新版本")} v${esc(latest)}</b><span>${tr(IN_APP? "請到 Google Play 更新，才能使用最新功能" : "重新整理就能使用最新版本")}</span></div><button type="button" class="upd-go">${tr(IN_APP? "去更新" : "立即更新")}</button><button type="button" class="upd-x" aria-label="${tr("關閉")}">×</button>`;
+  d.querySelector(".upd-x").onclick = ()=> d.remove();
+  d.querySelector(".upd-go").onclick = ()=>{
+    if(IN_APP){ location.href = PLAY_URL; return; }
+    syncNow().finally(()=>{ const u = new URL(location.href); u.searchParams.set("v", latest); location.replace(u.toString()); });
+  };
+  (document.getElementById("prefLayer")?.parentElement || document.body).appendChild(d);
+}
+document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState==="visible") checkForUpdate(); });
+setInterval(checkForUpdate, 30*60*1000);
+
 /* iPhone Safari：沒加到主畫面時，Safari 可能在 7 天沒開啟後清掉網站資料 → 提醒加到主畫面 */
 const A2HS_KEY = "ansimjia_a2hs";
 function maybeAskHomeScreen(){
@@ -4554,6 +4732,7 @@ function start(){
   else if(inLineApp()) showStoreWarn("在 LINE 裡開啟時，關掉後紀錄會消失。請點右上角「⋯」→「在預設瀏覽器中開啟」。");
   try{ navigator.storage && navigator.storage.persist && navigator.storage.persist(); }catch(e){}
   if(isIOSBrowser()) setTimeout(maybeAskHomeScreen, 4000);
+  setTimeout(checkForUpdate, 2500);
   // 啟動頁 → 新手導覽（首次）→ 首頁
   state.tab = "splash";
   render();
