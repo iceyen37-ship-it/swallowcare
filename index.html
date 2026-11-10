@@ -779,6 +779,33 @@
     .drawer { padding-bottom: calc(100px + var(--sb)); max-height: 72dvh; }
     .drawer.closed { transform: translateY(calc(100% - 84px - var(--sb) - 90px)); }
   }
+
+  /* ---- 專業版配色（2026/11/10）：主色橘、底色白與淺灰、文字深灰；黃色只留在地瓜插圖 ---- */
+  .tab.active{color:#FF7A3D;} .tab.active .ic svg{stroke:#FF7A3D;}
+  .seg span.on{background:var(--orange);color:#fff;}
+  .upd-tx b{color:#FF9A6A;}
+  .screen[data-page=home]{background:var(--grey-bg);}
+  .home-hero{background:#fff;border-radius:0 0 32px 32px;}
+  .home-date,.home-greet,.home-title{color:#1c1c1c;}
+  .home-cta button.meal{background:var(--orange);border:none;color:#fff;}
+  .home-cta button.meal svg{stroke:#fff;}
+  .home-cta button.visit{border:1.5px solid #dcdcdc;color:#333;}
+  .home-cta button.visit svg{stroke:#333;}
+  .home-level{color:#1c1c1c;}
+  .home-level .lv-lbl{color:#888;}
+  .home-level .lv-num small{color:#C24A00;}
+  .log-card{background:#fff;border-radius:28px;box-shadow:inset 0 0 0 1.5px var(--orange);}
+  .log-card.past{background:#fff;box-shadow:inset 0 0 0 1px #e6e6e6;}
+  .log-date .dn{color:var(--orange);} .log-date .dm{color:#FFB894;}
+  .log-card.past .log-date .dn{color:#333;} .log-card.past .log-date .dm{color:#c8c8c8;}
+  .log-row,.log-card.past .log-row{background:#f6f6f6;}
+  .log-row .ic svg{stroke:var(--orange);} .log-card.past .log-row .ic svg{stroke:#888;}
+  .log-row .tx,.log-card.past .log-row .tx{color:#1c1c1c;}
+  .log-row .tx.none,.log-card.past .log-row .tx.none{color:#aaa;}
+  .tile.empty.today{background:#FFE3D3;}
+  .tile.empty.has-rec{background:#FFF1EA;}
+  .tile.empty.today .plus,.tile.empty.has-rec .plus{color:#FFB894;}
+  .tile.empty.today .lb,.tile.empty.has-rec .lb{color:#C24A00;}
 </style></head><body>
 
 <!-- 📱 手機模擬外框 -->
