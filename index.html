@@ -518,6 +518,9 @@
   .tile.empty .plus{font-size:3rem;font-weight:200;color:#D9C65A;line-height:1;margin-top:-18px;}
   .tile.empty .lb{color:#8C7F2A;text-shadow:none;}
   .tile.empty.today{background:#FFEE8A;}
+  .tile.empty:not(.has-rec):not(.today){background:#ececec;}
+  .tile.empty:not(.has-rec):not(.today) .plus{color:#c2c2c2;}
+  .tile.empty:not(.has-rec):not(.today) .lb{color:#777;}
   .tile .rec-n{position:absolute;left:10px;right:10px;top:44%;transform:translateY(-50%);text-align:center;font-size:.78rem;font-weight:700;color:#6B5F14;line-height:1.3;overflow:hidden;max-height:4em;}
   .tile .rec-n b{display:block;font-size:1.6rem;font-family:var(--num);color:#ED6C01;}
   .strip.photos{padding-left:24px;margin-top:14px;gap:5px;}
