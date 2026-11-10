@@ -270,11 +270,11 @@
   .hist .h2{font-size:.8rem;color:#555;margin-top:4px;line-height:1.5;}
 
   /* ---- 安心錄 ---- */
-  .visit-stack{position:relative;max-height:min(50vh,420px);overflow-y:auto;scroll-snap-type:y proximity;padding:0 0 6px;scrollbar-width:none;overscroll-behavior:contain;}
+  .visit-stack{position:relative;max-height:min(60vh,520px);overflow-y:auto;scroll-snap-type:y mandatory;transition:height .2s ease;padding:0 0 6px;scrollbar-width:none;overscroll-behavior:contain;}
   .visit-stack::-webkit-scrollbar{display:none;}
-  .visit-stack .visit-hero{scroll-snap-align:start;margin-bottom:22px;}
+  .visit-stack .visit-hero{scroll-snap-align:start;scroll-snap-stop:always;margin-bottom:12px;}
   .visit-stack .visit-hero + .visit-hero{border-radius:44px;}
-  .vs-hint{text-align:center;font-size:.75rem;color:#999;margin:-4px 0 0;}
+  .vs-hint{text-align:center;font-size:.75rem;color:#999;margin:4px 0 0;}
   .vs-hint::before{content:"↑ ";}
   .f-field.combo{padding-right:0;}
   .pick-list{display:flex;flex-direction:column;gap:8px;}
@@ -319,7 +319,7 @@
   .note-page textarea{flex:1;min-height:160px;border:1.5px solid var(--orange);border-radius:20px;padding:14px 16px;font-family:inherit;font-size:1rem;line-height:1.7;resize:none;outline:none;background:#fff;}
   .np-foot{padding-top:14px;}
   .np-foot .btn-primary{height:50px;border-radius:25px;font-size:1.05rem;}
-  .visit-hero{background:#fff600;margin:0 11px 14px;border-radius:0 0 44px 44px;padding:14px 22px 22px;box-shadow:0 7px 0 #fffddc,0 14px 0 #eae9bf;}
+  .visit-hero{background:#fff600;margin:0 11px 14px;border-radius:0 0 44px 44px;padding:14px 22px 22px;}
   .vh-meta{display:flex;align-items:center;font-size:.9rem;font-weight:800;color:#000;padding-bottom:7px;border-bottom:1px solid #000;margin-bottom:10px;white-space:nowrap;}
   .vh-meta .sep{width:1px;height:14px;background:#000;margin:0 6px;}
   .vh-meta .right{margin-left:auto;display:flex;gap:18px;}
@@ -4306,7 +4306,7 @@ function wireEvents(){
     b.addEventListener("click", ()=>{
       state.visitSel = String(b.dataset.visit);
       const st = document.getElementById("visitStack"), card = st && st.querySelector(`[data-vcard="${CSS.escape(state.visitSel)}"]`);
-      if(card){ st.scrollTo({top: card.offsetTop, behavior:"smooth"}); st.scrollIntoView({behavior:"smooth", block:"nearest"}); document.querySelectorAll("[data-visit]").forEach(x=> x.classList.toggle("on", x===b)); }
+      if(card){ st.style.height = card.offsetHeight + "px"; st.scrollTo({top: card.offsetTop, behavior:"smooth"}); st.scrollIntoView({behavior:"smooth", block:"nearest"}); document.querySelectorAll("[data-visit]").forEach(x=> x.classList.toggle("on", x===b)); }
       else render();
     });
   });
@@ -4529,12 +4529,14 @@ function wireEvents(){
   const vStack = document.getElementById("visitStack");
   if(vStack){
     const sel = state.visitSel && vStack.querySelector(`[data-vcard="${CSS.escape(state.visitSel)}"]`);
+    const fitTo = c=>{ if(c) vStack.style.height = c.offsetHeight + "px"; };   // 一次只露出一筆，其他往上滑
+    fitTo(sel || vStack.querySelector("[data-vcard]"));
     if(sel) vStack.scrollTop = sel.offsetTop;
     let tm = null;
     vStack.addEventListener("scroll", ()=>{ clearTimeout(tm); tm = setTimeout(()=>{
       const cards = [...vStack.querySelectorAll("[data-vcard]")];
       const cur = cards.reduce((best,c)=> Math.abs(c.offsetTop - vStack.scrollTop) < Math.abs(best.offsetTop - vStack.scrollTop) ? c : best, cards[0]);
-      state.visitSel = cur.dataset.vcard;
+      state.visitSel = cur.dataset.vcard; fitTo(cur);
       document.querySelectorAll("[data-visit]").forEach(b=> b.classList.toggle("on", b.dataset.visit===state.visitSel));
     }, 120); }, {passive:true});
   }
