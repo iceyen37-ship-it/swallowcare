@@ -1,5 +1,5 @@
 /**
- * 安心呷｜雲端後台（Google 登入＋照護團隊資料同步）  2026/11/10 版
+ * 安心呷｜雲端後台（Google 登入＋照護團隊資料同步）  2026/11/10 通知版
  *
  * 使用方式：在 Apps Script 編輯器裡「全選 → 刪除」原本的程式碼，整份貼上這個檔案。
  * 部署：「部署 → 管理部署作業 → 編輯（鉛筆）→ 版本：新版本 → 部署」，網址不會變。
@@ -8,7 +8,11 @@
  *   帳號     ：帳號、名字、關係、密碼雜湊（舊帳號）、照護團隊、建立時間、Email、同意研究聯絡、Google ID
  *   照護團隊 ：團隊邀請碼、主要管理者、建立時間
  *   紀錄     ：每一筆餐飲／身體、看診、長輩資料、照顧者（同一個團隊的人共用）
+ *   推播     ：每支手機的通知代碼（Token）、帳號、平台、語言
  * 照片會存到雲端硬碟的「安心呷 照片」資料夾。
+ *
+ * 通知（推播）需要：專案設定 › 指令碼屬性 新增「FCM_SA」＝ Firebase 服務帳戶金鑰 JSON 全文，
+ * 再執行一次 setupPush（建立「回診提醒」與「新版本通知」的定時觸發）。
  */
 
 var SS = SpreadsheetApp.getActiveSpreadsheet();
@@ -113,7 +117,8 @@ var API = {
     var s = check_(d.token);
     var since = Number(d.since) || 0;
     var changes = Array.isArray(d.changes) ? d.changes.slice(0, 500) : [];
-    return withLock_(function () {
+    var fresh = [];
+    var result = withLock_(function () {
       var sh = sheet_('紀錄');
       var vals = sh.getDataRange().getValues();
       var index = {};
@@ -136,6 +141,7 @@ var API = {
         } else {
           appended.push(row);
           index[kind + '|' + id] = -1;
+          if (kind === 'meal' && !c.deleted && ts - row[3] < 6 * 3600 * 1000) fresh.push(c.data || {});
         }
       });
       if (appended.length) sh.getRange(sh.getLastRow() + 1, 1, appended.length, 8).setValues(appended);
@@ -147,6 +153,31 @@ var API = {
         });
       return { ok: true, now: ts, records: recs, members: members_(s.team), team: s.team };
     });
+    if (fresh.length) { try { notifyNewRecords_(s, fresh); } catch (e) {} }
+    return result;
+  },
+
+  // 通知：記下這支手機的通知代碼（同一個代碼換人登入時，改成新的帳號）
+  pushRegister: function (d) {
+    var s = check_(d.token);
+    var tok = String(d.push || '').trim();
+    if (!/^[\w:\-]{20,400}$/.test(tok)) throw new Error('bad_push');
+    var plat = d.platform === 'android' ? 'android' : 'web';
+    var lang = /^(zh|en|id|fil|vi)$/.test(d.lang) ? d.lang : 'zh';
+    return withLock_(function () {
+      var sh = sheet_('推播'), v = sh.getDataRange().getValues();
+      for (var i = 1; i < v.length; i++) {
+        if (String(v[i][0]) === tok) { sh.getRange(i + 1, 1, 1, 5).setValues([[tok, s.acc, plat, lang, now_()]]); return { ok: true }; }
+      }
+      sh.appendRow([tok, s.acc, plat, lang, now_()]);
+      return { ok: true };
+    });
+  },
+  // 登出或關閉通知：刪掉這支手機的代碼
+  pushUnregister: function (d) {
+    var tok = String(d.push || '').trim();
+    if (!tok) return { ok: true };
+    return withLock_(function () { removePushTokens_([tok]); return { ok: true }; });
   },
 
   upload: function (d) {
@@ -255,7 +286,8 @@ function googleSession_(acc, g) {
 var HEADERS = {
   '帳號': ['帳號', '名字', '與長輩關係', '密碼雜湊', '照護團隊', '建立時間', 'Email', '同意研究聯絡', 'Google ID'],
   '照護團隊': ['團隊邀請碼', '主要管理者', '建立時間'],
-  '紀錄': ['照護團隊', '類型', 'ID', '更新時間', '已刪除', '內容', '最後修改者', '伺服器時間']
+  '紀錄': ['照護團隊', '類型', 'ID', '更新時間', '已刪除', '內容', '最後修改者', '伺服器時間'],
+  '推播': ['Token', '帳號', '平台', '語言', '更新時間']
 };
 function sheet_(name) {
   var sh = SS.getSheetByName(name);
@@ -388,4 +420,150 @@ function setup() {
     sh.getRange(1, 1, sh.getMaxRows(), h.length).setNumberFormat('@');
   });
   UrlFetchApp.fetch('https://oauth2.googleapis.com/tokeninfo?id_token=x', { muteHttpExceptions: true });   // 觸發「連線到外部服務」授權
+}
+
+
+/* ---------------- 通知（推播） ---------------- */
+var PUSH_TEXT = {
+  rec:   { zh: '{who} 新增了{elder}的紀錄：{item}', en: '{who} added a record for {elder}: {item}', id: '{who} menambahkan catatan untuk {elder}: {item}',
+           fil: 'Nagdagdag si {who} ng tala para kay {elder}: {item}', vi: '{who} đã thêm ghi chép cho {elder}: {item}' },
+  visit: { zh: '明天是{elder}的回診日{place}，記得帶上要問醫生的問題。', en: 'Tomorrow is {elder}\'s clinic visit{place}.', id: 'Besok jadwal kontrol {elder}{place}.',
+           fil: 'Bukas ang check-up ni {elder}{place}.', vi: 'Ngày mai là lịch tái khám của {elder}{place}.' },
+  webUp: { zh: '安心呷有新版本 v{v}，打開安心呷，按上方的「立即更新」。', en: 'Ansimjia v{v} is available. Open the app and tap “Update now”.', id: 'Ansimjia v{v} tersedia. Buka aplikasi dan ketuk “Perbarui”.',
+           fil: 'May bagong Ansimjia v{v}. Buksan ang app at i-tap ang “I-update”.', vi: 'Đã có Ansimjia v{v}. Mở ứng dụng và chạm “Cập nhật”.' },
+  andUp: { zh: '安心呷有新版本 v{v}，請到 Google Play 更新。', en: 'Ansimjia v{v} is available on Google Play.', id: 'Ansimjia v{v} tersedia di Google Play.',
+           fil: 'May bagong Ansimjia v{v} sa Google Play.', vi: 'Ansimjia v{v} đã có trên Google Play.' }
+};
+var WEB_APP_URL = 'https://iceyen37-ship-it.github.io/swallowcare/';
+var VERSION_URL = WEB_APP_URL + 'version.json';
+
+function fill_(t, o) { return t.replace(/\{(\w+)\}/g, function (_, k) { return o[k] == null ? '' : o[k]; }); }
+
+// 有人新增飲食／身體紀錄 → 通知同一個照護團隊的其他人（同一個人 10 分鐘內只通知一次）
+function notifyNewRecords_(s, items) {
+  var cache = CacheService.getScriptCache(), key = 'rec|' + s.team + '|' + s.acc;
+  if (cache.get(key)) return;
+  cache.put(key, '1', 600);
+  var me = findAccount_(s.acc), who = me ? me.name : '';
+  var names = items.map(function (x) { return String(x.name || '').trim(); }).filter(String);
+  var item = names.slice(0, 3).join('、') + (names.length > 3 ? '…' : '');
+  var elder = elderName_(s.team);
+  var to = members_(s.team).map(function (m) { return m.account; }).filter(function (a) { return a !== s.acc; });
+  sendPush_(to, function (lang) {
+    return { title: '安心呷', body: fill_(PUSH_TEXT.rec[lang], { who: who, elder: elder, item: item || '—' }), link: WEB_APP_URL + '?go=meal' };
+  });
+}
+function elderName_(team) {
+  var v = sheet_('紀錄').getDataRange().getValues();
+  for (var i = v.length - 1; i >= 1; i--) {
+    if (String(v[i][0]) === team && v[i][1] === 'elder' && v[i][5]) { try { return JSON.parse(v[i][5]).name || '長輩'; } catch (e) {} }
+  }
+  return '長輩';
+}
+
+// 每天晚上：明天有回診的團隊，通知全部成員（setupPush 會建立這個定時觸發）
+function visitReminder() {
+  var tomorrow = Utilities.formatDate(new Date(Date.now() + 24 * 3600 * 1000), 'Asia/Taipei', 'yyyy-MM-dd');
+  var v = sheet_('紀錄').getDataRange().getValues(), teams = {};
+  for (var i = 1; i < v.length; i++) {
+    if (v[i][1] !== 'visit' || Number(v[i][4]) || !v[i][5]) continue;
+    var d; try { d = JSON.parse(v[i][5]); } catch (e) { continue; }
+    if (d.date === tomorrow && !teams[v[i][0]]) teams[v[i][0]] = d;
+  }
+  Object.keys(teams).forEach(function (team) {
+    var d = teams[team], place = [d.clinic, d.doctor].filter(String).join(' ');
+    var elder = elderName_(team);
+    sendPush_(members_(team).map(function (m) { return m.account; }), function (lang) {
+      return { title: '安心呷 回診提醒', body: fill_(PUSH_TEXT.visit[lang], { elder: elder, place: place ? '（' + place + '）' : '' }), link: WEB_APP_URL + '?go=visit' };
+    });
+  });
+}
+
+// 每小時：version.json 的版本變新 → 通知所有人更新（網頁版、Android 分開）
+function checkVersionPush() {
+  var res = UrlFetchApp.fetch(VERSION_URL + '?t=' + Date.now(), { muteHttpExceptions: true });
+  if (res.getResponseCode() !== 200) return;
+  var v = JSON.parse(res.getContentText()), p = PropertiesService.getScriptProperties();
+  [['web', 'webUp'], ['android', 'andUp']].forEach(function (x) {
+    var plat = x[0], cur = String(v[plat] || ''), last = p.getProperty('PUSHED_' + plat);
+    if (!cur || cur === last) return;
+    p.setProperty('PUSHED_' + plat, cur);
+    if (!last) return;                                         // 第一次執行只記下目前版本，不發通知
+    sendPush_(null, function (lang) {
+      return { title: '安心呷', body: fill_(PUSH_TEXT[x[1]][lang], { v: cur }), link: WEB_APP_URL };
+    }, plat);
+  });
+}
+
+// 測試：只發給自己（執行這個 Apps Script 的 Google 帳號）的手機
+function testPush() {
+  var me = String(Session.getEffectiveUser().getEmail() || '').toLowerCase();
+  var n = sendPush_([me], function () { return { title: '安心呷', body: '通知測試成功！', link: WEB_APP_URL }; });
+  Logger.log('已送出 ' + n + ' 則');
+}
+
+// 送出通知：accounts = 帳號清單（null 代表全部），build(lang) 回傳 {title, body, link}
+function sendPush_(accounts, build, onlyPlatform) {
+  var sh = sheet_('推播'), rows = sh.getDataRange().getValues().slice(1);
+  var want = accounts ? accounts.reduce(function (o, a) { o[a] = 1; return o; }, {}) : null;
+  rows = rows.filter(function (r) { return r[0] && (!want || want[String(r[1])]) && (!onlyPlatform || r[2] === onlyPlatform); });
+  if (!rows.length) return 0;
+  var sa = JSON.parse(PropertiesService.getScriptProperties().getProperty('FCM_SA') || 'null');
+  if (!sa) throw new Error('no_fcm_key');
+  var auth = 'Bearer ' + fcmAccessToken_(sa);
+  var url = 'https://fcm.googleapis.com/v1/projects/' + sa.project_id + '/messages:send';
+  var reqs = rows.map(function (r) {
+    var m = build(PUSH_TEXT.rec[r[3]] ? String(r[3]) : 'zh');
+    var msg = { token: String(r[0]), data: { link: m.link } };
+    if (r[2] === 'android') {
+      msg.android = { priority: 'high', notification: { title: m.title, body: m.body, channel_id: 'general', icon: 'ic_stat_notify', color: '#ED6C01' } };
+    } else {
+      msg.webpush = { headers: { Urgency: 'high' }, notification: { title: m.title, body: m.body, icon: WEB_APP_URL + 'icon-192.png' }, fcm_options: { link: m.link } };
+    }
+    return { url: url, method: 'post', contentType: 'application/json', headers: { Authorization: auth }, payload: JSON.stringify({ message: msg }), muteHttpExceptions: true };
+  });
+  var dead = [], sent = 0;
+  for (var i = 0; i < reqs.length; i += 50) {
+    UrlFetchApp.fetchAll(reqs.slice(i, i + 50)).forEach(function (res, j) {
+      var code = res.getResponseCode();
+      if (code === 200) sent++;
+      else if (code === 404 || /UNREGISTERED|INVALID_ARGUMENT/.test(res.getContentText())) dead.push(String(rows[i + j][0]));
+    });
+  }
+  if (dead.length) withLock_(function () { removePushTokens_(dead); });
+  return sent;
+}
+function removePushTokens_(tokens) {
+  var set = tokens.reduce(function (o, t) { o[t] = 1; return o; }, {});
+  var sh = sheet_('推播'), v = sh.getDataRange().getValues();
+  for (var i = v.length - 1; i >= 1; i--) if (set[String(v[i][0])]) sh.deleteRow(i + 1);
+}
+// 用服務帳戶金鑰換 Firebase 通知用的存取權杖（快取 50 分鐘）
+function fcmAccessToken_(sa) {
+  var cache = CacheService.getScriptCache(), hit = cache.get('fcm_at');
+  if (hit) return hit;
+  var now = Math.floor(Date.now() / 1000);
+  var enc = function (o) { return Utilities.base64EncodeWebSafe(JSON.stringify(o)).replace(/=+$/, ''); };
+  var input = enc({ alg: 'RS256', typ: 'JWT' }) + '.' + enc({ iss: sa.client_email, scope: 'https://www.googleapis.com/auth/firebase.messaging',
+    aud: 'https://oauth2.googleapis.com/token', iat: now, exp: now + 3600 });
+  var sig = Utilities.base64EncodeWebSafe(Utilities.computeRsaSha256Signature(input, sa.private_key)).replace(/=+$/, '');
+  var res = UrlFetchApp.fetch('https://oauth2.googleapis.com/token', { method: 'post', muteHttpExceptions: true,
+    payload: { grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer', assertion: input + '.' + sig } });
+  var j = JSON.parse(res.getContentText());
+  if (!j.access_token) throw new Error('fcm_auth_failed');
+  cache.put('fcm_at', j.access_token, 3000);
+  return j.access_token;
+}
+
+/* 設定好 FCM_SA 後，在編輯器上方選「setupPush」按「執行」一次 */
+function setupPush() {
+  sheet_('推播');
+  ScriptApp.getProjectTriggers().forEach(function (t) {
+    if (/^(visitReminder|checkVersionPush)$/.test(t.getHandlerFunction())) ScriptApp.deleteTrigger(t);
+  });
+  ScriptApp.newTrigger('visitReminder').timeBased().everyDays(1).atHour(19).inTimezone('Asia/Taipei').create();
+  ScriptApp.newTrigger('checkVersionPush').timeBased().everyHours(1).create();
+  checkVersionPush();                                          // 記下目前版本
+  fcmAccessToken_(JSON.parse(PropertiesService.getScriptProperties().getProperty('FCM_SA')));
+  Logger.log('通知設定完成');
 }
