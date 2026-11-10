@@ -191,7 +191,7 @@
   .more svg{width:24px;height:6px;fill:#000;}
   .sheet-layer{position:absolute;left:11px;right:11px;bottom:0;z-index:18;pointer-events:none;}
   .sheet-layer:empty{display:none;}
-  .drawer{pointer-events:auto;background:var(--grey-bg);border-radius:40px 40px 0 0;box-shadow:0 -6px 18px rgba(0,0,0,.10);padding:8px 26px calc(104px + 16px);max-height:calc(844px - 300px);display:flex;flex-direction:column;transition:transform .32s cubic-bezier(.2,.8,.2,1);will-change:transform;}
+  .drawer{pointer-events:auto;background:var(--grey-bg);border-radius:40px 40px 0 0;box-shadow:none;padding:8px 26px calc(104px + 16px);max-height:calc(844px - 300px);display:flex;flex-direction:column;transition:transform .32s cubic-bezier(.2,.8,.2,1);will-change:transform;}
   .drawer.closed{transform:translateY(calc(100% - 104px - 90px));}
   .drawer.dragging{transition:none;}
   .drawer-grip{display:flex;justify-content:center;padding:2px 0 6px;cursor:grab;touch-action:none;background:none;border:none;width:100%;}
@@ -349,7 +349,7 @@
   .month-pill{display:inline-flex;align-items:center;gap:6px;background:#fff;border-radius:14px;height:34px;padding:0 6px 0 12px;font-size:.95rem;font-weight:800;letter-spacing:.5px;color:#111;}
   .month-pill svg{width:18px;height:18px;stroke:#111;fill:none;stroke-width:1.4;}
   .avatar-ring{padding:0;cursor:pointer;width:42px;height:42px;border-radius:50%;border:2px solid #222;background:#fff center/cover;flex-shrink:0;}
-  .cal-panel{background:#fffb83;margin:2px 11px 0;border-radius:24px;padding:12px 16px 10px;box-shadow:0 4px 8px rgba(0,0,0,.12);}
+  .cal-panel{background:#fffb83;margin:2px 11px 0;border-radius:24px;padding:12px 16px 10px;box-shadow:none;}
   .calendar{display:grid;grid-template-columns:repeat(7,1fr);row-gap:6px;}
   .cal-h{text-align:center;font-size:.85rem;font-weight:800;color:#111;padding:4px 0 4px;}
   .cal-d{height:34px;display:flex;align-items:center;justify-content:center;font-size:1.05rem;font-weight:700;cursor:pointer;border:none;background:transparent;color:#111;padding:0;font-family:var(--num);}
