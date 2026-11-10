@@ -32,6 +32,9 @@ ol.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;g
 details{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 18px;margin:0 0 12px}
 summary{font-weight:700;cursor:pointer}
 details p{margin:8px 0 4px;color:var(--soft);font-size:16px}
+.notice{background:var(--tint);border-left:5px solid var(--accent);border-radius:14px;padding:12px 16px;margin:0 0 20px;font-size:16px;color:var(--soft)}
+.notice b{color:var(--ink)}
+section details{margin:16px 0 0;background:var(--bg)}
 .foot{color:var(--muted);font-size:14px;text-align:center;margin-top:28px}
 .foot a{color:var(--accent-ink)}
 </style>
@@ -43,6 +46,7 @@ details p{margin:8px 0 4px;color:var(--soft);font-size:16px}
   <p class="slogan">你安心餵，我安心吃</p>
 </header>
 <main>
+  <p class="notice"><b>目前是測試版，免費使用。</b>由國立臺灣科技大學設計系研究開發，仍在持續改進。安心呷是照護輔助工具，不能取代專業評估、診斷與醫囑。</p>
   <div class="pick" role="group" aria-label="選擇手機">
     <button type="button" id="b-android" aria-pressed="true">Android 手機</button>
     <button type="button" id="b-ios" aria-pressed="false">iPhone</button>
@@ -69,6 +73,10 @@ details p{margin:8px 0 4px;color:var(--soft);font-size:16px}
       </div></li>
     </ol>
     <p class="warn"><b>重要：</b>步驟 1、2 使用的 Google 帳號，要和手機上 Google Play 登入的是<b>同一個</b>，否則會顯示無法下載。</p>
+    <details>
+      <summary>Android 用戶注意：步驟 2 或 3 顯示「無法使用」？</summary>
+      <p>先確認步驟 1 已加入群組，而且用的是手機 Google Play 的同一個帳號。加入後可能要等幾分鐘，再重新打開步驟 2 的按鈕。</p>
+    </details>
   </section>
 
   <section id="ios" hidden>
@@ -83,17 +91,13 @@ details p{margin:8px 0 4px;color:var(--soft);font-size:16px}
         <h3>加入主畫面</h3>
         <p>在 Safari 下方按「分享」圖示，選「加入主畫面」。之後從桌面圖示打開，就像 App 一樣。</p>
       </div></li>
+      <li><span class="num">3</span><div>
+        <h3>從主畫面打開並登入</h3>
+        <p>用 Google 帳號登入，再按「開啟通知」，就收得到新紀錄、回診提醒和新版本通知。</p>
+      </div></li>
     </ol>
+    <p class="warn"><b>要更新時：</b>在安心呷裡按上方的「立即更新」。只把安心呷往上滑掉、回到桌面再打開，不會變成新版本。</p>
   </section>
-
-  <details>
-    <summary>步驟 2 或 3 顯示「無法使用」？</summary>
-    <p>先確認步驟 1 已加入群組，而且用的是手機 Google Play 的同一個帳號。加入後可能要等幾分鐘，再重新打開步驟 2 的按鈕。</p>
-  </details>
-  <details>
-    <summary>這是正式版嗎？</summary>
-    <p>目前是測試版，由國立臺灣科技大學設計系研究開發，仍在持續改進。安心呷是照護輔助工具，不能取代專業評估、診斷與醫囑。</p>
-  </details>
 
   <p class="foot">使用問題與回饋：<a href="mailto:iceyen37@gmail.com">iceyen37@gmail.com</a>　·　<a href="privacy.html">隱私權政策</a></p>
 </main>
